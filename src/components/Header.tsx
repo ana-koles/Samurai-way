@@ -12,9 +12,9 @@ export const Header = () => {
       </div>
 
       <ul className='icon_list'>
-        <li><a href='#'>Hello</a></li>
+        <li><a href='#'>Chat</a></li>
+        <li><a href='#'>Settings</a></li>
         <li><img src={photo} alt="photo" /></li>
-        <li><a href='#'>Hello</a></li>
       </ul>
 
     </header>

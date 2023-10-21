@@ -10,23 +10,88 @@ html {
   font-size: 10px;
 }
 
+@font-face {
+  font-family: 'Lato', sans-serif;
+  src: url(./assets/fonts/Lato-Black.eot) format('eot'), url(./assets/fonts/Lato-Black.woff2) format('woff2'), url(./assets/fonts/Lato-Black.ttf) format('ttf');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato', sans-serif;
+  src: url(./assets/fonts/Lato-Bold.woff2) format('eot'), url(./assets/fonts/Lato-Bold.woff2) format('woff2'), url(./assets/fonts/Lato-Bold.ttf) format('ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato', sans-serif;
+  src: url(./assets/fonts/Lato-Regular.eot) format('eot'), url(./assets/fonts/Lato-Regular.woff2) format('woff2'), url(./assets/fonts/Lato-Regular.ttf) format('ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato', sans-serif;
+  src: url(./assets/fonts/Lato-Light.eot) format('eot'), url(./assets/fonts/Lato-Light.woff2) format('woff2'), url(./assets/fonts/Lato-Light.ttf) format('ttf');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato', sans-serif;
+  src: url(./assets/fonts/Lato-Hairline.eot) format('eot'), url(./assets/fonts/Lato-Hairline.woff2) format('woff2'), url(./assets/fonts/Lato-Thin.ttf) format('ttf');
+  font-weight: 100;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: '#151920';
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
 .app-wrapper {
   display: grid;
   grid-template-columns: 1fr minmax(auto, 200px) minmax(auto, 740px) 1fr;
   grid-template-rows: 45px 1fr;
-  grid-gap: 20px;
-  border: 1px solid red;
+  grid-gap: 10px;
+  background-color: #313131;
+}
+
+
+h2 {
+  font-weight: 900;
+  font-size: 2rem;
+  color: white;
+}
+
+h3 {
+  color: white;
 }
 
 /* header */
 
 .header {
-  background-color: rgb(69, 182, 144);
   grid-column: 1/5;
   grid-row: 1/2;
   display: grid;
   grid-template-columns: 1fr minmax(auto, 200px) minmax(auto, 740px) 1fr;
   align-content: center;
+  background-color: #242426;
+}
+
+.header h2 {
+  color: #0AB690;
 }
 
 .logo_wrapper {
@@ -46,7 +111,6 @@ html {
   grid-column: 3/4;
   display: flex;
   align-items: center;
-  list-style-type: none;
 }
 
 .icon_list li+li {
@@ -64,11 +128,108 @@ li img {
   -o-border-radius: 50;
 }
 
+.header a {
+  color: #7C7F84;
+}
+
+.header a:hover {
+  color: #0AB690;
+}
+
+/* navigation bar */
+
 .navigation {
   border: 1px solid rgb(109, 181, 109);
   grid-column: 2/3;
   grid-row: 2/3;
+  background-color: #08080A;
 }
+
+.menu {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border: 1px solid rgb(255, 255, 255);
+  height: 255px;
+  margin-bottom: 10px;
+  padding: 20px 15px 0px 15px;
+}
+
+.menu li {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+
+}
+
+.menu a {
+  color: white;
+}
+
+.menu a:hover {
+  color: #0AB690;;
+}
+
+.menu h2 {
+  margin-bottom: 20px;
+}
+
+/* Friends section */
+
+.friends-wrapper {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border: 1px solid blueviolet;
+  min-height: 255px;
+  padding: 20px 15px 0px 15px;
+}
+
+.friends-wrapper h2 {
+  margin-bottom: 20px;
+}
+
+.friend {
+  display: flex;
+}
+
+.friend p {
+  color: #FDBA2B;
+}
+
+
+.friend + .friend {
+  margin-top: 10px;
+}
+
+.friend img {
+  width: 32px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  overflow: hidden;
+  margin-right: 5px;
+}
+
+.friend-text_wrapper {
+  max-height: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.friends-wrapper a {
+  display: block;
+  margin: 15px 0 15px 0;
+  text-decoration: underline
+}
+
+/* Content section */
 
 .content {
   border: 1px solid rgb(169, 109, 181);
@@ -77,41 +238,114 @@ li img {
   grid-row: 2/3;
 }
 
-.profile-photo {
-  max-height: 200px;
-}
-
-.image-wrapper {
-  max-height: 150px;
-  overflow: hidden;
-  max-width: 100%;
-}
-
-.profile {
+.profile-wrapper {
+  background-color: lightgrey;
+  height: 185px;
   display: flex;
-}
-.image-wrapper img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  transform: scale(1.2) ;
-  -webkit-transform: scale(1.2) ;
-  -moz-transform: scale(1.2) ;
-  -ms-transform: scale(1.2) ;
-  -o-transform: scale(1.2) ;
+  position: relative;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  z-index: -1;
+
 }
 
-textarea {
+.profile-wrapper::before {
+  content: '';
   width: 100%;
+  position: absolute;
+  height: 64px;
+  left: 0;
+  top: 0;
+  background-color:rgb(169, 109, 181);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  z-index: 0;
 }
 
-.post {
+.content-wrapper {
   display: flex;
+  position: relative;
+  bottom: 20px;
+  margin-left: 15px;
+  align-items: end;
 }
 
-.post-img {
-  height: 50px;
-  width: 50px;
+.photo {
+  position: relative;
+  z-index: 5;
+  background-image: url(./assets/cat-profile2.jpg);
   border-radius: 50%;
-  background-color: rgb(232, 188, 67);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  overflow: hidden;
+  width: 128px;
+  height: 128px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 115%;
+  margin-right: 25px;
+}
+
+.info-wrapper {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 10px;
+}
+
+.info-wrapper h2 {
+  margin-bottom: 5px;
+}
+
+.info-wrapper p {
+  font-size: 1.2rem;
+}
+
+.info-wrapper p+p {
+  margin-top: 5px;
+}
+
+.message-user_wrapper {
+  margin-top: 10px;
+  border: 1px solid pink;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  padding: 10px;
+}
+
+.message-user_wrapper img {
+  width: 38px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  margin-left: 6px;
+}
+
+.message-text {
+  margin: 13px 0 13px;
+}
+
+.services {
+  display: flex;
+}
+
+.like-wrapper {
+  margin-right: 20px;
 }
