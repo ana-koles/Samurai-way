@@ -20,7 +20,7 @@ export const NavBar = () => {
 
       </div>
 
-      <div className='friends-wrappe/*  */r'>
+      <div className='friends-wrapper'>
         <h2>Friends (100) </h2>
           <div className='friend'>
             <img src={friend1} alt="" />
