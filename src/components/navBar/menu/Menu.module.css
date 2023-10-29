@@ -1,0 +1,12 @@
+.menu_list li {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+
+.menu_list a {
+  color: #cfd0d1;
+}
+
+.menu_list a:hover {
+  color: #0AB690;;
+}

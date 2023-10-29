@@ -1,6 +1,3 @@
-
-/* navigation bar */
-
 .navigation {
   grid-column: 2/3;
   grid-row: 2/3;
@@ -12,7 +9,6 @@
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-  /* border: 1px solid #7C7F84; */
   height: 255px;
   margin-bottom: 10px;
   padding: 20px 15px 0px 15px;
@@ -23,24 +19,7 @@
   color: gold;
 }
 
-.menu li {
-  font-size: 1.4rem;
-  margin-bottom: 15px;
-
-}
-
-.menu a {
-  /* color: white; */
-  color: #cfd0d1;
-}
-
-.menu a:hover {
-  color: #0AB690;;
-}
 
 .menu h2 {
   margin-bottom: 20px;
 }
-
-/* Friends section */
-
