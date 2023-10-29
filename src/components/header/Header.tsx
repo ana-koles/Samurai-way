@@ -1,17 +1,18 @@
 import React from 'react';
-import logo from '../assets/logo.svg';
-import photo from '../assets/cat-profile2.jpg'
+import logo from '../../assets/logo.svg';
+import photo from '../../assets/cat-profile2.jpg';
+import s from './Header.module.css'
 
 export const Header = () => {
   return (
-    <header className='header'>
+    <header className={s.header}>
 
-      <div className='logo_wrapper'>
+      <div className={s.logo_wrapper}>
         <img src={logo} alt="logo" />
-        <h2>Friends</h2>
+        <h2>CatFriends</h2>
       </div>
 
-      <ul className='icon_list'>
+      <ul className={s.icon_list}>
         <li><a href='#'>Chat</a></li>
         <li><a href='#'>Settings</a></li>
         <li><img src={photo} alt="photo" /></li>

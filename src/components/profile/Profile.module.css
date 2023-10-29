@@ -1,0 +1,140 @@
+
+
+/* Content section */
+
+.content {
+  max-width: 100%;
+  grid-column: 3/4;
+  grid-row: 2/3;
+}
+
+p {
+  color: white;
+}
+
+.profile_wrapper {
+  background-color: #242426;
+  border: 1px solid rgba(49, 49, 49, 0.49);
+  height: 185px;
+  display: flex;
+  position: relative;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  z-index: 3;
+
+}
+
+.profile_wrapper::before {
+  content: '';
+  width: 100%;
+  position: absolute;
+  height: 64px;
+  left: 0;
+  top: 0;
+  background-image:linear-gradient(244deg, #FB9119 13.76%, #FCBF30 85.91%);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  z-index: 0;
+}
+
+.content_wrapper {
+  display: flex;
+  position: relative;
+  bottom: 33px;
+  margin-left: 15px;
+  align-items: end;
+}
+
+.photo {
+  position: relative;
+  z-index: 5;
+  background-image: url(../../assets/cat-profile2.jpg);
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  overflow: hidden;
+  width: 128px;
+  height: 128px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 115%;
+  margin-right: 25px;
+}
+
+.info_wrapper {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 10px;
+}
+
+.info_wrapper h2 {
+  margin-bottom: 5px;
+  font-size: 2.5rem;
+}
+
+.info_wrapper p {
+  font-size: 1.2rem;
+}
+
+.info_wrapper p+p {
+  margin-top: 5px;
+}
+
+.message_user_wrapper {
+  margin-top: 10px;
+  /* border: 1px solid rgba(49, 49, 49, 0.49); */
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(49, 49, 49, 0.59);;
+}
+
+.message_user_wrapper:nth-child(odd) {
+  background-color: rgba(49, 49, 49, 0.89);
+}
+
+.message_user_wrapper img {
+  width: 38px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.user_info {
+  display: flex;
+  align-items: center;
+}
+
+.user_info p {
+  color: #7C7F84;
+}
+
+.user_name {
+  margin-left: 6px;
+}
+
+.message_text {
+  margin: 13px 0 13px;
+}
+
+.services {
+  display: flex;
+}
+
+.services span {
+  color: #FDBA2B;
+}
+
+.like_wrapper {
+  margin-right: 20px;
+}

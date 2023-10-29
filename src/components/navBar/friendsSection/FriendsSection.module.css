@@ -1,0 +1,23 @@
+/* Friends section */
+
+.friends_wrapper {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  /* border: 1px solid #7C7F84;; */
+  min-height: 310px;
+  padding: 20px 15px 0px 15px;
+  background-color: #242426;
+}
+
+.friends_wrapper h2 {
+  margin-bottom: 20px;
+}
+
+.friends_wrapper a {
+  display: block;
+  margin: 15px 0 15px 0;
+  text-decoration: underline;
+}
