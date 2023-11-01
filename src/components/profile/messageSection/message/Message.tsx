@@ -27,7 +27,7 @@ export const Message: React.FC<MessagePropsType> = (props) => {
     <div className={s.services}>
       <div className={s.like_wrapper}>
         <img src="" alt="" />
-        <span>{props.likes}</span>
+        <span>{props.likes} likes</span>
       </div>
       <div>
         <img src="" alt="" />

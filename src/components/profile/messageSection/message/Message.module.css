@@ -6,7 +6,7 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   padding: 10px;
-  background-color: rgba(49, 49, 49, 0.59);;
+  background-color: rgba(49, 49, 49, 0.59);
 }
 
 .message_user_wrapper:nth-child(odd) {

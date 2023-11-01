@@ -1,0 +1,16 @@
+.content {
+  max-width: 100%;
+  grid-column: 3/4;
+  grid-row: 2/3;
+
+  display: grid;
+  grid-template-columns: 1fr minmax(auto, 200px);
+  grid-gap: 10px;
+  grid-auto-rows: auto;
+}
+
+.dialog_section {
+  grid-column: 1/2;
+  border: 2px solid darkorange
+}
+

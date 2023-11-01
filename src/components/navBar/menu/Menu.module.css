@@ -10,3 +10,7 @@
 .menu_list a:hover {
   color: #0AB690;;
 }
+
+.menu_list .active {
+  color: gold;
+}
