@@ -9,7 +9,7 @@ export const Header = () => {
 
       <div className={s.logo_wrapper}>
         <img src={logo} alt="logo" />
-        <h2>CatFriends</h2>
+        <h2>CATSBOOK</h2>
       </div>
 
       <ul className={s.icon_list}>
