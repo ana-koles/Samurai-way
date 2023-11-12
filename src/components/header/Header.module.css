@@ -52,3 +52,7 @@ li img {
 .header a:hover {
   color: #0AB690;
 }
+
+.icon_list a.activeLink {
+  color: gold;
+}

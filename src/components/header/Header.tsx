@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../../assets/logo.svg';
 import photo from '../../assets/cat-profile2.jpg';
 import s from './Header.module.css'
+import { NavLink } from 'react-router-dom';
 
 export const Header = () => {
   return (
@@ -13,8 +14,8 @@ export const Header = () => {
       </div>
 
       <ul className={s.icon_list}>
-        <li><a href='#'>Chat</a></li>
-        <li><a href='#'>Settings</a></li>
+        <li><NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink></li>
+        <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>
         <li><img src={photo} alt="photo" /></li>
       </ul>
 
