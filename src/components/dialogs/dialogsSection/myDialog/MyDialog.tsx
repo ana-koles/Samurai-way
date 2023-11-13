@@ -1,10 +1,10 @@
 import React from 'react';
 import photo from '../../../../assets/cat-profile2.jpg'
-import { DialogType } from '../../Dialogs';
+import { DialogItemType } from '../../Dialogs';
 import s from './MyDialog.module.css'
 
 type DialogPropsType = {
-  dialog: DialogType
+  dialog: DialogItemType
 }
 
 export const MyDialog:React.FC<DialogPropsType> = (props) => {

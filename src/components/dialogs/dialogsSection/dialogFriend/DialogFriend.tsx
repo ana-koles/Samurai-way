@@ -1,10 +1,10 @@
 import React from 'react';
 import s from './DialogFriend.module.css'
 import photo4 from '../../../../assets/friend4.jpg'
-import { DialogType } from '../../Dialogs';
+import { DialogItemType } from '../../Dialogs';
 
 type DialogPropsType = {
-  dialog: DialogType
+  dialog: DialogItemType
 }
 
 export const DialogFriend: React.FC<DialogPropsType> = (props) => {
