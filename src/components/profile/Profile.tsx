@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Profile.module.css'
 import { PostSection } from './postSection/PostSection';
-import { PostType, posts } from '../../data/posts';
+import { PostType } from '../../data/posts';
 
 type ProfilePropsType = {
   posts: PostType[]
@@ -9,6 +9,7 @@ type ProfilePropsType = {
 
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
+  console.log(props.posts)
   return (
     <div className={s.content}>
 

@@ -13,6 +13,7 @@ import { ContactType, DialogType, dialogs, messageContacts } from './data/dialog
 import { PostType } from './data/posts';
 
 
+
 type AppPropsType = {
   posts: PostType[]
   dialogs: DialogType
@@ -20,19 +21,20 @@ type AppPropsType = {
 }
 
 const App: React.FC<AppPropsType> = (props) => {
+
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header/>
         <NavBar/>
 
-        <Route path='/profile' render={() => <Profile posts={props.posts}/>}/>
+        <Route path='/profile' render={() => <Profile posts={props.posts} />}/>
         <Route path={'/messages'} render={() => <Dialogs dialogs={props.dialogs}/>}/>
 
         <Route path='/news' component={News}/>
         <Route path='/music' component={Music}/>
         <Route path='/settings' component={Settings}/>
-        <Route exact path='/' component={Profile}/>
+        <Route exact path='/' render={() => <Profile posts={props.posts} />}/>
       </div>
     </BrowserRouter>
 
