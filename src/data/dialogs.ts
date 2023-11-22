@@ -1,11 +1,9 @@
-type ContactType = {
+export type ContactType = {
   id: number
   name: string
 }
 
-export type MessageContactsType = ContactType[]
-
-export const messageContacts: MessageContactsType = [
+export const messageContacts: ContactType[] = [
   {id: 0, name:'Pumpkine'},
   {id: 1, name:'Missis Marple'},
   {id: 2, name:'Luna'},

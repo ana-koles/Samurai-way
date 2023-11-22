@@ -12,7 +12,7 @@ export const MyDialog:React.FC<DialogPropsType> = (props) => {
   let {id, name, message} = props.dialog;
 
   return (
-    <div className={s.dialog_wrapper}>
+    <div id={id.toString()} className={s.dialog_wrapper}>
 
       <div className={s.dialog_content_wrapper}>
 

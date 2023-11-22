@@ -9,18 +9,26 @@ import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { dialogs, messageContacts } from './data/dialogs';
+import { ContactType, DialogType, dialogs, messageContacts } from './data/dialogs';
+import { PostType } from './data/posts';
 
-const App = () => {
+
+type AppPropsType = {
+  posts: PostType[]
+  dialogs: DialogType
+  messageContacts: ContactType[]
+}
+
+const App: React.FC<AppPropsType> = (props) => {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header/>
         <NavBar/>
 
-        <Route path='/profile' component={Profile}/>
-        {/* <Route path='/messages/1'component={Dialogs}/> */}
-        <Route path={'/messages'} component={Dialogs}/>
+        <Route path='/profile' render={() => <Profile posts={props.posts}/>}/>
+        <Route path={'/messages'} render={() => <Dialogs dialogs={props.dialogs}/>}/>
+
         <Route path='/news' component={News}/>
         <Route path='/music' component={Music}/>
         <Route path='/settings' component={Settings}/>

@@ -1,11 +1,12 @@
 import React from 'react';
 import s from './ChatMenu.module.css'
 import { ChatMenuItem } from './chatMenuItem/ChatMenuItem';
-import { MessageContactsType } from '../../../data/dialogs';
+import { ContactType } from '../../../data/dialogs';
+
 
 
 type ChatMenyPropsType = {
-  messageContacts: MessageContactsType
+  messageContacts: ContactType[]
 }
 
 

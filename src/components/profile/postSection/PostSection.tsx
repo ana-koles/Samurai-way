@@ -15,13 +15,11 @@ type PostSectionPropsType = {
 
 export const PostSection: React.FC<PostSectionPropsType> = (props) => {
 
+  const postedMessages = props.posts.map(post => <Post key={post.id} {...post}/>)
 
   return (
     <div className={s.message_wrapper}>
-
-      {props.posts.map(post => <Post key={post.id} {...post}/>)}
-
-
+      {postedMessages}
     </div>
   );
 };

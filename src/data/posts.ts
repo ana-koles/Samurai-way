@@ -1,4 +1,12 @@
-export const posts = [
+export type PostType = {
+  id: number
+  name:  string
+  message: string
+  likes: number
+}
+
+
+export const posts: PostType[] = [
   {
     id: Date.now() * Math.random(),
     name:  'Fluffy Gangster',

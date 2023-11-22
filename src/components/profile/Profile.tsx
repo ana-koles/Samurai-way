@@ -1,11 +1,14 @@
 import React from 'react';
 import s from './Profile.module.css'
 import { PostSection } from './postSection/PostSection';
-import { posts } from '../../data/posts';
+import { PostType, posts } from '../../data/posts';
+
+type ProfilePropsType = {
+  posts: PostType[]
+}
 
 
-
-export const Profile = () => {
+export const Profile: React.FC<ProfilePropsType> = (props) => {
   return (
     <div className={s.content}>
 
@@ -15,14 +18,14 @@ export const Profile = () => {
             <div className={s.info_wrapper}>
               <h2>Fluffy Gangster</h2>
               <p>Date of Birth: July 6</p>
-              <p>City: Minsk</p>
+              <p>City: New York</p>
               <p>Hobby: wait for me to be fed</p>
               <p>GitHub: </p>
             </div>
           </div>
         </div>
 
-        <PostSection posts={posts}/>
+        <PostSection posts={props.posts}/>
 
 
     </div>
