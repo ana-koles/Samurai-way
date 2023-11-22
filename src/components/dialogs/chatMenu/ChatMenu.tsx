@@ -1,7 +1,8 @@
 import React from 'react';
 import s from './ChatMenu.module.css'
-import { Message } from './message/Message';
-import { MessageContactsType } from '../Dialogs';
+import { ChatMenuItem } from './chatMenuItem/ChatMenuItem';
+import { MessageContactsType } from '../../../data/dialogs';
+
 
 type ChatMenyPropsType = {
   messageContacts: MessageContactsType
@@ -17,7 +18,7 @@ export const ChatMenu: React.FC<ChatMenyPropsType>= (props) => {
 
         <ul>
           {props.messageContacts.map(contact => {
-            return <Message name={contact.name} id={contact.id}/>
+            return <ChatMenuItem name={contact.name} id={contact.id}/>
           })}
 
          {/*  <li><NavLink to='/messages/6' className={`${s.chatItem} ${s.active}`}>Choupette</NavLink></li> */}

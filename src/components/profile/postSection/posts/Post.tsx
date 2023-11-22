@@ -1,16 +1,16 @@
 import React from 'react';
-import s from './Message.module.css'
+import s from './Post.module.css'
 import photo5 from '../../../../assets/friend5.jpg'
 
 
-type MessagePropsType = {
+type PostPropsType = {
   key: number | undefined,
   name: string,
   message: string,
   likes: number
 }
 
-export const Message: React.FC<MessagePropsType> = (props) => {
+export const Post: React.FC<PostPropsType> = (props) => {
   return (
     <div className={s.message_user_wrapper}>
 

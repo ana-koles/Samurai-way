@@ -1,14 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import s from './Message.module.css'
+import s from './ChatMenuItem.module.css'
 
 
-type MessagePropsType = {
+type ChatMenuItemPropsType = {
   name: string
   id: number
 }
 
-export const Message: React.FC<MessagePropsType> = (props) => {
+export const ChatMenuItem: React.FC<ChatMenuItemPropsType> = (props) => {
 
   let {name, id} = props;
 

@@ -9,6 +9,7 @@ import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { dialogs, messageContacts } from './data/dialogs';
 
 const App = () => {
   return (
@@ -18,15 +19,12 @@ const App = () => {
         <NavBar/>
 
         <Route path='/profile' component={Profile}/>
-        <Route exact path='/messages'component={Dialogs}/>
+        {/* <Route path='/messages/1'component={Dialogs}/> */}
+        <Route path={'/messages'} component={Dialogs}/>
         <Route path='/news' component={News}/>
         <Route path='/music' component={Music}/>
         <Route path='/settings' component={Settings}/>
-        {/* <Profile/>
-        <Dialogs/>
-        <News/>
-        <Music/>
-        <Settings/> */}
+        <Route exact path='/' component={Profile}/>
       </div>
     </BrowserRouter>
 

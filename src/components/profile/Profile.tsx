@@ -1,6 +1,9 @@
 import React from 'react';
 import s from './Profile.module.css'
-import { MessageSection } from './messageSection/MessageSection';
+import { PostSection } from './postSection/PostSection';
+import { posts } from '../../data/posts';
+
+
 
 export const Profile = () => {
   return (
@@ -19,7 +22,7 @@ export const Profile = () => {
           </div>
         </div>
 
-        <MessageSection/>
+        <PostSection posts={posts}/>
 
 
     </div>

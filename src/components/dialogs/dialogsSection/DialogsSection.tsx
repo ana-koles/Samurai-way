@@ -2,10 +2,11 @@ import React from 'react';
 import s from './DialogsSection.module.css'
 import { MyDialog } from './myDialog/MyDialog';
 import { DialogFriend } from './dialogFriend/DialogFriend';
-import { DialogItemType, DialogType } from '../Dialogs';
+import { DialogItemType } from '../../../data/dialogs';
+
 
 type DialogsSectionPropsType = {
-  dialogs: DialogItemType[];
+  dialog: DialogItemType[];
 }
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
@@ -18,7 +19,7 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
         </div>
 
 
-        {props.dialogs.map((d, index) => index % 2 === 0 ? <DialogFriend dialog={d}/> : <MyDialog dialog={d}/>)}
+        {props.dialog.map(d => d.name === 'Fluffy Gangster' ?  <MyDialog dialog={d}/> : <DialogFriend dialog={d}/>)}
     </div>
   );
 };
