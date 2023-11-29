@@ -2,7 +2,7 @@ import React from 'react';
 import s from './DialogsSection.module.css'
 import { MyDialog } from './myDialog/MyDialog';
 import { DialogFriend } from './dialogFriend/DialogFriend';
-import { DialogItemType } from '../../../data/dialogs';
+import { DialogItemType } from '../../../redux/state';
 
 
 type DialogsSectionPropsType = {

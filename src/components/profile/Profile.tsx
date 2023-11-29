@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Profile.module.css'
 import { PostSection } from './postSection/PostSection';
-import { PostType } from '../../data/posts';
+import { PostType } from '../../redux/state';
 
 type ProfilePropsType = {
   posts: PostType[]
@@ -9,7 +9,11 @@ type ProfilePropsType = {
 
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
-  console.log(props.posts)
+
+  const addPost = (postText: string) => {
+
+  }
+
   return (
     <div className={s.content}>
 
@@ -26,7 +30,9 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
           </div>
         </div>
 
-        <PostSection posts={props.posts}/>
+        <PostSection
+            posts={props.posts}
+            addPost={addPost}/>
 
 
     </div>

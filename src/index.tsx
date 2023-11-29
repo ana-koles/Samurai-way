@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { posts } from './data/posts';
-import { dialogs, messageContacts } from './data/dialogs';
+import state from './redux/state'
+
 
 ReactDOM.render(
-    <App posts={posts} dialogs={dialogs} messageContacts={messageContacts}/>,
+    <App appState={state}/>,
   document.getElementById('root')
 );

@@ -9,15 +9,19 @@ import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { ContactType, DialogType, dialogs, messageContacts } from './data/dialogs';
-import { PostType } from './data/posts';
-
+import { ContactType, DialogType, PostType } from './redux/state';
 
 
 type AppPropsType = {
-  posts: PostType[]
-  dialogs: DialogType
-  messageContacts: ContactType[]
+  appState: {
+    profilePage:{
+      posts: PostType[]
+    },
+    dialogsPage: {
+      messageContacts: ContactType[],
+      dialogs: DialogType
+    }
+  }
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -28,13 +32,14 @@ const App: React.FC<AppPropsType> = (props) => {
         <Header/>
         <NavBar/>
 
-        <Route path='/profile' render={() => <Profile posts={props.posts} />}/>
-        <Route path={'/messages'} render={() => <Dialogs dialogs={props.dialogs}/>}/>
+        {/* render если передаем тег и пропсы, component - если ссылку на компоненту */}
+        <Route path='/profile' render={() => <Profile posts={props.appState.profilePage.posts} />}/>
+        <Route path={'/messages'} render={() => <Dialogs dialogsData={props.appState.dialogsPage}/>}/>
 
         <Route path='/news' component={News}/>
         <Route path='/music' component={Music}/>
         <Route path='/settings' component={Settings}/>
-        <Route exact path='/' render={() => <Profile posts={props.posts} />}/>
+        <Route exact path='/' render={() => <Profile posts={props.appState.profilePage.posts} />}/>
       </div>
     </BrowserRouter>
 

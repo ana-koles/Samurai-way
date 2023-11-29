@@ -2,23 +2,27 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import { ChatMenu } from './chatMenu/ChatMenu';
 import { DialogsSection } from './dialogsSection/DialogsSection';
-import { DialogType, dialogs, messageContacts } from '../../data/dialogs';
+import { ContactType, DialogType, PostType } from '../../redux/state';
 
 
 
-type DialogsType = {
-  dialogs: DialogType
+
+type DialogsPropsType = {
+  dialogsData: {
+    messageContacts: ContactType[],
+    dialogs: DialogType
+  }
 }
 
-export const Dialogs: React.FC<DialogsType> = (props) => {
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
-  let dialogWithContact = props.dialogs[0]; // сюда надо как-то закинуть объект с нужными диалогами
+  let dialogWithContact = props.dialogsData.dialogs[0]; // сюда надо как-то закинуть объект с нужными диалогами
 
   return (
     <div className={s.content}>
 
       <DialogsSection dialog={dialogWithContact} />
-      <ChatMenu messageContacts={messageContacts} />
+      <ChatMenu messageContacts={props.dialogsData.messageContacts} />
 
     </div>
   );

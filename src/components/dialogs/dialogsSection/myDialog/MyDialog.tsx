@@ -1,6 +1,6 @@
 import React from 'react';
 import photo from '../../../../assets/cat-profile2.jpg'
-import { DialogItemType } from '../../../../data/dialogs';
+import { DialogItemType } from '../../../../redux/state';
 import s from './MyDialog.module.css'
 
 type DialogPropsType = {
