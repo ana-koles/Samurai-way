@@ -5,8 +5,6 @@ import { DialogsSection } from './dialogsSection/DialogsSection';
 import { ContactType, DialogType, PostType } from '../../redux/state';
 
 
-
-
 type DialogsPropsType = {
   dialogsData: {
     messageContacts: ContactType[],
@@ -18,10 +16,16 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
   let dialogWithContact = props.dialogsData.dialogs[0]; // сюда надо как-то закинуть объект с нужными диалогами
 
+  const addMessageToDialog = () => {
+
+  }
+
   return (
     <div className={s.content}>
 
-      <DialogsSection dialog={dialogWithContact} />
+      <DialogsSection
+        dialog={dialogWithContact}
+        addMessageToDialog={addMessageToDialog}/>
       <ChatMenu messageContacts={props.dialogsData.messageContacts} />
 
     </div>

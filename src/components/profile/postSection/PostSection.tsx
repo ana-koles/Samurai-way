@@ -18,10 +18,19 @@ export const PostSection: React.FC<PostSectionPropsType> = (props) => {
     setPostText(e.currentTarget.value);
   }
 
+  //с помощью React.createRef
+
+  /* const newPostText: React.LegacyRef<HTMLTextAreaElement> = React.createRef();
+
+  const onChangeHandler = () => {
+    if (newPostText.current) {
+      setPostText(newPostText.current.value);
+    }
+  } */
+
   const onClickHandler = () => {
     props.addPost(postText);
     setPostText('');
-
   }
 
   const postedMessages = props.posts.map(post => <Post key={post.id} {...post}/>)
@@ -30,6 +39,7 @@ export const PostSection: React.FC<PostSectionPropsType> = (props) => {
     <div className={s.message_wrapper}>
       <div className={s.post_input}>
         <textarea
+                /* ref={newPostText} */
                 onChange={onChangeHandler}
                 value={postText}
                 placeholder='Your text...'>
