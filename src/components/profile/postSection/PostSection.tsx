@@ -46,8 +46,6 @@ export const PostSection: React.FC<PostSectionPropsType> = (props) => {
         </textarea>
         <Button name='post' callback={onClickHandler}/>
       </div>
-
-
       {postedMessages}
     </div>
   );

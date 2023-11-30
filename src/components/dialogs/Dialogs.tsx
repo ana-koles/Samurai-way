@@ -9,23 +9,20 @@ type DialogsPropsType = {
   dialogsData: {
     messageContacts: ContactType[],
     dialogs: DialogType
-  }
+  },
+  addMessageToDialog: (text: string) => void
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
   let dialogWithContact = props.dialogsData.dialogs[0]; // сюда надо как-то закинуть объект с нужными диалогами
 
-  const addMessageToDialog = () => {
-
-  }
-
   return (
     <div className={s.content}>
 
       <DialogsSection
         dialog={dialogWithContact}
-        addMessageToDialog={addMessageToDialog}/>
+        addMessageToDialog={props.addMessageToDialog}/>
       <ChatMenu messageContacts={props.dialogsData.messageContacts} />
 
     </div>

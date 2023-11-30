@@ -35,6 +35,10 @@
   margin-left: 6px;
 }
 
+.user_name > h3 {
+  margin-bottom: 5px;
+}
+
 .message_text {
   margin: 13px 0 13px;
 }

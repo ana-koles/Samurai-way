@@ -5,14 +5,11 @@ import { PostType } from '../../redux/state';
 
 type ProfilePropsType = {
   posts: PostType[]
+  addPost: (text: string) => void
 }
 
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
-
-  const addPost = (postText: string) => {
-
-  }
 
   return (
     <div className={s.content}>
@@ -32,9 +29,7 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
 
         <PostSection
             posts={props.posts}
-            addPost={addPost}/>
-
-
+            addPost={props.addPost}/>
     </div>
   );
 };
