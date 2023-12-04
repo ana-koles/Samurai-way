@@ -15,7 +15,7 @@ type DialogsPropsType = {
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
-  let dialogWithContact = props.dialogsData.dialogs[0]; // сюда надо как-то закинуть объект с нужными диалогами
+  let dialogWithContact = props.dialogsData.dialogs[1]; // сюда надо как-то закинуть объект с нужными диалогами
 
   return (
     <div className={s.content}>

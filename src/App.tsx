@@ -9,7 +9,7 @@ import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { ContactType, DialogType, PostType, addPost } from './redux/state';
+import { ContactType, DialogType, PostType } from './redux/state';
 
 
 type AppPropsType = {
@@ -23,6 +23,7 @@ type AppPropsType = {
     }
   },
   addMessageToDialog: (text: string) => void;
+  addPost: (text: string) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -36,7 +37,7 @@ const App: React.FC<AppPropsType> = (props) => {
         {/* render если передаем тег и пропсы, component - если ссылку на компоненту */}
         <Route path='/profile' render={() => <Profile
                                                     posts={props.appState.profilePage.posts}
-                                                    addPost={addPost}/>}/>
+                                                    addPost={props.addPost}/>}/>
         <Route path={'/messages'} render={() => <Dialogs
                                                     dialogsData={props.appState.dialogsPage}
                                                     addMessageToDialog={props.addMessageToDialog}/>}/>
@@ -46,7 +47,7 @@ const App: React.FC<AppPropsType> = (props) => {
         <Route path='/settings' component={Settings}/>
         <Route exact path='/' render={() => <Profile
                                                     posts={props.appState.profilePage.posts}
-                                                    addPost={addPost}/>}/>
+                                                    addPost={props.addPost}/>}/>
       </div>
     </BrowserRouter>
 

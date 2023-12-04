@@ -20,8 +20,20 @@ export type PostType = {
   likes: number
 }
 
+export type StateType = {
+    profilePage:{
+      posts: PostType[]
+    },
+    dialogsPage: {
+      messageContacts: ContactType[],
+      dialogs: DialogType
+    }
+  }
+
+const user = {id: 0, name:'Fluffy Gangster'}
+
 const messageContacts: ContactType[] = [
-  {id: 0, name:'Fluffy Gangster'},
+  /* {id: 0, name:'Fluffy Gangster'}, */
   {id: 1, name:'Missis Marple'},
   {id: 2, name:'Luna'},
   {id: 3, name:'Toby'},
@@ -30,7 +42,7 @@ const messageContacts: ContactType[] = [
   {id: 6, name:'Pumpkine'},
 ]
 
-export const state = {
+export const state: StateType = {
   profilePage: {
     posts: [
       {
@@ -64,7 +76,7 @@ export const state = {
         },
         {
           id: 12,
-          name:  'Fluffy Gangster',
+          name:  user.name,
           message: ` Hey there! Just napping as usual. You?`,
         },
         {
@@ -74,7 +86,7 @@ export const state = {
         },
         {
           id: 14,
-          name:  'Fluffy Gangster',
+          name:  user.name,
           message: `Absolutely! But don't forget the occasional playtime.`,
         },
         {
@@ -96,7 +108,7 @@ export const state = {
         },
         {
           id: 22,
-          name:  'Fluffy Gangster',
+          name:  user.name,
           message: `Meow! How are you doing?`,
         },
         {
@@ -106,10 +118,9 @@ export const state = {
         },
         {
           id: 24,
-          name:  'Fluffy Gangster',
+          name:  user.name,
           message: `Purr purr... Just enjoying the day!`,
         },
-
       ]
     },
   }
@@ -126,8 +137,11 @@ export const addMessageToDialog = (text: string) => {
 
   //коррекиный вариант - иммутабельный
 
-  /* const updatedDialogs = {...state, dialogsPage: {...state.dialogsPage, dialogs: {...state.dialogsPage.dialogs, [userId]: [...state.dialogsPage.dialogs[userId], newMessage]}}}
-
+  /* const updatedDialogs = {...state,
+                            dialogsPage: {...state.dialogsPage,
+                              dialogs: {...state.dialogsPage.dialogs,
+                                [messageContacts[0].id]: [...state.dialogsPage.dialogs[messageContacts[0].id], newMessage]}}}
+    console.log(updatedDialogs)
   return updatedDialogs; */
 
   //неправильный вариант - мутабельный
