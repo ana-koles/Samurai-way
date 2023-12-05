@@ -9,8 +9,10 @@ type DialogsPropsType = {
   dialogsData: {
     messageContacts: ContactType[],
     dialogs: DialogType
+    currentMessageText: string
   },
-  addMessageToDialog: (text: string) => void
+  addMessageToDialog: () => void
+  updateNewMessageText: (text: string) => void
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
@@ -22,7 +24,11 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
       <DialogsSection
         dialog={dialogWithContact}
-        addMessageToDialog={props.addMessageToDialog}/>
+        addMessageToDialog={props.addMessageToDialog}
+        currentMessageText={props.dialogsData.currentMessageText}
+        updateNewMessageText={props.updateNewMessageText}
+
+        />
       <ChatMenu messageContacts={props.dialogsData.messageContacts} />
 
     </div>

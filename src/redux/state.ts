@@ -1,3 +1,5 @@
+import { rerenderEntireTree } from "../rerender"
+
 export type ContactType = {
   id: number
   name: string
@@ -21,14 +23,16 @@ export type PostType = {
 }
 
 export type StateType = {
-    profilePage:{
-      posts: PostType[]
-    },
-    dialogsPage: {
-      messageContacts: ContactType[],
-      dialogs: DialogType
-    }
+  profilePage:{
+    currentText: string
+    posts: PostType[]
+  },
+  dialogsPage: {
+    messageContacts: ContactType[]
+    currentMessageText: string
+    dialogs: DialogType
   }
+}
 
 const user = {id: 0, name:'Fluffy Gangster'}
 
@@ -44,6 +48,7 @@ const messageContacts: ContactType[] = [
 
 export const state: StateType = {
   profilePage: {
+    currentText: '',
     posts: [
       {
         id: Date.now() * Math.random(),
@@ -67,6 +72,7 @@ export const state: StateType = {
   },
   dialogsPage: {
     messageContacts: messageContacts,
+    currentMessageText: '',
     dialogs: {
       [messageContacts[0].id]: [
         {
@@ -126,12 +132,12 @@ export const state: StateType = {
   }
 }
 
-export const addMessageToDialog = (text: string) => {
+export const addMessageToDialog = () => {
 
   const newMessage = {
     id: messageContacts[0].id + Math.random(),
-    name: messageContacts[0].name,
-    message: text
+    name: user.name,
+    message: state.dialogsPage.currentMessageText
   }
 
 
@@ -146,20 +152,36 @@ export const addMessageToDialog = (text: string) => {
 
   //неправильный вариант - мутабельный
 
-  state.dialogsPage.dialogs[messageContacts[0].id].push(newMessage)
+  state.dialogsPage.dialogs[messageContacts[0].id].push(newMessage);
+  state.dialogsPage.currentMessageText = '';
+  console.log(state)
+  rerenderEntireTree(state)
 
 }
 
-export const addPost = (text: string) => {
+export const addPost = () => {
   const newPost = {
     id: Date.now() * Math.random(),
     name: messageContacts[0].name,
-    message: text,
+    message: state.profilePage.currentText,
     likes: 0
   }
   //неправильный вариант - мутабельный
   state.profilePage.posts.unshift(newPost);
+  state.profilePage.currentText = '';
+  rerenderEntireTree(state)
 }
+
+export const updateNewPostText = (newText: string) => {
+  state.profilePage.currentText = newText;
+  rerenderEntireTree(state)
+}
+
+export const updateNewMessageText = (newText: string) => {
+  state.dialogsPage.currentMessageText = newText;
+  rerenderEntireTree(state)
+}
+
 
 
 /* const messageContacts: ContactType[] = [
@@ -170,7 +192,6 @@ export const addPost = (text: string) => {
   {id: 4, name:'Cleo'},
   {id: 5, name:'Choupette'},
 ] */
-
 
 
 /* const dialogs: DialogType = {
@@ -230,8 +251,6 @@ export const addPost = (text: string) => {
 
   ]
 } */
-
-
 
 
 /* export const posts: PostType[] = [
