@@ -2,17 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { addMessageToDialog, addPost, state } from './redux/state';
-import { rerenderEntireTree } from './rerender';
+import { StateType, store} from './redux/state';
 
 
 
-/* ReactDOM.render(
+
+export const rerenderEntireTree = (stateNew: StateType) => {
+  ReactDOM.render(
     <App
-        appState={state}
-        addMessageToDialog={addMessageToDialog}
-        addPost={addPost}/>,
-  document.getElementById('root')
-); */
+        state={stateNew}
+        /* addMessageToDialog={store.addMessageToDialog.bind(store)} */
+        dispatch={store.dispatch.bind(store)}
+       /*  addPost={store.addPost.bind(store)}
+        updateNewPostText={store.updateNewPostText.bind(store)}
+        updateNewMessageText={store.updateNewMessageText.bind(store)} */
+        />,
+        document.getElementById('root')
+  );
+}
 
-rerenderEntireTree(state);
+
+rerenderEntireTree(store.getState());
+
+store.subscribe(rerenderEntireTree); //передаем rerenderEntireTree в качестве callback

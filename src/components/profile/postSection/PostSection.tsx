@@ -28,7 +28,8 @@ export const PostSection: React.FC<PostSectionPropsType> = (props) => {
   const newPostElement: React.LegacyRef<HTMLTextAreaElement> = React.createRef();
 
   const onClickHandler = () => {
-    props.addPost();
+    debugger;
+    props.addPost(); //здесь addPost вызывается не от объекта store, а от объекта props
     console.log('click')
   }
 

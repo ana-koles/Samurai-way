@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import s from './DialogsSection.module.css'
 import { MyDialog } from './myDialog/MyDialog';
 import { DialogFriend } from './dialogFriend/DialogFriend';
-import { DialogItemType } from '../../../redux/state';
+import { DialogItemType, StateType } from '../../../redux/state';
 import { Button } from '../../button/Button';
 
 
@@ -14,6 +14,7 @@ type DialogsSectionPropsType = {
 }
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
+  debugger;
 
     //с помощью React.createRef
 /*   переменная newPostText будет содержать ссылку на DOM-узел <textarea>, и вы можете

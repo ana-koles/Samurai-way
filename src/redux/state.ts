@@ -1,4 +1,4 @@
-import { rerenderEntireTree } from "../rerender"
+export type CallSubscriberType = (state: StateType) => void
 
 export type ContactType = {
   id: number
@@ -13,6 +13,11 @@ export type DialogItemType = {
 
 export type DialogType = {
   [key: string]: DialogItemType[],
+}
+
+export type ActionType = {
+  type: string
+  [key: string]: string | undefined
 }
 
 export type PostType = {
@@ -34,243 +39,208 @@ export type StateType = {
   }
 }
 
-const user = {id: 0, name:'Fluffy Gangster'}
+export type StoreType = {
+  _callSubscriber: (state: StateType) => void,
+  user: { id: number, name: string },
+  messageContacts: ContactType[],
+  _state: {
+    profilePage:{
+      currentText: string
+      posts: PostType[]
+    },
+    dialogsPage: {
+      messageContacts: ContactType[],
+      currentMessageText: string
+      dialogs: DialogType
+    }
+  }
+  getState: () => void,
+  addMessageToDialog: () => void
+  addPost: () => void
+  updateNewPostText: (text: string) => void
+  updateNewMessageText: (text: string) => void
+}
 
-const messageContacts: ContactType[] = [
+const messageContacts = [
   /* {id: 0, name:'Fluffy Gangster'}, */
-  {id: 1, name:'Missis Marple'},
-  {id: 2, name:'Luna'},
-  {id: 3, name:'Toby'},
-  {id: 4, name:'Cleo'},
-  {id: 5, name:'Choupette'},
-  {id: 6, name:'Pumpkine'},
+  { id: 1, name: 'Missis Marple' },
+  { id: 2, name: 'Luna' },
+  { id: 3, name: 'Toby' },
+  { id: 4, name: 'Cleo' },
+  { id: 5, name: 'Choupette' },
+  { id: 6, name: 'Pumpkine' },
 ]
 
-export const state: StateType = {
-  profilePage: {
-    currentText: '',
-    posts: [
-      {
-        id: Date.now() * Math.random(),
-        name:  messageContacts[0].name,
-        message: `Paws up, it's time for another purr-fect day!`,
-        likes: 21
-      },
-      {
-        id: Date.now() * Math.random(),
-        name:  messageContacts[0].name,
-        message: `Just caught a toy mouse 🐭 and feeling like a true hunter! 😼`,
-        likes: 7
-      },
-      {
-        id: Date.now() * Math.random(),
-        name:  messageContacts[0].name,
-        message: `Is it dinner time yet? I'm feline pretty hungry. 🍽️`,
-        likes: 12
-      },
-    ]
-  },
-  dialogsPage: {
-    messageContacts: messageContacts,
-    currentMessageText: '',
-    dialogs: {
-      [messageContacts[0].id]: [
+const user =  { id: 0, name: 'Fluffy Gangster' }
+
+export let store = {
+  user: user,
+  messageContacts: messageContacts,
+  _state: {
+    profilePage: {
+      currentText: '',
+      posts: [
         {
-          id: Number(messageContacts[0].id + 1),
+          id: Date.now() * Math.random(),
+          name: messageContacts[0].name,
+          message: `Paws up, it's time for another purr-fect day!`,
+          likes: 21
+        },
+        {
+          id: Date.now() * Math.random(),
           name:  messageContacts[0].name,
-          message: `Hi, how's it going today?`,
+          message: `Just caught a toy mouse 🐭 and feeling like a true hunter! 😼`,
+          likes: 7
         },
         {
-          id: 12,
-          name:  user.name,
-          message: ` Hey there! Just napping as usual. You?`,
-        },
-        {
-          id: 13,
+          id: Date.now() * Math.random(),
           name:  messageContacts[0].name,
-          message: `Same here, napping is our superpower. 😴`,
-        },
-        {
-          id: 14,
-          name:  user.name,
-          message: `Absolutely! But don't forget the occasional playtime.`,
-        },
-        {
-          id: 15,
-          name:  messageContacts[0].name,
-          message: `You're right, chasing feather toys is a must! 🐾`,
-        },
-        {
-          id: 16,
-          name:  messageContacts[0].name,
-          message: `Need to rest`,
-        },
-      ],
-      [messageContacts[1].id]: [
-        {
-          id: 21,
-          name:  messageContacts[1].name,
-          message: `Hey there!`,
-        },
-        {
-          id: 22,
-          name:  user.name,
-          message: `Meow! How are you doing?`,
-        },
-        {
-          id: 23,
-          name:  messageContacts[1].name,
-          message: `I'm good, thanks! How about you?`,
-        },
-        {
-          id: 24,
-          name:  user.name,
-          message: `Purr purr... Just enjoying the day!`,
+          message: `Is it dinner time yet? I'm feline pretty hungry. 🍽️`,
+          likes: 12
         },
       ]
     },
+    dialogsPage: {
+      messageContacts: messageContacts,
+      currentMessageText: '',
+      dialogs: {
+        [messageContacts[0].id]: [
+          {
+            id: Number(messageContacts[0].id + 1),
+            name:  messageContacts[0].name,
+            message: `Hi, how's it going today?`,
+          },
+          {
+            id: 12,
+            name:  user.name,
+            message: ` Hey there! Just napping as usual. You?`,
+          },
+          {
+            id: 13,
+            name:  messageContacts[0].name,
+            message: `Same here, napping is our superpower. 😴`,
+          },
+          {
+            id: 14,
+            name:  user.name,
+            message: `Absolutely! But don't forget the occasional playtime.`,
+          },
+          {
+            id: 15,
+            name:  messageContacts[0].name,
+            message: `You're right, chasing feather toys is a must! 🐾`,
+          },
+          {
+            id: 16,
+            name:  messageContacts[0].name,
+            message: `Need to rest`,
+          },
+        ],
+        [messageContacts[1].id]: [
+          {
+            id: 21,
+            name:  messageContacts[1].name,
+            message: `Hey there!`,
+          },
+          {
+            id: 22,
+            name:  user.name,
+            message: `Meow! How are you doing?`,
+          },
+          {
+            id: 23,
+            name:  messageContacts[1].name,
+            message: `I'm good, thanks! How about you?`,
+          },
+          {
+            id: 24,
+            name:  user.name,
+            message: `Purr purr... Just enjoying the day!`,
+          },
+        ]
+      },
+    }
+  },
+  _callSubscriber(state: StateType) {
+    console.log('Render')
+  },
+
+  getState() {
+    return this._state;
+  },
+  subscribe(observer: CallSubscriberType) {
+    this._callSubscriber = observer; //observer pattern
+  },
+
+  addMessageToDialog() {
+    const newMessage = {
+      id: messageContacts[0].id + Math.random(),
+      name: user.name,
+      message: this._state.dialogsPage.currentMessageText
+    }
+
+    //неправильный вариант - мутабельный
+
+    this._state.dialogsPage.dialogs[messageContacts[0].id].push(newMessage);
+    this._state.dialogsPage.currentMessageText = '';
+    this._callSubscriber(this._state);
+  },
+
+  addPost() {
+    const newPost = {
+      id: Date.now() * Math.random(),
+      name: messageContacts[0].name,
+      message: this._state.profilePage.currentText,
+      likes: 0
+    }
+    //неправильный вариант - мутабельный
+    this._state.profilePage.posts.unshift(newPost);
+    this._state.profilePage.currentText = '';
+    this._callSubscriber(this._state);
+  },
+
+  updateNewPostText(newText: string) {
+    this._state.profilePage.currentText = newText;
+    this._callSubscriber(this._state);
+  },
+
+  updateNewMessageText(newText: string) {
+    this._state.dialogsPage.currentMessageText = newText;
+    this._callSubscriber(this._state);
+  },
+  dispatch(action: ActionType) {
+    if(action.type === 'ADD-MESSAGE-TO-DIALOG'){
+      const newMessage = {
+        id: messageContacts[0].id + Math.random(),
+        name: user.name,
+        message: this._state.dialogsPage.currentMessageText
+      }
+
+      //неправильный вариант - мутабельный
+      this._state.dialogsPage.dialogs[messageContacts[0].id].push(newMessage);
+      this._state.dialogsPage.currentMessageText = '';
+      this._callSubscriber(this._state);
+
+    } else if(action.type === 'ADD-POST'){
+      const newPost = {
+        id: Date.now() * Math.random(),
+        name: messageContacts[0].name,
+        message: this._state.profilePage.currentText,
+        likes: 0
+      }
+      //неправильный вариант - мутабельный
+      this._state.profilePage.posts.unshift(newPost);
+      this._state.profilePage.currentText = '';
+      this._callSubscriber(this._state);
+
+    } else if(action.type === 'UPDATE-NEW-POST-TEXT') {
+      this._state.profilePage.currentText = newText;
+      this._callSubscriber(this._state);
+    } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+      this._state.dialogsPage.currentMessageText = newText;
+      this._callSubscriber(this._state);
+    }
+
   }
 }
-
-export const addMessageToDialog = () => {
-
-  const newMessage = {
-    id: messageContacts[0].id + Math.random(),
-    name: user.name,
-    message: state.dialogsPage.currentMessageText
-  }
-
-
-  //коррекиный вариант - иммутабельный
-
-  /* const updatedDialogs = {...state,
-                            dialogsPage: {...state.dialogsPage,
-                              dialogs: {...state.dialogsPage.dialogs,
-                                [messageContacts[0].id]: [...state.dialogsPage.dialogs[messageContacts[0].id], newMessage]}}}
-    console.log(updatedDialogs)
-  return updatedDialogs; */
-
-  //неправильный вариант - мутабельный
-
-  state.dialogsPage.dialogs[messageContacts[0].id].push(newMessage);
-  state.dialogsPage.currentMessageText = '';
-  console.log(state)
-  rerenderEntireTree(state)
-
-}
-
-export const addPost = () => {
-  const newPost = {
-    id: Date.now() * Math.random(),
-    name: messageContacts[0].name,
-    message: state.profilePage.currentText,
-    likes: 0
-  }
-  //неправильный вариант - мутабельный
-  state.profilePage.posts.unshift(newPost);
-  state.profilePage.currentText = '';
-  rerenderEntireTree(state)
-}
-
-export const updateNewPostText = (newText: string) => {
-  state.profilePage.currentText = newText;
-  rerenderEntireTree(state)
-}
-
-export const updateNewMessageText = (newText: string) => {
-  state.dialogsPage.currentMessageText = newText;
-  rerenderEntireTree(state)
-}
-
-
-
-/* const messageContacts: ContactType[] = [
-  {id: 0, name:'Pumpkine'},
-  {id: 1, name:'Missis Marple'},
-  {id: 2, name:'Luna'},
-  {id: 3, name:'Toby'},
-  {id: 4, name:'Cleo'},
-  {id: 5, name:'Choupette'},
-] */
-
-
-/* const dialogs: DialogType = {
-  [messageContacts[0].id]: [
-    {
-      id: Number(messageContacts[0].id + 1),
-      name:  'Pumpkine',
-      message: `Hi, how's it going today?`,
-    },
-    {
-      id: 12,
-      name:  'Fluffy Gangster',
-      message: ` Hey there! Just napping as usual. You?`,
-    },
-    {
-      id: 13,
-      name:  'Pumpkine',
-      message: `Same here, napping is our superpower. 😴`,
-    },
-    {
-      id: 14,
-      name:  'Fluffy Gangster',
-      message: `Absolutely! But don't forget the occasional playtime.`,
-    },
-    {
-      id: 15,
-      name:  'Pumpkine',
-      message: `You're right, chasing feather toys is a must! 🐾`,
-    },
-    {
-      id: 16,
-      name:  'Pumpkine',
-      message: `Need to rest`,
-    },
-  ],
-  [messageContacts[1].id]: [
-    {
-      id: 21,
-      name:  'Missis Marple',
-      message: `Hey there!`,
-    },
-    {
-      id: 22,
-      name:  'Fluffy Gangster',
-      message: `Meow! How are you doing?`,
-    },
-    {
-      id: 23,
-      name:  'Missis Marple',
-      message: `I'm good, thanks! How about you?`,
-    },
-    {
-      id: 24,
-      name:  'Fluffy Gangster',
-      message: `Purr purr... Just enjoying the day!`,
-    },
-
-  ]
-} */
-
-
-/* export const posts: PostType[] = [
-  {
-    id: Date.now() * Math.random(),
-    name:  'Fluffy Gangster',
-    message: `Paws up, it's time for another purr-fect day!`,
-    likes: 21
-  },
-  {
-    id: Date.now() * Math.random(),
-    name:  'Fluffy Gangster',
-    message: `Just caught a toy mouse 🐭 and feeling like a true hunter! 😼`,
-    likes: 7
-  },
-  {
-    id: Date.now() * Math.random(),
-    name:  'Fluffy Gangster',
-    message: `Is it dinner time yet? I'm feline pretty hungry. 🍽️`,
-    likes: 12
-  },
-] */
 
