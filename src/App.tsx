@@ -9,7 +9,7 @@ import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { ContactType, DialogType, PostType, StateType, StoreType } from './redux/state';
+import { ActionType, ContactType, DialogType, PostType, StateType, StoreType } from './redux/state';
 
 
 type AppPropsType = {
@@ -28,7 +28,7 @@ type AppPropsType = {
   addPost: () => void
   updateNewPostText: (text: string) => void
   updateNewMessageText: (text: string) => void */
-  dispatch: () => void
+  dispatch: (action: ActionType) => void
 }
 
 
@@ -61,9 +61,10 @@ const App: React.FC<AppPropsType> = (props) => { //поменять потом �
         <Route path='/settings' component={Settings}/>
         <Route exact path='/' render={() => <Profile
                                                     posts={props.state.profilePage.posts}
-                                                    addPost={props.addPost}
                                                     currentText={props.state.profilePage.currentText}
-                                                    updateNewPostText={props.updateNewPostText}
+                                                    dispatch={props.dispatch}
+                                                    /* updateNewPostText={props.updateNewPostText}
+                                                    addPost={props.addPost} */
                                                     />}/>
       </div>
     </BrowserRouter>

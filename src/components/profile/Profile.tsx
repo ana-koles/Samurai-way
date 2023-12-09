@@ -1,13 +1,14 @@
 import React from 'react';
 import s from './Profile.module.css'
 import { PostSection } from './postSection/PostSection';
-import { PostType } from '../../redux/state';
+import { ActionType, PostType } from '../../redux/state';
 
 type ProfilePropsType = {
   posts: PostType[]
-  addPost: () => void
   currentText: string
-  updateNewPostText: (text: string) => void
+  /* updateNewPostText: (text: string) => void
+  addPost: () => void */
+  dispatch: (action: ActionType) => void
 }
 
 
@@ -31,9 +32,10 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
 
         <PostSection
             posts={props.posts}
-            addPost={props.addPost}
             currentText={props.currentText}
-            updateNewPostText={props.updateNewPostText}
+            dispatch={props.dispatch}
+            /* updateNewPostText={props.updateNewPostText}
+            addPost={props.addPost} */
 
             />
     </div>

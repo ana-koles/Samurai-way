@@ -1,16 +1,19 @@
 import React from 'react';
 import s from './PostSection.module.css'
 import { Post } from './posts/Post';
-import { PostType } from '../../../redux/state';
+import { ActionType, PostType, addPostAC, updateNewPostTextAC } from '../../../redux/state';
 import { Button } from '../../button/Button';
 
 
 type PostSectionPropsType = {
   posts: PostType[]
-  addPost: () => void
   currentText: string
-  updateNewPostText: (text: string) => void
+  /* addPost: () => void
+  updateNewPostText: (text: string) => void */
+
+  dispatch: (action: ActionType) => void
 }
+
 
 export const PostSection: React.FC<PostSectionPropsType> = (props) => {
 
@@ -29,13 +32,17 @@ export const PostSection: React.FC<PostSectionPropsType> = (props) => {
 
   const onClickHandler = () => {
     debugger;
-    props.addPost(); //здесь addPost вызывается не от объекта store, а от объекта props
+    /* props.addPost(); */ //здесь addPost вызывается не от объекта store, а от объекта props
+    /* props.dispatch({type: 'ADD-POST'}) */
+    props.dispatch(addPostAC());
     console.log('click')
   }
 
   const onChangeHandler = () => {
     if (newPostElement.current) {
-      props.updateNewPostText(newPostElement.current.value);
+      /* props.updateNewPostText(newPostElement.current.value); */
+      /* props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: newPostElement.current.value}) */
+      props.dispatch(updateNewPostTextAC(newPostElement.current.value))
       console.log('change')
     }
   }

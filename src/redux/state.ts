@@ -17,7 +17,8 @@ export type DialogType = {
 
 export type ActionType = {
   type: string
-  [key: string]: string | undefined
+  newText?: string
+  /* [key: string]: string | undefined */
 }
 
 export type PostType = {
@@ -234,13 +235,23 @@ export let store = {
       this._callSubscriber(this._state);
 
     } else if(action.type === 'UPDATE-NEW-POST-TEXT') {
-      this._state.profilePage.currentText = newText;
-      this._callSubscriber(this._state);
+      if (action.newText) {
+        this._state.profilePage.currentText = action.newText;
+        this._callSubscriber(this._state);
+      }
+
     } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
-      this._state.dialogsPage.currentMessageText = newText;
-      this._callSubscriber(this._state);
+      if (action.newText) {
+        this._state.dialogsPage.currentMessageText = action.newText;
+        this._callSubscriber(this._state);
+      }
+
     }
 
   }
 }
 
+export const updateNewMessageTextAC = (text: string) => ({type: 'UPDATE-NEW-MESSAGE-TEXT', newText: text })
+export const addMessageToDialogAC = () => ({type: 'ADD-MESSAGE-TO-DIALOG'})
+export const addPostAC = () => ({type: 'ADD-POST'})
+export const updateNewPostTextAC = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', newText: text})

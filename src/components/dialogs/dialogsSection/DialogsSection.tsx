@@ -2,15 +2,16 @@ import React, { ChangeEvent, useState } from 'react';
 import s from './DialogsSection.module.css'
 import { MyDialog } from './myDialog/MyDialog';
 import { DialogFriend } from './dialogFriend/DialogFriend';
-import { DialogItemType, StateType } from '../../../redux/state';
+import { ActionType, DialogItemType, StateType, addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/state';
 import { Button } from '../../button/Button';
 
 
 type DialogsSectionPropsType = {
   dialog: DialogItemType[]
   currentMessageText: string
-  addMessageToDialog: () => void
-  updateNewMessageText: (text: string) => void
+  /* addMessageToDialog: () => void
+  updateNewMessageText: (text: string) => void */
+  dispatch: (action: ActionType) => void
 }
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
@@ -25,14 +26,17 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
 
   const onChangeHandler = () => {
     if (newDialogMessage.current) {
-      props.updateNewMessageText(newDialogMessage.current.value);
+      /* props.updateNewMessageText(newDialogMessage.current.value); */
+      /* props.dispatch({type: 'UPDATE-NEW-MESSAGE-TEXT', newText: newDialogMessage.current.value }) */
+      props.dispatch(updateNewMessageTextAC(newDialogMessage.current.value))
       console.log('change');
     }
   }
 
   const addMessageToDialog = () => {
-    props.addMessageToDialog();
-
+    /* props.addMessageToDialog(); */
+    /* props.dispatch({type: 'ADD-MESSAGE-TO-DIALOG'}) */
+    props.dispatch(addMessageToDialogAC())
   }
 
   return (
