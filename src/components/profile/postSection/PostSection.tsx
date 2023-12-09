@@ -1,27 +1,21 @@
 import React from 'react';
 import s from './PostSection.module.css'
 import { Post } from './posts/Post';
-import { ActionType, PostType, addPostAC, updateNewPostTextAC } from '../../../redux/state';
+import { ActionType,PostType, UserType} from '../../../redux/state';
+
 import { Button } from '../../button/Button';
+import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer';
 
 
 type PostSectionPropsType = {
   posts: PostType[]
   currentText: string
-  /* addPost: () => void
-  updateNewPostText: (text: string) => void */
-
   dispatch: (action: ActionType) => void
+  user: UserType
 }
 
 
 export const PostSection: React.FC<PostSectionPropsType> = (props) => {
-
-  /* const [postText, setPostText] = useState('');
-
-  const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setPostText(e.currentTarget.value);
-  } */
 
   //с помощью React.createRef
 /*   переменная newPostText будет содержать ссылку на DOM-узел <textarea>, и вы можете
@@ -31,19 +25,18 @@ export const PostSection: React.FC<PostSectionPropsType> = (props) => {
   const newPostElement: React.LegacyRef<HTMLTextAreaElement> = React.createRef();
 
   const onClickHandler = () => {
-    debugger;
     /* props.addPost(); */ //здесь addPost вызывается не от объекта store, а от объекта props
     /* props.dispatch({type: 'ADD-POST'}) */
-    props.dispatch(addPostAC());
-    console.log('click')
+    props.dispatch(addPostAC(props.user.name));
   }
 
   const onChangeHandler = () => {
+
     if (newPostElement.current) {
+      console.log(newPostElement.current.value)
       /* props.updateNewPostText(newPostElement.current.value); */
       /* props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: newPostElement.current.value}) */
       props.dispatch(updateNewPostTextAC(newPostElement.current.value))
-      console.log('change')
     }
   }
 

@@ -2,18 +2,14 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import { ChatMenu } from './chatMenu/ChatMenu';
 import { DialogsSection } from './dialogsSection/DialogsSection';
-import { ActionType, ContactType, DialogType, PostType, StateType } from '../../redux/state';
+import { ActionType, ContactType, DialogPageType, DialogType, MessageContactsType, PostType, StateType, UserType } from '../../redux/state';
 
 
 type DialogsPropsType = {
-  dialogsData: {
-    messageContacts: ContactType[],
-    dialogs: DialogType
-    currentMessageText: string
-  },
-  /* addMessageToDialog: () => void
-  updateNewMessageText: (text: string) => void */
+  dialogsData: DialogPageType,
   dispatch: (action: ActionType) => void
+  messageContacts: MessageContactsType
+  user: UserType
 
 }
 
@@ -25,11 +21,11 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
       <DialogsSection
         dialog={dialogWithContact}
         currentMessageText={props.dialogsData.currentMessageText}
-        /* updateNewMessageText={props.updateNewMessageText}
-        addMessageToDialog={props.addMessageToDialog} */
         dispatch={props.dispatch}
+        user={props.user}
+        messageContacts={props.messageContacts}
         />
-      <ChatMenu messageContacts={props.dialogsData.messageContacts} />
+      <ChatMenu messageContacts={props.messageContacts} />
 
     </div>
   );

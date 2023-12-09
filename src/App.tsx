@@ -13,17 +13,8 @@ import { ActionType, ContactType, DialogType, PostType, StateType, StoreType } f
 
 
 type AppPropsType = {
-  state: {
-    profilePage:{
-      currentText: string
-      posts: PostType[]
-    },
-    dialogsPage: {
-      messageContacts: ContactType[],
-      currentMessageText: string
-      dialogs: DialogType
-    }
-  },
+  store: StoreType
+  state: StateType
   /* addMessageToDialog: () => void;
   addPost: () => void
   updateNewPostText: (text: string) => void
@@ -45,12 +36,15 @@ const App: React.FC<AppPropsType> = (props) => { //поменять потом �
                                                     posts={props.state.profilePage.posts}
                                                     currentText={props.state.profilePage.currentText}
                                                     dispatch={props.dispatch}
+                                                    user={props.store.user}
                                                     /* updateNewPostText={props.updateNewPostText}
                                                     addPost={props.addPost} */
                                                     />}/>
         <Route path={'/messages'} render={() => <Dialogs
                                                     dialogsData={props.state.dialogsPage}
                                                     dispatch={props.dispatch}
+                                                    user={props.store.user}
+                                                    messageContacts={props.store.messageContacts}
                                                     /* addMessageToDialog={props.addMessageToDialog}
                                                     updateNewMessageText={props.updateNewMessageText} */
 
@@ -63,6 +57,7 @@ const App: React.FC<AppPropsType> = (props) => { //поменять потом �
                                                     posts={props.state.profilePage.posts}
                                                     currentText={props.state.profilePage.currentText}
                                                     dispatch={props.dispatch}
+                                                    user={props.store.user}
                                                     /* updateNewPostText={props.updateNewPostText}
                                                     addPost={props.addPost} */
                                                     />}/>

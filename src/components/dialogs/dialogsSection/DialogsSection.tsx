@@ -2,21 +2,21 @@ import React, { ChangeEvent, useState } from 'react';
 import s from './DialogsSection.module.css'
 import { MyDialog } from './myDialog/MyDialog';
 import { DialogFriend } from './dialogFriend/DialogFriend';
-import { ActionType, DialogItemType, StateType, addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/state';
+import { ActionType, DialogItemType, MessageContactsType, UserType } from '../../../redux/state';
 import { Button } from '../../button/Button';
+import { addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/dialogs-reducer';
 
 
 type DialogsSectionPropsType = {
   dialog: DialogItemType[]
   currentMessageText: string
-  /* addMessageToDialog: () => void
-  updateNewMessageText: (text: string) => void */
   dispatch: (action: ActionType) => void
+  user: UserType
+  messageContacts: MessageContactsType
+
 }
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
-  debugger;
-
     //с помощью React.createRef
 /*   переменная newPostText будет содержать ссылку на DOM-узел <textarea>, и вы можете
 использовать эту ссылку в коде для взаимодействия с этим элементом, таким как получение
@@ -36,7 +36,7 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
   const addMessageToDialog = () => {
     /* props.addMessageToDialog(); */
     /* props.dispatch({type: 'ADD-MESSAGE-TO-DIALOG'}) */
-    props.dispatch(addMessageToDialogAC())
+    props.dispatch(addMessageToDialogAC(props.messageContacts[0].id, props.user.name))
   }
 
   return (

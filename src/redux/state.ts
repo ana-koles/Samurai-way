@@ -1,3 +1,8 @@
+import { dialogsReducer } from "./dialogs-reducer"
+import { messageContactsReducer } from "./message-contacts-reducer"
+import { profileReducer } from "./profile-reducer"
+import { userReducer } from "./user-reducer"
+
 export type CallSubscriberType = (state: StateType) => void
 
 export type ContactType = {
@@ -11,15 +16,19 @@ export type DialogItemType = {
   message: string
 }
 
+export type MessageContactsType = Array<{id: number, name: string}>
+export type UserType = {id: number, name: string}
+
 export type DialogType = {
   [key: string]: DialogItemType[],
 }
 
-export type ActionType = {
-  type: string
-  newText?: string
-  /* [key: string]: string | undefined */
+export type DialogPageType = {
+  currentMessageText: string
+  dialogs: DialogType
 }
+
+export type ActionType = any
 
 export type PostType = {
   id: number
@@ -28,13 +37,14 @@ export type PostType = {
   likes: number
 }
 
+export type ProfilePageType = {
+  currentText: string
+  posts: PostType[]
+}
+
 export type StateType = {
-  profilePage:{
-    currentText: string
-    posts: PostType[]
-  },
+  profilePage: ProfilePageType ,
   dialogsPage: {
-    messageContacts: ContactType[]
     currentMessageText: string
     dialogs: DialogType
   }
@@ -42,7 +52,7 @@ export type StateType = {
 
 export type StoreType = {
   _callSubscriber: (state: StateType) => void,
-  user: { id: number, name: string },
+  user: UserType,
   messageContacts: ContactType[],
   _state: {
     profilePage:{
@@ -50,7 +60,6 @@ export type StoreType = {
       posts: PostType[]
     },
     dialogsPage: {
-      messageContacts: ContactType[],
       currentMessageText: string
       dialogs: DialogType
     }
@@ -62,7 +71,7 @@ export type StoreType = {
   updateNewMessageText: (text: string) => void
 }
 
-const messageContacts = [
+const messageContacts: MessageContactsType = [
   /* {id: 0, name:'Fluffy Gangster'}, */
   { id: 1, name: 'Missis Marple' },
   { id: 2, name: 'Luna' },
@@ -72,7 +81,8 @@ const messageContacts = [
   { id: 6, name: 'Pumpkine' },
 ]
 
-const user =  { id: 0, name: 'Fluffy Gangster' }
+
+const user: UserType =  { id: 0, name: 'Fluffy Gangster' }
 
 export let store = {
   user: user,
@@ -102,7 +112,6 @@ export let store = {
       ]
     },
     dialogsPage: {
-      messageContacts: messageContacts,
       currentMessageText: '',
       dialogs: {
         [messageContacts[0].id]: [
@@ -210,6 +219,14 @@ export let store = {
     this._callSubscriber(this._state);
   },
   dispatch(action: ActionType) {
+
+    profileReducer(this._state.profilePage, action);
+    dialogsReducer(this._state.dialogsPage, action);
+    userReducer(this.user, action);
+    messageContactsReducer(this.messageContacts, action);
+    this._callSubscriber(this._state);
+
+/*
     if(action.type === 'ADD-MESSAGE-TO-DIALOG'){
       const newMessage = {
         id: messageContacts[0].id + Math.random(),
@@ -217,7 +234,7 @@ export let store = {
         message: this._state.dialogsPage.currentMessageText
       }
 
-      //неправильный вариант - мутабельный
+
       this._state.dialogsPage.dialogs[messageContacts[0].id].push(newMessage);
       this._state.dialogsPage.currentMessageText = '';
       this._callSubscriber(this._state);
@@ -225,11 +242,11 @@ export let store = {
     } else if(action.type === 'ADD-POST'){
       const newPost = {
         id: Date.now() * Math.random(),
-        name: messageContacts[0].name,
+        name: user.name,
         message: this._state.profilePage.currentText,
         likes: 0
       }
-      //неправильный вариант - мутабельный
+
       this._state.profilePage.posts.unshift(newPost);
       this._state.profilePage.currentText = '';
       this._callSubscriber(this._state);
@@ -245,13 +262,7 @@ export let store = {
         this._state.dialogsPage.currentMessageText = action.newText;
         this._callSubscriber(this._state);
       }
-
-    }
+    } */
 
   }
 }
-
-export const updateNewMessageTextAC = (text: string) => ({type: 'UPDATE-NEW-MESSAGE-TEXT', newText: text })
-export const addMessageToDialogAC = () => ({type: 'ADD-MESSAGE-TO-DIALOG'})
-export const addPostAC = () => ({type: 'ADD-POST'})
-export const updateNewPostTextAC = (text: string) => ({type: 'UPDATE-NEW-POST-TEXT', newText: text})

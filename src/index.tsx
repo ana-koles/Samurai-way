@@ -11,6 +11,7 @@ export const rerenderEntireTree = (stateNew: StateType) => {
   ReactDOM.render(
     <App
         state={stateNew}
+        store={store}
         /* addMessageToDialog={store.addMessageToDialog.bind(store)} */
         dispatch={store.dispatch.bind(store)}
        /*  addPost={store.addPost.bind(store)}
