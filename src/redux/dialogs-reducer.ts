@@ -80,16 +80,14 @@ let dialogsInitialState:DialogPageType = {
   },
 }
 
-export const dialogsReducer = (state: DialogPageType = dialogsInitialState, action: DialogReducerActionType) => {
+export const dialogsReducer = (state: DialogPageType = dialogsInitialState, action: DialogReducerActionType): DialogPageType => {
   switch(action.type) {
     case ADD_MESSAGE_TO_DIALOG:
-      debugger;
       const newMessage = {
         id: action.userId + 1 + Math.random(),
         name: 'Fluffy Gangster',
         message: state.currentMessageText
       }
-      console.log(state.dialogs[action.userId]);
       state.dialogs[action.userId + 1].push(newMessage);
       state.currentMessageText = '';
       return state;

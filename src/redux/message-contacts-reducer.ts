@@ -10,6 +10,6 @@ let messagesContactsInitialState: MessageContactsType = [
   { id: 6, name: 'Pumpkine' },
 ];
 
-export const messageContactsReducer = (state: MessageContactsType = messagesContactsInitialState, action: any) => {
+export const messageContactsReducer = (state: MessageContactsType = messagesContactsInitialState, action: any): MessageContactsType => {
   return state;
 }

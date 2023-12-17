@@ -13,17 +13,10 @@ import { ActionType, ContactType, DialogType, PostType, StateType, StoreType } f
 
 
 type AppPropsType = {
-  store: any
-  state: StateType
-  /* addMessageToDialog: () => void;
-  addPost: () => void
-  updateNewPostText: (text: string) => void
-  updateNewMessageText: (text: string) => void */
-  dispatch: (action: ActionType) => void
 }
 
 
-const App: React.FC<AppPropsType> = (props) => { //поменять потом типы
+const App: React.FC<AppPropsType> = (props) => { 
 
   return (
     <BrowserRouter>
@@ -32,37 +25,13 @@ const App: React.FC<AppPropsType> = (props) => { //поменять потом �
         <NavBar/>
 
         {/* render если передаем тег и пропсы, component - если ссылку на компоненту */}
-        <Route path='/profile' render={() => <Profile store={props.store}
-
-                                                    /* posts={props.state.profilePage.posts}
-                                                    currentText={props.state.profilePage.currentText}
-                                                    dispatch={props.dispatch}
-                                                    user={props.store.user} */
-                                                    /* updateNewPostText={props.updateNewPostText}
-                                                    addPost={props.addPost} */
-                                                    />}/>
-        <Route path={'/messages'} render={() => <Dialogs store={props.store}
-                                                    /* dialogsData={props.state.dialogsPage}
-                                                    dispatch={props.dispatch}
-                                                    user={props.store.user}
-                                                    messageContacts={props.state.messageContacts} */
-                                                    /* addMessageToDialog={props.addMessageToDialog}
-                                                    updateNewMessageText={props.updateNewMessageText} */
-
-                                                    />}/>
+        <Route path='/profile' render={() => <Profile /* store={props.store} *//>}/>
+        <Route path={'/messages'} render={() => <Dialogs /* store={props.store} */ />}/>
 
         <Route path='/news' component={News}/>
         <Route path='/music' component={Music}/>
         <Route path='/settings' component={Settings}/>
-        <Route exact path='/' render={() => <Profile
-                                                    /* posts={props.state.profilePage.posts}
-                                                    currentText={props.state.profilePage.currentText}
-                                                    dispatch={props.dispatch}
-                                                    user={props.store.user} */
-                                                    store={props.store}
-                                                    /* updateNewPostText={props.updateNewPostText}
-                                                    addPost={props.addPost} */
-                                                    />}/>
+        <Route exact path='/' render={() => <Profile/>}/>
       </div>
     </BrowserRouter>
 

@@ -12,11 +12,6 @@ type DialogsSectionPropsType = {
   currentMessageText: string
   addMessageToDialog: (userId: number, userName: string) => void
   updateNewMessageText: (newText: string) => void
-/*   dialog: DialogItemType[]
-  currentMessageText: string
-  dispatch: (action: ActionType) => void
-  user: UserType
-  messageContacts: MessageContactsType */
 }
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {

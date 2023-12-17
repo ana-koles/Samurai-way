@@ -3,9 +3,10 @@ import s from './Profile.module.css'
 import { PostSection } from './postSection/PostSection';
 import { ActionType, MessageContactsType, PostType, UserType } from '../../redux/store';
 import { PostSectionContainer } from './postSection/PostSectionContainer';
+import { connect } from 'react-redux';
 
 type ProfilePropsType = {
-  store: any
+ /*  store: any */
   /* posts: PostType[]
   currentText: string */
   /* updateNewPostText: (text: string) => void
@@ -41,7 +42,8 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
             updateNewPostText={props.updateNewPostText}
             addPost={props.addPost} */}
 
-            <PostSectionContainer store={props.store}/>
+            <PostSectionContainer /* store={props.store} *//>
     </div>
   );
 };
+

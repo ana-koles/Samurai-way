@@ -2,13 +2,13 @@ import React from 'react';
 import s from './ChatMenu.module.css'
 import { ChatMenuItem } from './chatMenuItem/ChatMenuItem';
 import { ContactType } from '../../../redux/store';
-
+import { AppRootStateType } from '../../../redux/redux-store';
+import { connect } from 'react-redux';
 
 
 type ChatMenyPropsType = {
   messageContacts: ContactType[]
 }
-
 
 export const ChatMenu: React.FC<ChatMenyPropsType>= (props) => {
 
@@ -21,8 +21,6 @@ export const ChatMenu: React.FC<ChatMenyPropsType>= (props) => {
           {props.messageContacts.map(contact => {
             return <ChatMenuItem name={contact.name} id={contact.id}/>
           })}
-
-         {/*  <li><NavLink to='/messages/6' className={`${s.chatItem} ${s.active}`}>Choupette</NavLink></li> */}
         </ul>
 
       </div>
@@ -31,3 +29,10 @@ export const ChatMenu: React.FC<ChatMenyPropsType>= (props) => {
   );
 };
 
+const mapStateToProps = (state: AppRootStateType) => {
+  return {
+    messageContacts: state.messageContacts,
+  };
+};
+
+export default connect(mapStateToProps)(ChatMenu);

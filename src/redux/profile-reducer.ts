@@ -44,7 +44,7 @@ let profileInitialState: ProfilePageType = {
   ],
 }
 
-export const profileReducer = (state: ProfilePageType = profileInitialState , action: ProfileReducerActionType) => {
+export const profileReducer = (state: ProfilePageType = profileInitialState , action: ProfileReducerActionType): ProfilePageType => {
 
   switch(action.type) {
     case ADD_POST:

@@ -1,11 +1,9 @@
 import React from 'react';
 import s from './PostSection.module.css'
-import { Post } from './posts/Post';
-import { ActionType,PostType, UserType} from '../../../redux/store';
-
-import { Button } from '../../button/Button';
 import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer';
 import { PostSection } from './PostSection';
+import { connect } from 'react-redux';
+import { AppRootStateType } from '../../../redux/redux-store';
 
 /* type PostSectionPropsType = {
   posts: PostType[]
@@ -13,11 +11,11 @@ import { PostSection } from './PostSection';
   dispatch: (action: ActionType) => void
   user: UserType
 } */
-type PostSectionPropsType = {
+/* type PostSectionPropsType = {
   store: any
-}
+} */
 
-export const PostSectionContainer: React.FC<PostSectionPropsType> = (props) => {
+/* export const PostSectionContainer: React.FC<PostSectionPropsType> = (props) => {
 
   let state = props.store.getState();
 
@@ -38,5 +36,24 @@ export const PostSectionContainer: React.FC<PostSectionPropsType> = (props) => {
             updateNewPostText={updateNewPostText}
       />
   );
-};
+}; */
 
+const mapStateToProps = (state: AppRootStateType) => {
+  return {
+    posts: state.profilePage.posts,
+    currentText: state.profilePage.currentText
+  }
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    addPost: (name: string) => {
+      dispatch(addPostAC(name))
+    },
+    updateNewPostText: (text: string) => {
+      dispatch(updateNewPostTextAC(text))
+    }
+  }
+}
+
+export const PostSectionContainer = connect(mapStateToProps, mapDispatchToProps)(PostSection)
