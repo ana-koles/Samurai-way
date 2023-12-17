@@ -9,11 +9,11 @@ import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { ActionType, ContactType, DialogType, PostType, StateType, StoreType } from './redux/state';
+import { ActionType, ContactType, DialogType, PostType, StateType, StoreType } from './redux/store';
 
 
 type AppPropsType = {
-  store: StoreType
+  store: any
   state: StateType
   /* addMessageToDialog: () => void;
   addPost: () => void
@@ -32,19 +32,20 @@ const App: React.FC<AppPropsType> = (props) => { //поменять потом �
         <NavBar/>
 
         {/* render если передаем тег и пропсы, component - если ссылку на компоненту */}
-        <Route path='/profile' render={() => <Profile
-                                                    posts={props.state.profilePage.posts}
+        <Route path='/profile' render={() => <Profile store={props.store}
+
+                                                    /* posts={props.state.profilePage.posts}
                                                     currentText={props.state.profilePage.currentText}
                                                     dispatch={props.dispatch}
-                                                    user={props.store.user}
+                                                    user={props.store.user} */
                                                     /* updateNewPostText={props.updateNewPostText}
                                                     addPost={props.addPost} */
                                                     />}/>
-        <Route path={'/messages'} render={() => <Dialogs
-                                                    dialogsData={props.state.dialogsPage}
+        <Route path={'/messages'} render={() => <Dialogs store={props.store}
+                                                    /* dialogsData={props.state.dialogsPage}
                                                     dispatch={props.dispatch}
                                                     user={props.store.user}
-                                                    messageContacts={props.store.messageContacts}
+                                                    messageContacts={props.state.messageContacts} */
                                                     /* addMessageToDialog={props.addMessageToDialog}
                                                     updateNewMessageText={props.updateNewMessageText} */
 
@@ -54,10 +55,11 @@ const App: React.FC<AppPropsType> = (props) => { //поменять потом �
         <Route path='/music' component={Music}/>
         <Route path='/settings' component={Settings}/>
         <Route exact path='/' render={() => <Profile
-                                                    posts={props.state.profilePage.posts}
+                                                    /* posts={props.state.profilePage.posts}
                                                     currentText={props.state.profilePage.currentText}
                                                     dispatch={props.dispatch}
-                                                    user={props.store.user}
+                                                    user={props.store.user} */
+                                                    store={props.store}
                                                     /* updateNewPostText={props.updateNewPostText}
                                                     addPost={props.addPost} */
                                                     />}/>

@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { StateType, store} from './redux/state';
+import { AppRootStateType, store } from './redux/redux-store';
 
 
 
-
-export const rerenderEntireTree = (stateNew: StateType) => {
+export const rerenderEntireTree = (stateNew: AppRootStateType) => {
   ReactDOM.render(
     <App
         state={stateNew}
@@ -25,4 +24,7 @@ export const rerenderEntireTree = (stateNew: StateType) => {
 
 rerenderEntireTree(store.getState());
 
-store.subscribe(rerenderEntireTree); //передаем rerenderEntireTree в качестве callback
+store.subscribe(() => {
+  let state = store.getState();
+  rerenderEntireTree(state);
+}); //передаем rerenderEntireTree в качестве callback

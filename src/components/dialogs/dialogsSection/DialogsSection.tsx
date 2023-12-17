@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import s from './DialogsSection.module.css'
 import { MyDialog } from './myDialog/MyDialog';
 import { DialogFriend } from './dialogFriend/DialogFriend';
-import { ActionType, DialogItemType, MessageContactsType, UserType } from '../../../redux/state';
+import { ActionType, DialogItemType, MessageContactsType, UserType } from '../../../redux/store';
 import { Button } from '../../button/Button';
 import { addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/dialogs-reducer';
 
@@ -10,10 +10,13 @@ import { addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/dia
 type DialogsSectionPropsType = {
   dialog: DialogItemType[]
   currentMessageText: string
+  addMessageToDialog: (userId: number, userName: string) => void
+  updateNewMessageText: (newText: string) => void
+/*   dialog: DialogItemType[]
+  currentMessageText: string
   dispatch: (action: ActionType) => void
   user: UserType
-  messageContacts: MessageContactsType
-
+  messageContacts: MessageContactsType */
 }
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
@@ -26,17 +29,12 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
 
   const onChangeHandler = () => {
     if (newDialogMessage.current) {
-      /* props.updateNewMessageText(newDialogMessage.current.value); */
-      /* props.dispatch({type: 'UPDATE-NEW-MESSAGE-TEXT', newText: newDialogMessage.current.value }) */
-      props.dispatch(updateNewMessageTextAC(newDialogMessage.current.value))
-      console.log('change');
+      props.updateNewMessageText(newDialogMessage.current.value)
     }
   }
 
   const addMessageToDialog = () => {
-    /* props.addMessageToDialog(); */
-    /* props.dispatch({type: 'ADD-MESSAGE-TO-DIALOG'}) */
-    props.dispatch(addMessageToDialogAC(props.messageContacts[0].id, props.user.name))
+    props.addMessageToDialog(0, "Fluffy Gangster")
   }
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './ChatMenu.module.css'
 import { ChatMenuItem } from './chatMenuItem/ChatMenuItem';
-import { ContactType } from '../../../redux/state';
+import { ContactType } from '../../../redux/store';
 
 
 

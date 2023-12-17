@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './DialogFriend.module.css'
 import photo4 from '../../../../assets/friend4.jpg'
-import { DialogItemType } from '../../../../redux/state';
+import { DialogItemType } from '../../../../redux/store';
 
 
 type DialogPropsType = {

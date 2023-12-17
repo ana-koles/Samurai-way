@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './PostSection.module.css'
 import { Post } from './posts/Post';
-import { ActionType,PostType, UserType} from '../../../redux/state';
+import { ActionType,PostType, UserType} from '../../../redux/store';
 
 import { Button } from '../../button/Button';
 import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer';
@@ -10,8 +10,8 @@ import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer';
 type PostSectionPropsType = {
   posts: PostType[]
   currentText: string
-  dispatch: (action: ActionType) => void
-  user: UserType
+  addPost: (name: string) => void
+  updateNewPostText: (text: string) => void
 }
 
 
@@ -26,17 +26,12 @@ export const PostSection: React.FC<PostSectionPropsType> = (props) => {
 
   const onClickHandler = () => {
     /* props.addPost(); */ //здесь addPost вызывается не от объекта store, а от объекта props
-    /* props.dispatch({type: 'ADD-POST'}) */
-    props.dispatch(addPostAC(props.user.name));
+    props.addPost('Fluffy Gangster')
   }
 
   const onChangeHandler = () => {
-
     if (newPostElement.current) {
-      console.log(newPostElement.current.value)
-      /* props.updateNewPostText(newPostElement.current.value); */
-      /* props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: newPostElement.current.value}) */
-      props.dispatch(updateNewPostTextAC(newPostElement.current.value))
+      props.updateNewPostText(newPostElement.current.value)
     }
   }
 

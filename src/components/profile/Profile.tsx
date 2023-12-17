@@ -1,15 +1,17 @@
 import React from 'react';
 import s from './Profile.module.css'
 import { PostSection } from './postSection/PostSection';
-import { ActionType, MessageContactsType, PostType, UserType } from '../../redux/state';
+import { ActionType, MessageContactsType, PostType, UserType } from '../../redux/store';
+import { PostSectionContainer } from './postSection/PostSectionContainer';
 
 type ProfilePropsType = {
-  posts: PostType[]
-  currentText: string
+  store: any
+  /* posts: PostType[]
+  currentText: string */
   /* updateNewPostText: (text: string) => void
   addPost: () => void */
-  dispatch: (action: ActionType) => void
-  user: UserType
+  /* dispatch: (action: ActionType) => void
+  user: UserType */
 }
 
 
@@ -31,15 +33,15 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
           </div>
         </div>
 
-        <PostSection
+         {/* <PostSection
             posts={props.posts}
             currentText={props.currentText}
             dispatch={props.dispatch}
             user={props.user}
-            /* updateNewPostText={props.updateNewPostText}
-            addPost={props.addPost} */
+            updateNewPostText={props.updateNewPostText}
+            addPost={props.addPost} */}
 
-            />
+            <PostSectionContainer store={props.store}/>
     </div>
   );
 };

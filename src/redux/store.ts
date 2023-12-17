@@ -43,6 +43,7 @@ export type ProfilePageType = {
 }
 
 export type StateType = {
+  messageContacts: ContactType[],
   profilePage: ProfilePageType ,
   dialogsPage: {
     currentMessageText: string
@@ -53,8 +54,8 @@ export type StateType = {
 export type StoreType = {
   _callSubscriber: (state: StateType) => void,
   user: UserType,
-  messageContacts: ContactType[],
   _state: {
+    messageContacts: ContactType[],
     profilePage:{
       currentText: string
       posts: PostType[]
@@ -86,88 +87,98 @@ const user: UserType =  { id: 0, name: 'Fluffy Gangster' }
 
 export let store = {
   user: user,
-  messageContacts: messageContacts,
+
   _state: {
+    messageContacts: [
+      { id: 0, name:'Fluffy Gangster'},
+      { id: 1, name: 'Missis Marple' },
+      { id: 2, name: 'Luna' },
+      { id: 3, name: 'Toby' },
+      { id: 4, name: 'Cleo' },
+      { id: 5, name: 'Choupette' },
+      { id: 6, name: 'Pumpkine' },
+    ],
     profilePage: {
       currentText: '',
       posts: [
         {
           id: Date.now() * Math.random(),
-          name: messageContacts[0].name,
+          /* name: store._state.messageContacts[0].name, */
+          name: 'Fluffy Gangster',
           message: `Paws up, it's time for another purr-fect day!`,
-          likes: 21
+          likes: 21,
         },
         {
           id: Date.now() * Math.random(),
-          name:  messageContacts[0].name,
+          name: 'Fluffy Gangster',
           message: `Just caught a toy mouse 🐭 and feeling like a true hunter! 😼`,
-          likes: 7
+          likes: 7,
         },
         {
           id: Date.now() * Math.random(),
-          name:  messageContacts[0].name,
+          name: 'Fluffy Gangster',
           message: `Is it dinner time yet? I'm feline pretty hungry. 🍽️`,
-          likes: 12
+          likes: 12,
         },
-      ]
+      ],
     },
     dialogsPage: {
       currentMessageText: '',
       dialogs: {
-        [messageContacts[0].id]: [
+        [1]: [
           {
-            id: Number(messageContacts[0].id + 1),
-            name:  messageContacts[0].name,
+            id: 11,
+            name: 'Missis Marple',
             message: `Hi, how's it going today?`,
           },
           {
             id: 12,
-            name:  user.name,
-            message: ` Hey there! Just napping as usual. You?`,
+            name: 'Fluffy Gangster',
+            message: `Hey there! Just napping as usual. You?`,
           },
           {
             id: 13,
-            name:  messageContacts[0].name,
+            name: 'Missis Marple',
             message: `Same here, napping is our superpower. 😴`,
           },
           {
             id: 14,
-            name:  user.name,
+            name: 'Fluffy Gangster',
             message: `Absolutely! But don't forget the occasional playtime.`,
           },
           {
             id: 15,
-            name:  messageContacts[0].name,
+            name: 'Missis Marple',
             message: `You're right, chasing feather toys is a must! 🐾`,
           },
           {
             id: 16,
-            name:  messageContacts[0].name,
+            name: 'Missis Marple',
             message: `Need to rest`,
           },
         ],
-        [messageContacts[1].id]: [
+        [2]: [
           {
             id: 21,
-            name:  messageContacts[1].name,
+            name: 'Luna',
             message: `Hey there!`,
           },
           {
             id: 22,
-            name:  user.name,
+            name: 'Fluffy Gangster',
             message: `Meow! How are you doing?`,
           },
           {
             id: 23,
-            name:  messageContacts[1].name,
+            name: 'Luna',
             message: `I'm good, thanks! How about you?`,
           },
           {
             id: 24,
-            name:  user.name,
+            name: 'Fluffy Gangster',
             message: `Purr purr... Just enjoying the day!`,
           },
-        ]
+        ],
       },
     }
   },
@@ -191,7 +202,7 @@ export let store = {
 
     //неправильный вариант - мутабельный
 
-    this._state.dialogsPage.dialogs[messageContacts[0].id].push(newMessage);
+    this._state.dialogsPage.dialogs[1].push(newMessage);
     this._state.dialogsPage.currentMessageText = '';
     this._callSubscriber(this._state);
   },
@@ -223,46 +234,8 @@ export let store = {
     profileReducer(this._state.profilePage, action);
     dialogsReducer(this._state.dialogsPage, action);
     userReducer(this.user, action);
-    messageContactsReducer(this.messageContacts, action);
+    messageContactsReducer(this._state.messageContacts, action);
     this._callSubscriber(this._state);
-
-/*
-    if(action.type === 'ADD-MESSAGE-TO-DIALOG'){
-      const newMessage = {
-        id: messageContacts[0].id + Math.random(),
-        name: user.name,
-        message: this._state.dialogsPage.currentMessageText
-      }
-
-
-      this._state.dialogsPage.dialogs[messageContacts[0].id].push(newMessage);
-      this._state.dialogsPage.currentMessageText = '';
-      this._callSubscriber(this._state);
-
-    } else if(action.type === 'ADD-POST'){
-      const newPost = {
-        id: Date.now() * Math.random(),
-        name: user.name,
-        message: this._state.profilePage.currentText,
-        likes: 0
-      }
-
-      this._state.profilePage.posts.unshift(newPost);
-      this._state.profilePage.currentText = '';
-      this._callSubscriber(this._state);
-
-    } else if(action.type === 'UPDATE-NEW-POST-TEXT') {
-      if (action.newText) {
-        this._state.profilePage.currentText = action.newText;
-        this._callSubscriber(this._state);
-      }
-
-    } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
-      if (action.newText) {
-        this._state.dialogsPage.currentMessageText = action.newText;
-        this._callSubscriber(this._state);
-      }
-    } */
 
   }
 }
