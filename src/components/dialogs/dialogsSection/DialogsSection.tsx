@@ -23,7 +23,6 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
   const newDialogMessage:React.LegacyRef<HTMLTextAreaElement> = React.createRef();
 
   const onChangeHandler = () => {
-    debugger;
     if (newDialogMessage.current) {
       props.updateNewMessageText(newDialogMessage.current.value)
     }

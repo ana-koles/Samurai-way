@@ -1,9 +1,10 @@
 import React from 'react';
 import s from './PostSection.module.css'
-import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer';
+import { PostType, ProfileReducerActionType, addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer';
 import { PostSection } from './PostSection';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../../redux/redux-store';
+import { Dispatch } from 'redux';
 
 /* type PostSectionPropsType = {
   posts: PostType[]
@@ -38,19 +39,29 @@ import { AppRootStateType } from '../../../redux/redux-store';
   );
 }; */
 
-const mapStateToProps = (state: AppRootStateType) => {
+type MapStateToPropsType = {
+  posts: PostType[]
+  currentText: string
+}
+
+type MapDispatchToPropsType = {
+  addPost: (name: string) => void
+  updateNewPostText: (text: string) => void
+}
+
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     posts: state.profilePage.posts,
     currentText: state.profilePage.currentText
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<ProfileReducerActionType>): MapDispatchToPropsType => {
   return {
-    addPost: (name: string) => {
+    addPost: (name) => {
       dispatch(addPostAC(name))
     },
-    updateNewPostText: (text: string) => {
+    updateNewPostText: (text) => {
       dispatch(updateNewPostTextAC(text))
     }
   }
