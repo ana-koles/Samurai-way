@@ -23,6 +23,7 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
   const newDialogMessage:React.LegacyRef<HTMLTextAreaElement> = React.createRef();
 
   const onChangeHandler = () => {
+    debugger;
     if (newDialogMessage.current) {
       props.updateNewMessageText(newDialogMessage.current.value)
     }
@@ -38,7 +39,7 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
             <h2>Cat Talks</h2>
         </div>
 
-        {props.dialog.map(d => d.name === 'Fluffy Gangster' ?  <MyDialog dialog={d}/> : <DialogFriend dialog={d}/>)}
+        {props.dialog.map(d => d.name === 'Fluffy Gangster' ?  <MyDialog dialog={d} key={d.id}/> : <DialogFriend dialog={d} key={d.id}/>)}
 
         <div className={s.message_input}>
           <textarea
