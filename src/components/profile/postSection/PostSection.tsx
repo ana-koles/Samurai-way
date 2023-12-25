@@ -1,18 +1,16 @@
 import React from 'react';
 import s from './PostSection.module.css'
 import { Post } from './posts/Post';
-import { ActionType,PostType, UserType} from '../../../redux/store';
-
 import { Button } from '../../button/Button';
-import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer';
+import { PostSectionPropsType } from './PostSectionContainer';
 
 
-type PostSectionPropsType = {
+/* type PostSectionPropsType = {
   posts: PostType[]
   currentText: string
   addPost: (name: string) => void
   updateNewPostText: (text: string) => void
-}
+} */
 
 
 export const PostSection: React.FC<PostSectionPropsType> = (props) => {

@@ -28,6 +28,6 @@ export const rerenderEntireTree = () => {
 
 rerenderEntireTree();
 
-store.subscribe(() => {
+/* store.subscribe(() => {
   rerenderEntireTree();
-}); //передаем rerenderEntireTree в качестве callback
+}); //передаем rerenderEntireTree в качестве callback */

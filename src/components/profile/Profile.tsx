@@ -1,7 +1,5 @@
 import React from 'react';
 import s from './Profile.module.css'
-import { PostSection } from './postSection/PostSection';
-import { ActionType, MessageContactsType, PostType, UserType } from '../../redux/store';
 import { PostSectionContainer } from './postSection/PostSectionContainer';
 import { connect } from 'react-redux';
 

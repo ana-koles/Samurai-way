@@ -2,17 +2,17 @@ import React, { ChangeEvent, useState } from 'react';
 import s from './DialogsSection.module.css'
 import { MyDialog } from './myDialog/MyDialog';
 import { DialogFriend } from './dialogFriend/DialogFriend';
-import { ActionType, DialogItemType, MessageContactsType, UserType } from '../../../redux/store';
 import { Button } from '../../button/Button';
-import { addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/dialogs-reducer';
+import { DialogItemType, addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/dialogs-reducer';
+import { DialogsSectionPropsType } from './DialogsSectionContainer';
 
 
-type DialogsSectionPropsType = {
+/* type DialogsSectionPropsType = {
   dialog: DialogItemType[]
   currentMessageText: string
   addMessageToDialog: (userId: number, userName: string) => void
   updateNewMessageText: (newText: string) => void
-}
+} */
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
     //с помощью React.createRef

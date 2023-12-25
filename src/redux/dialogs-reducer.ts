@@ -88,15 +88,11 @@ export const dialogsReducer = (state: DialogPageType = dialogsInitialState, acti
         name: 'Fluffy Gangster',
         message: state.currentMessageText
       }
-      state.dialogs[action.userId + 1].push(newMessage);
-      state.currentMessageText = '';
-      return state;
+      let copyState = {...state, currentMessageText: '', dialogs: {...state.dialogs, [action.userId + 1]: [...state.dialogs[action.userId + 1], newMessage]}}
+      return copyState;
 
     case UPDATE_NEW_MESSAGE_TEXT:
-      if (action.newText) {
-        state.currentMessageText = action.newText;
-      };
-      return state;
+      return {...state, currentMessageText: action.newText};
 
     default:
       return state

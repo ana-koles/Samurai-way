@@ -9,14 +9,13 @@ import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { ActionType, ContactType, DialogType, PostType, StateType, StoreType } from './redux/store';
 
 
 type AppPropsType = {
 }
 
 
-const App: React.FC<AppPropsType> = (props) => { 
+const App: React.FC<AppPropsType> = (props) => {
 
   return (
     <BrowserRouter>

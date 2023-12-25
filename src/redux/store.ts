@@ -1,3 +1,4 @@
+import { v1 } from "uuid"
 import { dialogsReducer } from "./dialogs-reducer"
 import { messageContactsReducer } from "./message-contacts-reducer"
 import { profileReducer } from "./profile-reducer"
@@ -10,39 +11,39 @@ export type ContactType = {
   name: string
 }
 
-export type DialogItemType = {
+type DialogItemType = {
   id: number
   name: string
   message: string
 }
 
-export type MessageContactsType = Array<{id: number, name: string}>
-export type UserType = {id: number, name: string}
+type MessageContactsType = Array<{id: number, name: string}>
+type UserType = {id: number, name: string}
 
-export type DialogType = {
+type DialogType = {
   [key: string]: DialogItemType[],
 }
 
-export type DialogPageType = {
+type DialogPageType = {
   currentMessageText: string
   dialogs: DialogType
 }
 
-export type ActionType = any
+type ActionType = any
 
-export type PostType = {
-  id: number
+type PostType = {
+  id: string
   name:  string
   message: string
   likes: number
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
   currentText: string
   posts: PostType[]
 }
 
-export type StateType = {
+type StateType = {
   messageContacts: ContactType[],
   profilePage: ProfilePageType ,
   dialogsPage: {
@@ -51,7 +52,7 @@ export type StateType = {
   }
 }
 
-export type StoreType = {
+type StoreType = {
   _callSubscriber: (state: StateType) => void,
   user: UserType,
   _state: {
@@ -85,7 +86,7 @@ const messageContacts: MessageContactsType = [
 
 const user: UserType =  { id: 0, name: 'Fluffy Gangster' }
 
-export let store = {
+let store = {
   user: user,
 
   _state: {
@@ -102,20 +103,20 @@ export let store = {
       currentText: '',
       posts: [
         {
-          id: Date.now() * Math.random(),
+          id: v1(),
           /* name: store._state.messageContacts[0].name, */
           name: 'Fluffy Gangster',
           message: `Paws up, it's time for another purr-fect day!`,
           likes: 21,
         },
         {
-          id: Date.now() * Math.random(),
+          id: v1(),
           name: 'Fluffy Gangster',
           message: `Just caught a toy mouse 🐭 and feeling like a true hunter! 😼`,
           likes: 7,
         },
         {
-          id: Date.now() * Math.random(),
+          id: v1(),
           name: 'Fluffy Gangster',
           message: `Is it dinner time yet? I'm feline pretty hungry. 🍽️`,
           likes: 12,
@@ -209,7 +210,7 @@ export let store = {
 
   addPost() {
     const newPost = {
-      id: Date.now() * Math.random(),
+      id: v1(),
       name: messageContacts[0].name,
       message: this._state.profilePage.currentText,
       likes: 0

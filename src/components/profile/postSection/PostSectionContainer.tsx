@@ -49,6 +49,8 @@ type MapDispatchToPropsType = {
   updateNewPostText: (text: string) => void
 }
 
+export type PostSectionPropsType = MapStateToPropsType & MapDispatchToPropsType
+
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     posts: state.profilePage.posts,
