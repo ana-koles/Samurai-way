@@ -67,10 +67,10 @@ const SET_USERS = 'SET-USERS';
 type UpdateFollowType = ReturnType<typeof UpdateFollowAC>;
 type SetUsersType = ReturnType<typeof SetUsersAC>;
 
-type ActionType = UpdateFollowType | SetUsersType
+export type UsersPageActionType = UpdateFollowType | SetUsersType
 
 
-export const usersReducer = (state: UsersType = usersInitialState , action: ActionType): UsersType => {
+export const usersReducer = (state: UsersType = usersInitialState , action: UsersPageActionType): UsersType => {
   switch(action.type) {
     case UPDATE_FOLLOW:
       return {...state, users: state.users.map(user => user.id === action.userId ? {...user, follwed: !user.followed} : user )};
