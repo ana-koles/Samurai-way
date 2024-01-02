@@ -1,7 +1,9 @@
 import { v1 } from "uuid"
+import photo from '../assets/friend4.jpg'
 
 export type UserType = {
   id: string
+  photo: string
   followed: boolean
   name:  string
   status: string
@@ -20,6 +22,7 @@ let usersInitialState: UsersType = {
   users: [
     {
       id: v1(),
+      photo: photo,
       followed: true,
       name: 'Whiskers',
       status: `Missing my human right meow`,
@@ -30,9 +33,10 @@ let usersInitialState: UsersType = {
     },
     {
       id: v1(),
+      photo: photo,
       followed: false,
       name: 'Oliver',
-      status: `rying out a new toy today`,
+      status: `Trying out a new toy today`,
       location: {
         city: 'London',
         country: 'UK'
@@ -40,6 +44,7 @@ let usersInitialState: UsersType = {
     },
     {
       id: v1(),
+      photo: photo,
       name: 'Leo',
       followed: true,
       status: `Knocked a glass off the table, just to see what would happen`,
@@ -50,6 +55,7 @@ let usersInitialState: UsersType = {
     },
     {
       id: v1(),
+      photo: photo,
       name: 'Milo',
       followed: false,
       status: `Just had a gourmet meal of fresh salmon`,
@@ -71,9 +77,12 @@ export type UsersPageActionType = UpdateFollowType | SetUsersType
 
 
 export const usersReducer = (state: UsersType = usersInitialState , action: UsersPageActionType): UsersType => {
+
   switch(action.type) {
     case UPDATE_FOLLOW:
-      return {...state, users: state.users.map(user => user.id === action.userId ? {...user, follwed: !user.followed} : user )};
+      let newState = {...state, users: state.users.map(user => user.id === action.userId ? {...user, followed: !user.followed} : user )};
+      console.log(newState)
+      return newState
 
     case SET_USERS:
       return {...state, users: [...state.users, ...action.users]}

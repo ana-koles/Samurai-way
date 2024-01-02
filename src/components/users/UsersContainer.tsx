@@ -8,10 +8,12 @@ type MapStateToPropsType = {
   users: UserType[]
 }
 
-type mapDispatchToPropsType = {
+type MapDispatchToPropsType = {
   updateFollow: (userId: string) => void
   setUsers: (users: UserType[]) => void
 }
+
+export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsType;
 
 let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
@@ -19,7 +21,7 @@ let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): mapDispatchToPropsType => {
+let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchToPropsType => {
   return {
     updateFollow: (userId: string) => {
       dispatch(UpdateFollowAC(userId))

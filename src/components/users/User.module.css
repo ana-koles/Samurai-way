@@ -7,3 +7,77 @@
 .header {
   color: white;
 }
+
+.user_wrapper {
+  display: flex;
+  margin-top: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(49, 49, 49, 0.59);
+}
+
+
+.user_info {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user_info img {
+  width: 38px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.user_info p {
+  color: #7C7F84;
+}
+
+.user_info button {
+  margin-top: 10px;
+  font-size: 8px;
+  padding: 2px;
+}
+
+.user_name {
+  margin-left: 6px;
+}
+
+.user_name > h3 {
+  margin-bottom: 5px;
+  color: #FDBA2B;
+}
+
+.status_wrapper h3 {
+  color: #FDBA2B;
+}
+
+.status_wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+
+}
+
+.status_text {
+  margin: 13px 0 13px;
+}
+
+.location_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.location_wrapper span {
+  color: #7C7F84;
+  font-size: 8px;
+}
+
