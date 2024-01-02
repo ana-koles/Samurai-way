@@ -12,7 +12,7 @@ export type ContactType = {
 }
 
 type DialogItemType = {
-  id: number
+  id: string
   name: string
   message: string
 }
@@ -44,9 +44,9 @@ type ProfilePageType = {
 }
 
 type StateType = {
-  messageContacts: ContactType[],
   profilePage: ProfilePageType ,
   dialogsPage: {
+    messageContacts: ContactType[],
     currentMessageText: string
     dialogs: DialogType
   }
@@ -90,15 +90,6 @@ let store = {
   user: user,
 
   _state: {
-    messageContacts: [
-      { id: 0, name:'Fluffy Gangster'},
-      { id: 1, name: 'Missis Marple' },
-      { id: 2, name: 'Luna' },
-      { id: 3, name: 'Toby' },
-      { id: 4, name: 'Cleo' },
-      { id: 5, name: 'Choupette' },
-      { id: 6, name: 'Pumpkine' },
-    ],
     profilePage: {
       currentText: '',
       posts: [
@@ -124,58 +115,67 @@ let store = {
       ],
     },
     dialogsPage: {
+      messageContacts: [
+        { id: 0, name:'Fluffy Gangster'},
+        { id: 1, name: 'Missis Marple' },
+        { id: 2, name: 'Luna' },
+        { id: 3, name: 'Toby' },
+        { id: 4, name: 'Cleo' },
+        { id: 5, name: 'Choupette' },
+        { id: 6, name: 'Pumpkine' },
+      ],
       currentMessageText: '',
       dialogs: {
         [1]: [
           {
-            id: 11,
+            id: v1(),
             name: 'Missis Marple',
             message: `Hi, how's it going today?`,
           },
           {
-            id: 12,
+            id:  v1(),
             name: 'Fluffy Gangster',
             message: `Hey there! Just napping as usual. You?`,
           },
           {
-            id: 13,
+            id:  v1(),
             name: 'Missis Marple',
             message: `Same here, napping is our superpower. 😴`,
           },
           {
-            id: 14,
+            id:  v1(),
             name: 'Fluffy Gangster',
             message: `Absolutely! But don't forget the occasional playtime.`,
           },
           {
-            id: 15,
+            id:  v1(),
             name: 'Missis Marple',
             message: `You're right, chasing feather toys is a must! 🐾`,
           },
           {
-            id: 16,
+            id:  v1(),
             name: 'Missis Marple',
             message: `Need to rest`,
           },
         ],
         [2]: [
           {
-            id: 21,
+            id:  v1(),
             name: 'Luna',
             message: `Hey there!`,
           },
           {
-            id: 22,
+            id:  v1(),
             name: 'Fluffy Gangster',
             message: `Meow! How are you doing?`,
           },
           {
-            id: 23,
+            id:  v1(),
             name: 'Luna',
             message: `I'm good, thanks! How about you?`,
           },
           {
-            id: 24,
+            id:  v1(),
             name: 'Fluffy Gangster',
             message: `Purr purr... Just enjoying the day!`,
           },
@@ -196,7 +196,7 @@ let store = {
 
   addMessageToDialog() {
     const newMessage = {
-      id: messageContacts[0].id + Math.random(),
+      id: v1(),
       name: user.name,
       message: this._state.dialogsPage.currentMessageText
     }
@@ -235,7 +235,7 @@ let store = {
     profileReducer(this._state.profilePage, action);
     dialogsReducer(this._state.dialogsPage, action);
     userReducer(this.user, action);
-    messageContactsReducer(this._state.messageContacts, action);
+    messageContactsReducer(this._state.dialogsPage.messageContacts, action);
     this._callSubscriber(this._state);
 
   }

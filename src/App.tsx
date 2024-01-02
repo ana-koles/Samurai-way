@@ -9,6 +9,7 @@ import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { Users } from './components/users/Users';
 
 
 type AppPropsType = {
@@ -30,6 +31,7 @@ const App: React.FC<AppPropsType> = (props) => {
         <Route path='/news' component={News}/>
         <Route path='/music' component={Music}/>
         <Route path='/settings' component={Settings}/>
+        <Route path='/users' component={Users}/>
         <Route exact path='/' render={() => <Profile/>}/>
       </div>
     </BrowserRouter>

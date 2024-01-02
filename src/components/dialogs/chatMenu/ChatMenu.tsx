@@ -31,7 +31,7 @@ export const ChatMenu: React.FC<ChatMenyPropsType>= (props) => {
 
 const mapStateToProps = (state: AppRootStateType) => {
   return {
-    messageContacts: state.messageContacts,
+    messageContacts: state.dialogsPage.messageContacts,
   };
 };
 
