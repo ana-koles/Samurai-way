@@ -1,7 +1,7 @@
 import { v1 } from "uuid"
 import photo from '../assets/friend4.jpg'
 
-export type UserType = {
+/* export type UserType = {
   id: string
   photo: string
   followed: boolean
@@ -11,7 +11,21 @@ export type UserType = {
     city: string
     country: string
   }
+} */
+
+
+export type UserType = {
+  name: string
+  id: number
+  uniqueUrlName: null
+  photos: {
+    small: null | string,
+    large: null | string
+},
+  status: null,
+  followed: boolean
 }
+
 
 export type UsersType = {
   users: UserType[]
@@ -19,7 +33,7 @@ export type UsersType = {
 
 
 let usersInitialState: UsersType = {
-  users: [
+  users: [/*
     {
       id: v1(),
       photo: photo,
@@ -63,7 +77,7 @@ let usersInitialState: UsersType = {
         city: 'Rome',
         country: 'Italy'
       }
-    },
+    }, */
   ],
 }
 
@@ -92,7 +106,8 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
   }
 }
 
-export const UpdateFollowAC = (userId: string) => ({type: UPDATE_FOLLOW, userId: userId} as const);
+//возможно userId надо будет исрпавить на string
+export const UpdateFollowAC = (userId: number) => ({type: UPDATE_FOLLOW, userId: userId} as const);
 
 export const SetUsersAC = (users: UserType[]) => ({type: SET_USERS, users: users} as const);
 

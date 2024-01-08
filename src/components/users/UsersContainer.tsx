@@ -1,15 +1,16 @@
 import { connect } from "react-redux";
 import { Users } from "./Users";
 import { AppRootStateType } from "../../redux/redux-store";
-import { SetUsersAC, UpdateFollowAC, UserType, UsersPageActionType } from "../../redux/users-reducer";
+import { SetUsersAC, UpdateFollowAC, UserType , UsersPageActionType } from "../../redux/users-reducer";
 import { Dispatch } from "redux";
+
 
 type MapStateToPropsType = {
   users: UserType[]
 }
 
 type MapDispatchToPropsType = {
-  updateFollow: (userId: string) => void
+  updateFollow: (userId: number) => void //возможно надо будет исправить на string
   setUsers: (users: UserType[]) => void
 }
 
@@ -23,7 +24,7 @@ let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 
 let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchToPropsType => {
   return {
-    updateFollow: (userId: string) => {
+    updateFollow: (userId: number) => { //возможно надо удет исправить на string
       dispatch(UpdateFollowAC(userId))
     },
     setUsers: (users: UserType[]) => {
