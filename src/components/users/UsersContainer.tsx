@@ -1,14 +1,15 @@
 import { connect } from "react-redux";
-import { Users } from "./Users";
+import { Users } from "./UsersC";
 import { AppRootStateType } from "../../redux/redux-store";
 import { SetUsersAC, UpdateFollowAC, UserType , UsersPageActionType } from "../../redux/users-reducer";
 import { Dispatch } from "redux";
 
-
+//типизация стейта
 type MapStateToPropsType = {
   users: UserType[]
 }
 
+//типизация пропсов
 type MapDispatchToPropsType = {
   updateFollow: (userId: number) => void //возможно надо будет исправить на string
   setUsers: (users: UserType[]) => void
