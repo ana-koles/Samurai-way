@@ -81,3 +81,14 @@
   font-size: 8px;
 }
 
+.page_number {
+  color: rgb(198, 195, 195)
+}
+
+.page_current {
+  color: #FDBA2B;
+}
+
+.content > span {
+  cursor: pointer;
+}
