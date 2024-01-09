@@ -20,64 +20,26 @@ type UsersGetType = {
 
 export class Users extends Component<UsersContainerPropsType>{
 
-  getUsers = () => {
-    if (this.props.users.length === 0) {
+  constructor (props: UsersContainerPropsType) {
+    super(props)
+    if (this.props.users.length === 0) { //чтобы данные загружались сразу при загрузке страницы
       axios.get<UsersGetType>('https://social-network.samuraijs.com/api/1.0/users')
       .then((response) => this.props.setUsers(response.data.items))
+    }
+  }
 
-      /*   [
-          {
-          id: v1(),
-          photo: photo,
-          followed: true,
-          name: 'Whiskers',
-          status: `Missing my human right meow`,
-          location: {
-            city: 'Boston',
-            country: 'USA'
-          }
-          },
-          {
-          id: v1(),
-          photo: photo,
-          followed: false,
-          name: 'Oliver',
-          status: `Trying out a new toy today`,
-          location: {
-            city: 'London',
-            country: 'UK'
-          }
-          },
-          {
-          id: v1(),
-          photo: photo,
-          name: 'Leo',
-          followed: true,
-          status: `Knocked a glass off the table, just to see what would happen`,
-          location: {
-            city: 'Milan',
-            country: 'Italy'
-          }
-          },
-          {
-          id: v1(),
-          photo: photo,
-          name: 'Milo',
-          followed: false,
-          status: `Just had a gourmet meal of fresh salmon`,
-          location: {
-            city: 'Rome',
-            country: 'Italy'
-          }
-          }
-        ] */
+  componentDidMount(): void {
+    if (this.props.users.length === 0) { //чтобы данные загружались сразу при загрузке страницы
+      axios.get<UsersGetType>('https://social-network.samuraijs.com/api/1.0/users')
+      .then((response) => this.props.setUsers(response.data.items))
     }
   }
 
   render () { //обязательно наличие метода render(), чтобы вернуть JSX
+
     return (
       <div className={s.content}>
-        <button onClick={this.getUsers}>Get Users</button>
+        {/* <button onClick={this.getUsers}>Get Users</button> */}
         {this.props.users.map(user => <div key={user.id} className={s.user_wrapper}>
             <div className={s.user_info}>
               <img src={user.photos.small != null ? user.photos.small : photo} alt="user" />
