@@ -6,6 +6,7 @@ import { v1 } from 'uuid';
 import photo from '../../assets/friend4.jpg';
 import axios from 'axios';
 import { UserType } from '../../redux/users-reducer';
+import { Users } from './Users';
 
 
 type UsersGetType = {
@@ -14,11 +15,10 @@ type UsersGetType = {
   error: null | string
 }
 
-
 /* Если вы не определяете конструктор в своем классе, React будет использовать конструктор из базового класса Component, который инициализирует состояние (this.state) и пропсы (this.props).
 Этот конструктор, в свою очередь, устанавливает this.props в значения, переданные компоненте в момент создания. */
 
-export class Users extends Component<UsersContainerPropsType>{
+export class UsersAPIComponent extends Component<UsersContainerPropsType>{
 
   constructor (props: UsersContainerPropsType) {
     super(props)
@@ -48,46 +48,17 @@ export class Users extends Component<UsersContainerPropsType>{
       .then((response) => {
         this.props.setUsers(response.data.items);
       }
-        );
-
+    );
   }
 
   render () { //обязательно наличие метода render(), чтобы вернуть JSX
 
-    let totalPageCount = Math.ceil(this.props.totalUsersCount / this.props.pageCount);
-    const totalPageCountArr = [];
-    for (let i = 1; i <= totalPageCount; i++) {
-      totalPageCountArr.push(i);
-    }
+    return <Users totalUsersCount={this.props.totalUsersCount}
+                  pageCount={this.props.pageCount}
+                  currentPage={this.props.currentPage}
+                  users={this.props.users}
+                  updateFollow={this.props.updateFollow}
+                  setCurrentPage={this.setCurrentPage}/>
 
-    return (
-
-      <div className={s.content}>
-        {totalPageCountArr.map(page => {
-          return <span key={page + 156789} className={`${s.page_number} ${this.props.currentPage === page ? s.page_current : ''}`} onClick={(e) => this.setCurrentPage(page)}>  {page}  </span>
-        })}
-
-
-        {/* <button onClick={this.getUsers}>Get Users</button> */}
-        {this.props.users.map(user => <div key={user.id + Math.random()} className={s.user_wrapper}>
-            <div className={s.user_info}>
-              <img src={user.photos.small != null ? user.photos.small : photo} alt="user" />
-              {user.followed === true ? <button onClick={() => this.props.updateFollow(user.id)}>Unfollow</button> : <button onClick={() => this.props.updateFollow(user.id)}>Follow</button>}
-            </div>
-
-            <div className={s.status_wrapper}>
-              <h3>{user.name}</h3>
-              <p className={s.status_text}>{user.status} </p>
-            </div>
-
-            <div className={s.location_wrapper}>
-              <span>{"user.location.country"}</span>
-              <span>{"user.location.city"}</span>
-            </div>
-
-          </div>)}
-      </div>
-
-    );
   }
 }

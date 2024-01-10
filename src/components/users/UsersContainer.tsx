@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { Users } from "./UsersC";
+import { UsersAPIComponent } from "./UsersAPIComponent";
 import { AppRootStateType } from "../../redux/redux-store";
 import { SetCurrentPageAC, SetTotalUsersCountAC, SetUsersAC, UpdateFollowAC, UserType , UsersPageActionType } from "../../redux/users-reducer";
 import { Dispatch } from "redux";
@@ -48,4 +48,4 @@ let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchT
   }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent);

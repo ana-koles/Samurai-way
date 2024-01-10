@@ -82,7 +82,7 @@ let usersInitialState: UsersType = {
       }
     }, */
   ],
-  currentPage: 2,
+  currentPage: 1,
   totalUsersCount: 0,
   pageCount: 5
 }
