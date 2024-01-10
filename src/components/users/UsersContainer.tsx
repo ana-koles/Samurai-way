@@ -1,8 +1,10 @@
 import { connect } from "react-redux";
-import { UsersAPIComponent } from "./UsersAPIComponent";
 import { AppRootStateType } from "../../redux/redux-store";
 import { SetCurrentPageAC, SetTotalUsersCountAC, SetUsersAC, UpdateFollowAC, UserType , UsersPageActionType } from "../../redux/users-reducer";
 import { Dispatch } from "redux";
+import { Component } from "react";
+import axios from "axios";
+import { Users } from "./Users";
 
 //типизация стейта
 type MapStateToPropsType = {
@@ -10,6 +12,12 @@ type MapStateToPropsType = {
   currentPage: number
   totalUsersCount: number
   pageCount: number
+}
+
+type UsersGetType = {
+  items: UserType[]
+  totalCount: number
+  error: null | string
 }
 
 //типизация пропсов
@@ -21,6 +29,56 @@ type MapDispatchToPropsType = {
 }
 
 export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsType;
+
+/* Если вы не определяете конструктор в своем классе, React будет использовать конструктор из базового класса Component, который инициализирует состояние (this.state) и пропсы (this.props).
+Этот конструктор, в свою очередь, устанавливает this.props в значения, переданные компоненте в момент создания. */
+
+export class UsersComponent extends Component<UsersContainerPropsType>{
+
+  constructor (props: UsersContainerPropsType) {
+    super(props)
+    if (this.props.users.length === 0) { //чтобы данные загружались сразу при загрузке страницы
+      axios.get<UsersGetType>('https://social-network.samuraijs.com/api/1.0/users')
+      .then((response) => this.props.setUsers(response.data.items))
+    }
+  }
+
+  componentDidMount(): void {
+    //чтобы данные загружались сразу при загрузке страницы
+
+      axios.get<UsersGetType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageCount}&page=${this.props.currentPage}`)
+      .then((response) => {
+        this.props.setUsers(response.data.items);
+        this.props.setTotalUsersCount(response.data.totalCount / 500);
+      });
+
+  }
+
+  setCurrentPage = (currentPageNumber: number) => {
+    this.props.setCurrentPage(currentPageNumber);
+
+    //здесь в &page=${currentPageNumber}`) нужно именно указывать currentPageNumber
+    // а не this.props.currentPAge, потому что к этому момоенту запрос не будет знать обновленное значение currentPage
+    axios.get<UsersGetType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageCount}&page=${currentPageNumber}`)
+      .then((response) => {
+        this.props.setUsers(response.data.items);
+      }
+    );
+  }
+
+  render () { //обязательно наличие метода render(), чтобы вернуть JSX
+
+    return <Users totalUsersCount={this.props.totalUsersCount}
+                  pageCount={this.props.pageCount}
+                  currentPage={this.props.currentPage}
+                  users={this.props.users}
+                  updateFollow={this.props.updateFollow}
+                  setCurrentPage={this.setCurrentPage}/>
+
+  }
+}
+
+
 
 let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
@@ -48,4 +106,4 @@ let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchT
   }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent);
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersComponent);
