@@ -1,10 +1,10 @@
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { AppRootStateType } from "../../redux/redux-store";
-import { SetCurrentPageAC, SetTotalUsersCountAC, SetUsersAC, UpdateFollowAC, UserType , UsersPageActionType } from "../../redux/users-reducer";
-import { Dispatch } from "redux";
+import { changeIsFetchedAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, updateFollowAC, UserType , UsersPageActionType } from "../../redux/users-reducer";
 import { Component } from "react";
 import axios from "axios";
 import { Users } from "./Users";
+import loadingImg from '../../assets/spinning-dots.svg'
 
 //типизация стейта
 type MapStateToPropsType = {
@@ -12,6 +12,7 @@ type MapStateToPropsType = {
   currentPage: number
   totalUsersCount: number
   pageCount: number
+  isFetched: boolean
 }
 
 type UsersGetType = {
@@ -26,6 +27,7 @@ type MapDispatchToPropsType = {
   setUsers: (users: UserType[]) => void
   setCurrentPage: (currentPage: number) => void
   setTotalUsersCount: (totalUsersCount: number) => void
+  changeIsFetched: (isFetched: boolean) => void
 }
 
 export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsType;
@@ -35,19 +37,24 @@ export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsTy
 
 export class UsersComponent extends Component<UsersContainerPropsType>{
 
+
   constructor (props: UsersContainerPropsType) {
     super(props)
-    if (this.props.users.length === 0) { //чтобы данные загружались сразу при загрузке страницы
+/*     if (this.props.users.length === 0) { //чтобы данные загружались сразу при загрузке страницы
       axios.get<UsersGetType>('https://social-network.samuraijs.com/api/1.0/users')
       .then((response) => this.props.setUsers(response.data.items))
-    }
+    } */
   }
 
   componentDidMount(): void {
     //чтобы данные загружались сразу при загрузке страницы
+      this.props.changeIsFetched(true); //запускаем крутилку
+
 
       axios.get<UsersGetType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageCount}&page=${this.props.currentPage}`)
       .then((response) => {
+        this.props.changeIsFetched(false); // убираем крутилка
+
         this.props.setUsers(response.data.items);
         this.props.setTotalUsersCount(response.data.totalCount / 500);
       });
@@ -56,11 +63,14 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
 
   setCurrentPage = (currentPageNumber: number) => {
     this.props.setCurrentPage(currentPageNumber);
+    this.props.changeIsFetched(true); //запускаем крутилку
 
     //здесь в &page=${currentPageNumber}`) нужно именно указывать currentPageNumber
     // а не this.props.currentPAge, потому что к этому момоенту запрос не будет знать обновленное значение currentPage
     axios.get<UsersGetType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageCount}&page=${currentPageNumber}`)
       .then((response) => {
+        this.props.changeIsFetched(false); // убираем крутилку
+
         this.props.setUsers(response.data.items);
       }
     );
@@ -73,23 +83,22 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
                   currentPage={this.props.currentPage}
                   users={this.props.users}
                   updateFollow={this.props.updateFollow}
-                  setCurrentPage={this.setCurrentPage}/>
-
+                  setCurrentPage={this.setCurrentPage}
+                  isFetched={this.props.isFetched}/>
   }
 }
-
-
 
 let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     users: state.usersPage.users,
     currentPage: state.usersPage.currentPage,
     totalUsersCount: state.usersPage.totalUsersCount,
-    pageCount: state.usersPage.pageCount
+    pageCount: state.usersPage.pageCount,
+    isFetched: state.usersPage.isFetched
   }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchToPropsType => {
+/* let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchToPropsType => {
   return {
     updateFollow: (userId: number) => { //возможно надо удет исправить на string
       dispatch(UpdateFollowAC(userId))
@@ -102,8 +111,31 @@ let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchT
     },
     setTotalUsersCount: (totalUsersCount: number) => {
       dispatch(SetTotalUsersCountAC(totalUsersCount))
+    },
+    changeIsFetched: (isFetched: boolean) => {
+      dispatch(ChangeIsFetchedAC(isFetched));
     }
   }
-}
+} */
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersComponent);
+export const UsersContainer = connect(mapStateToProps, {
+  //Здесь автоматически connect к каждому значению свойства применяет dispatch,
+  // создавая таким образом callback как в ф-ции mapDispatchToProps
+  updateFollow: updateFollowAC,
+  setUsers: setUsersAC,
+  setCurrentPage: setCurrentPageAC,
+  setTotalUsersCount: setTotalUsersCountAC,
+  changeIsFetched: changeIsFetchedAC
+})(UsersComponent);
+
+
+//еще более короткая версия - нужно будет скорректировать наименования action creators,
+//чтобы они соответствовали названиям свойств
+
+/* export const UsersContainer = connect(mapStateToProps, {
+  updateFollow,
+  setUsers,
+  setCurrentPage,
+  setTotalUsersCount,
+  changeIsFetched,
+})(UsersComponent); */

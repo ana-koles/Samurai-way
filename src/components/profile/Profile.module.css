@@ -47,7 +47,7 @@ p {
 .photo {
   position: relative;
   z-index: 5;
-  background-image: url(../../assets/cat-profile2.jpg);
+/*   background-image: url(../../assets/cat-profile2.jpg); */
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -60,6 +60,10 @@ p {
   background-position: center center;
   background-size: 115%;
   margin-right: 25px;
+}
+
+.photoBackground {
+  background-image: url(../../assets/cat-profile2.jpg);
 }
 
 .info_wrapper {

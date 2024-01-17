@@ -232,7 +232,7 @@ let store = {
   },
   dispatch(action: ActionType) {
 
-    profileReducer(this._state.profilePage, action);
+   /*  profileReducer(this._state.profilePage, action); */
     dialogsReducer(this._state.dialogsPage, action);
     userReducer(this.user, action);
     messageContactsReducer(this._state.dialogsPage.messageContacts, action);

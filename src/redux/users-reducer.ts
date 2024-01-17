@@ -26,12 +26,12 @@ export type UserType = {
   followed: boolean
 }
 
-
 export type UsersType = {
   users: UserType[]
   currentPage: number
   totalUsersCount: number
   pageCount: number
+  isFetched: boolean
 }
 
 
@@ -84,20 +84,27 @@ let usersInitialState: UsersType = {
   ],
   currentPage: 1,
   totalUsersCount: 0,
-  pageCount: 5
+  pageCount: 5,
+  isFetched: false
 }
 
 const UPDATE_FOLLOW = 'UPDATE-FOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const CHANGE_IS_FETCHED = 'CHANGE_IS_FETCHED';
 
-type UpdateFollowType = ReturnType<typeof UpdateFollowAC>;
-type SetUsersType = ReturnType<typeof SetUsersAC>;
-type SetCurrentPage = ReturnType<typeof SetCurrentPageAC>
-type SetTotalUsersCount = ReturnType<typeof SetTotalUsersCountAC>
+type UpdateFollowType = ReturnType<typeof updateFollowAC>;
+type SetUsersType = ReturnType<typeof setUsersAC>;
+type SetCurrentPage = ReturnType<typeof setCurrentPageAC>;
+type SetTotalUsersCount = ReturnType<typeof setTotalUsersCountAC>;
+type ChangeIsFetchedAT = ReturnType<typeof changeIsFetchedAC>;
 
-export type UsersPageActionType = UpdateFollowType | SetUsersType | SetCurrentPage | SetTotalUsersCount
+export type UsersPageActionType = UpdateFollowType
+    | SetUsersType
+    | SetCurrentPage
+    | SetTotalUsersCount
+    | ChangeIsFetchedAT
 
 
 export const usersReducer = (state: UsersType = usersInitialState , action: UsersPageActionType): UsersType => {
@@ -117,21 +124,28 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
     case SET_TOTAL_USERS_COUNT:
       return {...state, totalUsersCount: action.count}
 
+    case CHANGE_IS_FETCHED:
+      return {...state, isFetched: action.isFetched};
+
       default:
         return state;
   }
 }
 
 //возможно userId надо будет исрпавить на string
-export const UpdateFollowAC = (userId: number) => ({type: UPDATE_FOLLOW, userId: userId} as const);
+export const updateFollowAC = (userId: number) => ({type: UPDATE_FOLLOW, userId: userId} as const);
 
-export const SetUsersAC = (users: UserType[]) => ({type: SET_USERS, users: users} as const);
+export const setUsersAC = (users: UserType[]) => ({type: SET_USERS, users: users} as const);
 
-export const SetCurrentPageAC = (currentPage: number) => {
+export const setCurrentPageAC = (currentPage: number) => {
   return {type: SET_CURRENT_PAGE, currentPage} as const
 }
 
-export const SetTotalUsersCountAC = (totalUsersCount: number) => {
+export const setTotalUsersCountAC = (totalUsersCount: number) => {
   return {type: SET_TOTAL_USERS_COUNT, count: totalUsersCount} as const
+}
+
+export const changeIsFetchedAC = (isFetched: boolean) => {
+  return {type: CHANGE_IS_FETCHED, isFetched} as const;
 }
 

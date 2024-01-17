@@ -2,6 +2,9 @@ import React from 'react';
 import s from './User.module.css'
 import { UserType } from '../../redux/users-reducer';
 import photo from '../../assets/friend4.jpg';
+import loadingImg from '../../assets/spinning-dots.svg'
+import { Preloader } from '../common/Preloader';
+import { NavLink } from 'react-router-dom';
 
 type UsersPropsType = {
   totalUsersCount: number
@@ -10,7 +13,7 @@ type UsersPropsType = {
   setCurrentPage: (pageNumber: number) => void
   updateFollow: (userId: number) => void
   users: UserType[]
-
+  isFetched: boolean
 }
 
 export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
@@ -23,8 +26,9 @@ export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
   }
 
   return (
-
     <div className={s.content}>
+    {props.isFetched ? <Preloader />: ''}
+
     {totalPageCountArr.map(page => {
       return <span key={page + 156789} className={`${s.page_number} ${props.currentPage === page ? s.page_current : ''}`} onClick={(e) => props.setCurrentPage(page)}>  {page}  </span>
     })}
@@ -33,7 +37,7 @@ export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
     {/* <button onClick={this.getUsers}>Get Users</button> */}
     {props.users.map(user => <div key={user.id + Math.random()} className={s.user_wrapper}>
         <div className={s.user_info}>
-          <img src={user.photos.small != null ? user.photos.small : photo} alt="user" />
+          <NavLink to={'profile/' + user.id}><img src={user.photos.small != null ? user.photos.small : photo} alt="user" /></NavLink>
           {user.followed === true ? <button onClick={() => props.updateFollow(user.id)}>Unfollow</button> : <button onClick={() => props.updateFollow(user.id)}>Follow</button>}
         </div>
 
@@ -49,7 +53,6 @@ export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
 
       </div>)}
   </div>
-
   );
 };
 
