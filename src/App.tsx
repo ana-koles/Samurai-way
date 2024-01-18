@@ -11,6 +11,7 @@ import { Settings } from './components/settingsPage/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { UsersContainer } from './components/users/UsersContainer';
 import { ProfileContainer } from './components/profile/ProfileContainer';
+import { HeaderContainer } from './components/header/HeaderComponent';
 
 
 type AppPropsType = {
@@ -22,7 +23,7 @@ const App: React.FC<AppPropsType> = (props) => {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
-        <Header/>
+        <HeaderContainer/>
         <NavBar/>
 
         {/* render если передаем тег и пропсы, component - если ссылку на компоненту */}

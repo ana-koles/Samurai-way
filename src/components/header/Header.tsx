@@ -3,8 +3,17 @@ import logo from '../../assets/logo.svg';
 import photo from '../../assets/cat-profile2.jpg';
 import s from './Header.module.css'
 import { NavLink } from 'react-router-dom';
+import { UserDataType } from './HeaderComponent';
+import { UserProfile } from '../../redux/profile-reducer';
 
-export const Header = () => {
+
+type HeaderPropsType = {
+  login: string | null
+  isAuth: boolean
+  profile: UserProfile | null
+}
+
+export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
   return (
     <header className={s.header}>
 
@@ -16,7 +25,13 @@ export const Header = () => {
       <ul className={s.icon_list}>
         <li><NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink></li>
         <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>
-        <li><img src={photo} alt="photo" /></li>
+        {props.isAuth ?
+          <li><NavLink to='/auth'><span>{props.login}</span><img src={props.profile?.photos.small
+            ? props.profile?.photos.small
+            : photo} alt="photo" /></NavLink></li>
+          :
+          <li><NavLink to='/auth'><span>Login</span></NavLink></li>}
+
       </ul>
 
     </header>
