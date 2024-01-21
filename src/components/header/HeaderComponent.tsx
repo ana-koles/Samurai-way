@@ -34,15 +34,17 @@ class HeaderComponent extends Component<HeaderContainerPropsType> {
   componentDidMount(): void {
     axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {withCredentials: true})
       .then(res => {
-        debugger;
         if (res.data.resultCode === 0) {
           let {id, email, login} = res.data.data;
           this.props.setAuthUserData(id, email, login);
-
-          axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + id)
-          .then((res) => this.props.setProfile(res.data))
+          return id;
         }
       })
+      .then(res => {
+        return axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + res);
+      })
+      .then((res) => this.props.setProfile(res.data))
+
   }
 
   render () {

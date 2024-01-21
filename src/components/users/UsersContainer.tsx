@@ -51,7 +51,12 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
       this.props.changeIsFetched(true); //запускаем крутилку
 
 
-      axios.get<UsersGetType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageCount}&page=${this.props.currentPage}`)
+      axios.get<UsersGetType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageCount}&page=${this.props.currentPage}`, {
+        withCredentials: true,
+                  headers: {
+                    "API-KEY": "f8f6fe16-bb80-454f-8b60-979f91c82094"
+                  }
+      })
       .then((response) => {
         this.props.changeIsFetched(false); // убираем крутилка
 

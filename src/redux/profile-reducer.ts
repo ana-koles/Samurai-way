@@ -83,8 +83,6 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
     case SET_PROFILE: {
       return {...state, profile: action.user}
     }
-
-
     case ADD_POST:
       const newPost = {
         id: v1(),
@@ -95,11 +93,11 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
       let copyState = {...state, posts: [newPost, ...state.posts], currentText: ''};
       return copyState;
 
-      case UPDATE_NEW_POST_TEXT:
-        return {...state, currentText: action.newText};
+    case UPDATE_NEW_POST_TEXT:
+      return {...state, currentText: action.newText};
 
-      default:
-        return state;
+    default:
+      return state;
   }
 }
 
