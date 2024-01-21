@@ -5,6 +5,7 @@ import { Component } from "react";
 import axios from "axios";
 import { Users } from "./Users";
 import loadingImg from '../../assets/spinning-dots.svg'
+import { usersApi } from "../../redux/api";
 
 //типизация стейта
 type MapStateToPropsType = {
@@ -15,11 +16,7 @@ type MapStateToPropsType = {
   isFetched: boolean
 }
 
-type UsersGetType = {
-  items: UserType[]
-  totalCount: number
-  error: null | string
-}
+
 
 //типизация пропсов
 type MapDispatchToPropsType = {
@@ -50,19 +47,13 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
     //чтобы данные загружались сразу при загрузке страницы
       this.props.changeIsFetched(true); //запускаем крутилку
 
+      usersApi.getUsers(this.props.pageCount,this.props.currentPage)
+        .then((data) => {
+          this.props.changeIsFetched(false); // убираем крутилка
 
-      axios.get<UsersGetType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageCount}&page=${this.props.currentPage}`, {
-        withCredentials: true,
-                  headers: {
-                    "API-KEY": "f8f6fe16-bb80-454f-8b60-979f91c82094"
-                  }
-      })
-      .then((response) => {
-        this.props.changeIsFetched(false); // убираем крутилка
-
-        this.props.setUsers(response.data.items);
-        this.props.setTotalUsersCount(response.data.totalCount / 500);
-      });
+          this.props.setUsers(data.items);
+          this.props.setTotalUsersCount(data.totalCount / 500);
+        });
 
   }
 
@@ -72,11 +63,11 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
 
     //здесь в &page=${currentPageNumber}`) нужно именно указывать currentPageNumber
     // а не this.props.currentPAge, потому что к этому момоенту запрос не будет знать обновленное значение currentPage
-    axios.get<UsersGetType>(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageCount}&page=${currentPageNumber}`)
-      .then((response) => {
-        this.props.changeIsFetched(false); // убираем крутилку
 
-        this.props.setUsers(response.data.items);
+    usersApi.getUsers(this.props.pageCount,currentPageNumber)
+      .then((data) => {
+        this.props.changeIsFetched(false); // убираем крутилку
+        this.props.setUsers(data.items);
       }
     );
   }

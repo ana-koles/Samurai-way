@@ -6,6 +6,7 @@ import loadingImg from '../../assets/spinning-dots.svg'
 import { Preloader } from '../common/Preloader';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { usersApi } from '../../redux/api';
 
 type UsersPropsType = {
   totalUsersCount: number
@@ -50,35 +51,24 @@ export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
           {user.followed === true
             ? <button onClick={() => {
               //unfollow the user
-              axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {
-                withCredentials: true,
-                headers: {
-                  "API-KEY": "f8f6fe16-bb80-454f-8b60-979f91c82094"
-                }
-              })
-              .then(response => {
-                if (response.data.resultCode === 0) {
-                  props.updateFollow(user.id)
-                }
-              })
 
-
-            }}>
-              Unfollow</button>
-
-            : <button onClick={() => {
-              //follow the user
-                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
-                  withCredentials: true,
-                  headers: {
-                    "API-KEY": "f8f6fe16-bb80-454f-8b60-979f91c82094"
-                  }
-                })
-                .then((response) => {
-                  if (response.data.resultCode === 0) {
+              usersApi.unfollowUser(user.id)
+                .then(data => {
+                  if (data.resultCode === 0) {
                     props.updateFollow(user.id)
                   }
                 })
+            }}>
+            Unfollow</button>
+
+            : <button onClick={() => {
+              //follow the user
+                usersApi.followUser(user.id)
+                  .then((data) => {
+                    if (data.resultCode === 0) {
+                      props.updateFollow(user.id)
+                    }
+                  })
               }}>Follow</button>
             }
         </div>
