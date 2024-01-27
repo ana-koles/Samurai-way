@@ -7,6 +7,7 @@ import { Preloader } from '../common/Preloader';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { usersApi } from '../../redux/api';
+import { useDispatch } from 'react-redux';
 
 type UsersPropsType = {
   totalUsersCount: number
@@ -14,8 +15,10 @@ type UsersPropsType = {
   currentPage: number
   setCurrentPage: (pageNumber: number) => void
   updateFollow: (userId: number) => void
+  toggleIsFollingInProgress: (userId: number, isFetched: boolean) => void
   users: UserType[]
   isFetched: boolean
+  isFollowingInProgress: Array<number>
 }
 
 export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
@@ -49,25 +52,28 @@ export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
           <NavLink to={'profile/' + user.id}><img src={user.photos.small != null ? user.photos.small : photo} alt="user" /></NavLink>
 
           {user.followed === true
-            ? <button onClick={() => {
+            ? <button disabled={props.isFollowingInProgress.some(id => id === user.id)} onClick={() => {
               //unfollow the user
-
+              props.toggleIsFollingInProgress(user.id, true);
               usersApi.unfollowUser(user.id)
                 .then(data => {
                   if (data.resultCode === 0) {
                     props.updateFollow(user.id)
                   }
+                  props.toggleIsFollingInProgress(user.id, false);
                 })
             }}>
             Unfollow</button>
 
-            : <button onClick={() => {
+            : <button disabled={props.isFollowingInProgress.some(id => id === user.id)} onClick={() => {
               //follow the user
+                props.toggleIsFollingInProgress(user.id, true);
                 usersApi.followUser(user.id)
                   .then((data) => {
                     if (data.resultCode === 0) {
                       props.updateFollow(user.id)
                     }
+                    props.toggleIsFollingInProgress(user.id, false);
                   })
               }}>Follow</button>
             }

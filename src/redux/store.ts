@@ -2,7 +2,7 @@ import { v1 } from "uuid"
 import { dialogsReducer } from "./dialogs-reducer"
 import { messageContactsReducer } from "./message-contacts-reducer"
 import { profileReducer } from "./profile-reducer"
-import { userReducer } from "./user-reducer"
+
 
 export type CallSubscriberType = (state: StateType) => void
 
@@ -234,7 +234,7 @@ let store = {
 
    /*  profileReducer(this._state.profilePage, action); */
     dialogsReducer(this._state.dialogsPage, action);
-    userReducer(this.user, action);
+
     messageContactsReducer(this._state.dialogsPage.messageContacts, action);
     this._callSubscriber(this._state);
 

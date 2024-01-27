@@ -1,6 +1,6 @@
 import { connect, useDispatch } from "react-redux";
 import { AppRootStateType } from "../../redux/redux-store";
-import { changeIsFetchedAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, updateFollowAC, UserType , UsersPageActionType } from "../../redux/users-reducer";
+import { changeIsFetchedAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, updateFollowAC, UserType, toggleIsFollingInProgressAC } from "../../redux/users-reducer";
 import { Component } from "react";
 import axios from "axios";
 import { Users } from "./Users";
@@ -14,6 +14,7 @@ type MapStateToPropsType = {
   totalUsersCount: number
   pageCount: number
   isFetched: boolean
+  isFollowingInProgress: Array<number>
 }
 
 
@@ -25,6 +26,7 @@ type MapDispatchToPropsType = {
   setCurrentPage: (currentPage: number) => void
   setTotalUsersCount: (totalUsersCount: number) => void
   changeIsFetched: (isFetched: boolean) => void
+  toggleIsFollingInProgress: (userId: number, isFetched: boolean) => void
 }
 
 export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsType;
@@ -80,7 +82,10 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
                   users={this.props.users}
                   updateFollow={this.props.updateFollow}
                   setCurrentPage={this.setCurrentPage}
-                  isFetched={this.props.isFetched}/>
+                  isFetched={this.props.isFetched}
+                  toggleIsFollingInProgress={this.props.toggleIsFollingInProgress}
+                  isFollowingInProgress={this.props.isFollowingInProgress}
+                  />
   }
 }
 
@@ -90,7 +95,8 @@ let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     currentPage: state.usersPage.currentPage,
     totalUsersCount: state.usersPage.totalUsersCount,
     pageCount: state.usersPage.pageCount,
-    isFetched: state.usersPage.isFetched
+    isFetched: state.usersPage.isFetched,
+    isFollowingInProgress: state.usersPage.isFollowingInProgress,
   }
 }
 
@@ -121,7 +127,8 @@ export const UsersContainer = connect(mapStateToProps, {
   setUsers: setUsersAC,
   setCurrentPage: setCurrentPageAC,
   setTotalUsersCount: setTotalUsersCountAC,
-  changeIsFetched: changeIsFetchedAC
+  changeIsFetched: changeIsFetchedAC,
+  toggleIsFollingInProgress: toggleIsFollingInProgressAC
 })(UsersComponent);
 
 

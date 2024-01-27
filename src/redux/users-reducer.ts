@@ -32,6 +32,7 @@ export type UsersType = {
   totalUsersCount: number
   pageCount: number
   isFetched: boolean
+  isFollowingInProgress: Array<number> // хранит id тех пользователей к-ые в процессе follow/unfollow
 }
 
 
@@ -85,7 +86,8 @@ let usersInitialState: UsersType = {
   currentPage: 1,
   totalUsersCount: 0,
   pageCount: 5,
-  isFetched: false
+  isFetched: false,
+  isFollowingInProgress: []
 }
 
 const UPDATE_FOLLOW = 'UPDATE-FOLLOW';
@@ -93,18 +95,21 @@ const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const CHANGE_IS_FETCHED = 'CHANGE_IS_FETCHED';
+const TOGGLE_IS_FOLLOWINT_IN_PROGRESS = 'TOGGLE_IS_FOLLOWINT_IN_PROGRESS';
 
 type UpdateFollowType = ReturnType<typeof updateFollowAC>;
 type SetUsersType = ReturnType<typeof setUsersAC>;
 type SetCurrentPage = ReturnType<typeof setCurrentPageAC>;
 type SetTotalUsersCount = ReturnType<typeof setTotalUsersCountAC>;
 type ChangeIsFetchedAT = ReturnType<typeof changeIsFetchedAC>;
+type ToggleIsFollowingInProgressAT = ReturnType<typeof toggleIsFollingInProgressAC>;
 
 export type UsersPageActionType = UpdateFollowType
     | SetUsersType
     | SetCurrentPage
     | SetTotalUsersCount
     | ChangeIsFetchedAT
+    |ToggleIsFollowingInProgressAT
 
 
 export const usersReducer = (state: UsersType = usersInitialState , action: UsersPageActionType): UsersType => {
@@ -127,6 +132,13 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
     case CHANGE_IS_FETCHED:
       return {...state, isFetched: action.isFetched};
 
+    case TOGGLE_IS_FOLLOWINT_IN_PROGRESS:
+      return {...state, isFollowingInProgress:
+          action.isFetched //если мы в процессе follow/unfollow, то добавить юзера в массив
+          ?  [...state.isFollowingInProgress, action.userId]
+          : state.isFollowingInProgress.filter(id => id !== action.userId) // если процесс закончился, юзера из массива убрать
+      }
+
       default:
         return state;
   }
@@ -147,5 +159,9 @@ export const setTotalUsersCountAC = (totalUsersCount: number) => {
 
 export const changeIsFetchedAC = (isFetched: boolean) => {
   return {type: CHANGE_IS_FETCHED, isFetched} as const;
+}
+
+export const toggleIsFollingInProgressAC = (userId: number, isFetched: boolean) => {
+  return {type: TOGGLE_IS_FOLLOWINT_IN_PROGRESS, userId, isFetched} as const;
 }
 
