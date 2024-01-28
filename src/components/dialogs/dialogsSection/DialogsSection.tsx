@@ -5,14 +5,8 @@ import { DialogFriend } from './dialogFriend/DialogFriend';
 import { Button } from '../../button/Button';
 import { DialogItemType, addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/dialogs-reducer';
 import { DialogsSectionPropsType } from './DialogsSectionContainer';
+import { Redirect } from 'react-router-dom';
 
-
-/* type DialogsSectionPropsType = {
-  dialog: DialogItemType[]
-  currentMessageText: string
-  addMessageToDialog: (userId: number, userName: string) => void
-  updateNewMessageText: (newText: string) => void
-} */
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
     //с помощью React.createRef
@@ -31,6 +25,10 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
   const addMessageToDialog = () => {
     props.addMessageToDialog(0, "Fluffy Gangster")
   }
+
+/*   if (!props.isAuth) {
+    return <Redirect to={'/login'}/>
+  } */
 
   return (
     <div className = {s.dialog_section}>

@@ -51,7 +51,7 @@ export const usersApi = {
 }
 
 export const authApi = {
-  getAuth() {
+  getMeAuth() {
     return instance.get<RequestType<UsersAuthDataType>>(`auth/me`)
       .then(res => res.data)
   }

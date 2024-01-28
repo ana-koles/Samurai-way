@@ -3,11 +3,12 @@ import { DialogItemType, DialogReducerActionType, addMessageToDialogAC, updateNe
 import { DialogsSection } from './DialogsSection';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../../redux/redux-store';
+import { withAuthRedirect } from '../../../hoc/withAuthRedirect';
 
 
 type MapStateToPropsType = {
   dialog: DialogItemType[],
-  currentMessageText: string
+  currentMessageText: string,
 }
 
 type MapDispatchToPropsType = {
@@ -15,35 +16,15 @@ type MapDispatchToPropsType = {
   updateNewMessageText: (newText: string) => void
 }
 
-export type DialogsSectionPropsType = MapDispatchToPropsType & MapStateToPropsType
+export type DialogsSectionPropsType = MapDispatchToPropsType & MapStateToPropsType;
 
-/* export const DialogsSectionContainer:React.FC<DialogsSectionPropsType> = (props) => {
-
-  let state = props.store.getState();
-
-  const updateNewMessageText = (newText: string) => {
-    props.store.dispatch(updateNewMessageTextAC(newText))
-  }
-
-  const addMessageToDialog = (userId: number, userName: string) => {
-    props.store.dispatch(addMessageToDialogAC(userId, userName))
-  }
-
-  return (
-    <DialogsSection
-          dialog={props.dialog}
-          currentMessageText={state.dialogsPage.currentMessageText}
-          addMessageToDialog={addMessageToDialog}
-          updateNewMessageText={updateNewMessageText}
-    />
-  );
-}; */
-
+//создаем контейнерную компоненту над DialogsSection (по факту возвращаем 2 контейнерные компоненты над DialogsSection)
+const AuthRedirectComponent = withAuthRedirect(DialogsSection);
 
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     dialog: state.dialogsPage.dialogs[1],
-    currentMessageText: state.dialogsPage.currentMessageText
+    currentMessageText: state.dialogsPage.currentMessageText,
   }
 }
 
@@ -58,4 +39,5 @@ const mapDispatchToProps = (dispatch: Dispatch<DialogReducerActionType>): MapDis
   }
 }
 
-export const DialogsSectionContainer = connect(mapStateToProps, mapDispatchToProps)(DialogsSection)
+
+export const DialogsSectionContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)

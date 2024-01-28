@@ -1,9 +1,7 @@
 import { Dispatch } from "redux";
-import { authApi, profileApi } from "./api";
-import { UserProfileType, setProfileAC } from "./profile-reducer";
+import { authApi } from "./api";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
-const SET_IS_AUTH = 'SET_IS_AUTH';
 
 let initialState: InitialStateType = {
   id: null,
@@ -33,6 +31,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
   }
 }
 
+//actions
 export const setAuthUserData = (userId: number | null, email: string|null, login: string|null) => {
   return {type: SET_AUTH_USER_DATA, payload: {
     userId,
@@ -41,19 +40,13 @@ export const setAuthUserData = (userId: number | null, email: string|null, login
   }} as const
 }
 
-export const setAuthUserDataTC = () => (dispatch: Dispatch) => {
-  authApi.getAuth()
+//thunk
+export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
+  authApi.getMeAuth()
     .then(data => {
       if (data.resultCode === 0) {
         let {id, email, login} = data.data;
         dispatch(setAuthUserData(id, email, login));
-
-        if (id !== undefined) {
-          profileApi.getProfileData(id)
-            .then(res => {
-            dispatch(setProfileAC(res.data))
-          })
-        }
       }
     })
 }

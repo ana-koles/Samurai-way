@@ -5,18 +5,18 @@ import axios from "axios";
 import { ProfileReducerActionType, UserProfileType, setProfileAC, setProfileTC } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 type MapStateToPropsType = {
   profile: UserProfileType | null
 }
 
 type MapDispatchToPropsType = {
-/*   setProfile: (userProfile: UserProfileType) => void */
   setProfile: (userId: number) => void
 }
 
-//типизация useID
+//типизация userID
 type PathParamsType = {
   userId: string,
 }
@@ -41,10 +41,12 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
   }
 }
 
-const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
+//создаем контейнерную компоненту над ProfileComponent (по факту возвращаем 2 контейнерные компоненты над ProfileComponent)
+const  AuthRedirectComponent = withAuthRedirect(ProfileComponent);
 
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
   }
 }
 
@@ -57,7 +59,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 } */
 
 //тоже вернет новую компоненту, по факту тоже отрисуется ProfileComponent и закинутся данные из URL
-const ProfileComponentWithURLData = withRouter(ProfileComponent);
+const ProfileComponentWithURLData = withRouter(AuthRedirectComponent);
 
 //connect вернет новую компоненту, по факту отрисуется ProfileComponent и закинет данные из store
 export const ProfileContainer = connect(mapStateToProps, {setProfile: setProfileTC})(ProfileComponentWithURLData)

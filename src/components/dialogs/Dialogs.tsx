@@ -9,19 +9,11 @@ type DialogsPropsType = {
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
- /*  let state = props.store.getState(); */
-
-  /* let dialogWithContact = state.dialogsPage.dialogs[1]; */ // сюда надо как-то закинуть объект с нужными диалогами
-
+  
   return (
     <div className={s.content}>
-
-      <DialogsSectionContainer
-/*                   store={props.store}
-                  dialog={dialogWithContact} */
-        />
+      <DialogsSectionContainer/>
       <ChatMenu  />
-
     </div>
   );
 };

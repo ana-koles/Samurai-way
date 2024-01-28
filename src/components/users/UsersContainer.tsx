@@ -36,10 +36,6 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
 
   constructor (props: UsersContainerPropsType) {
     super(props)
-/*     if (this.props.users.length === 0) { //чтобы данные загружались сразу при загрузке страницы
-      axios.get<UsersGetType>('https://social-network.samuraijs.com/api/1.0/users')
-      .then((response) => this.props.setUsers(response.data.items))
-    } */
   }
 
   componentDidMount(): void {

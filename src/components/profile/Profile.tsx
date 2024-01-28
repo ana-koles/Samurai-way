@@ -5,35 +5,27 @@ import { connect } from 'react-redux';
 import { UserProfileType } from '../../redux/profile-reducer';
 import photo from '../../assets/cat-profile2.jpg'
 import { Preloader } from '../common/Preloader';
+import noPhoto from '../../assets/no_photo.jpg'
 
 type ProfilePropsType = {
- /*  store: any */
-  /* posts: PostType[]
-  currentText: string */
-  /* updateNewPostText: (text: string) => void
-  addPost: () => void */
-  /* dispatch: (action: ActionType) => void
-  user: UserType */
   profile: UserProfileType | null
 }
 
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
-
   if (!props.profile ) {
     return (<Preloader/>)
   }
 
   return (
     <div className={s.content}>
-
         <div className={s.profile_wrapper}>
           <div className ={s.content_wrapper}>
           <div /* className={props.profile.photos.large === null ? `${s.photo} ${s.photoBackground}` : `${s.photo}`} */>
             {props.profile.photos.large !== null ? (
               <img className={s.photo} src={props.profile.photos.large} alt="Profile Photo" />
             ) : (
-              <span>No Photo</span>
+              <img className={s.photo} src={noPhoto} alt="No Profile Photo" />
             )}
             </div>
             <div className={s.info_wrapper}>
@@ -46,15 +38,7 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
           </div>
         </div>
 
-         {/* <PostSection
-            posts={props.posts}
-            currentText={props.currentText}
-            dispatch={props.dispatch}
-            user={props.user}
-            updateNewPostText={props.updateNewPostText}
-            addPost={props.addPost} */}
-
-            <PostSectionContainer /* store={props.store} *//>
+        <PostSectionContainer /* store={props.store} *//>
     </div>
   );
 };
