@@ -2,9 +2,10 @@ import { connect } from "react-redux";
 import { Header } from "./Header";
 import { AppRootStateType } from "../../redux/redux-store";
 import { Component } from "react";
-import { setAuthUserData } from "../../redux/auth-reducer";
+import { setAuthUserData, setAuthUserDataTC } from "../../redux/auth-reducer";
 import axios from "axios";
-import { UserProfile, setProfileAC } from "../../redux/profile-reducer";
+import { UserProfileType, setProfileAC } from "../../redux/profile-reducer";
+import { authApi } from "../../redux/api";
 
 export type UserDataType = {
   id: number | null,
@@ -16,35 +17,20 @@ export type UserDataType = {
 type MapStateToProps = {
   login: string | null
   isAuth: boolean
-  profile: UserProfile | null
+  profile: UserProfileType | null
 }
 
 type MapDispatchToPropsType = {
-  setAuthUserData: (userId: number | null, email: string|null, login: string|null) => void
-  setProfile: (userProfile: UserProfile) => void
+  setAuthUserData: () => void
+  setProfile: (userProfile: UserProfileType) => void
 }
 
 type HeaderContainerPropsType = MapStateToProps & MapDispatchToPropsType
 
 class HeaderComponent extends Component<HeaderContainerPropsType> {
 
-/*   withCredentials: true используется для включения передачи куки (cookies) вместе с запросом.
-Это особенно важно, когда вы обращаетесь к серверу с использованием кросс-доменных запросов
-(CORS - Cross-Origin Resource Sharing).*/
   componentDidMount(): void {
-    axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {withCredentials: true})
-      .then(res => {
-        if (res.data.resultCode === 0) {
-          let {id, email, login} = res.data.data;
-          this.props.setAuthUserData(id, email, login);
-          return id;
-        }
-      })
-      .then(res => {
-        return axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + res);
-      })
-      .then((res) => this.props.setProfile(res.data))
-
+    this.props.setAuthUserData()
   }
 
   render () {
@@ -60,4 +46,5 @@ const mapStateToProps = (state: AppRootStateType): MapStateToProps => {
   }
 }
 
-export const HeaderContainer = connect(mapStateToProps, {setAuthUserData, setProfile: setProfileAC})(HeaderComponent)
+export const HeaderContainer = connect(mapStateToProps, {setAuthUserData: setAuthUserDataTC,
+setProfile: setProfileAC})(HeaderComponent)

@@ -1,6 +1,6 @@
 import { connect, useDispatch } from "react-redux";
 import { AppRootStateType } from "../../redux/redux-store";
-import { changeIsFetchedAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, updateFollowAC, UserType, toggleIsFollingInProgressAC } from "../../redux/users-reducer";
+import { changeIsFetchedAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, updateFollowAC, UserType, toggleIsFollingInProgressAC, getUsersTC } from "../../redux/users-reducer";
 import { Component } from "react";
 import axios from "axios";
 import { Users } from "./Users";
@@ -18,24 +18,21 @@ type MapStateToPropsType = {
 }
 
 
-
 //типизация пропсов
 type MapDispatchToPropsType = {
   updateFollow: (userId: number) => void //возможно надо будет исправить на string
-  setUsers: (users: UserType[]) => void
   setCurrentPage: (currentPage: number) => void
-  setTotalUsersCount: (totalUsersCount: number) => void
-  changeIsFetched: (isFetched: boolean) => void
   toggleIsFollingInProgress: (userId: number, isFetched: boolean) => void
+  getUsers: (pageCount: number, currentPage: number) => void
 }
 
 export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsType;
 
-/* Если вы не определяете конструктор в своем классе, React будет использовать конструктор из базового класса Component, который инициализирует состояние (this.state) и пропсы (this.props).
+/* Если вы не определяете конструктор в своем классе, React будет использовать конструктор из
+базового класса Component, который инициализирует состояние (this.state) и пропсы (this.props).
 Этот конструктор, в свою очередь, устанавливает this.props в значения, переданные компоненте в момент создания. */
 
 export class UsersComponent extends Component<UsersContainerPropsType>{
-
 
   constructor (props: UsersContainerPropsType) {
     super(props)
@@ -47,31 +44,15 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
 
   componentDidMount(): void {
     //чтобы данные загружались сразу при загрузке страницы
-      this.props.changeIsFetched(true); //запускаем крутилку
-
-      usersApi.getUsers(this.props.pageCount,this.props.currentPage)
-        .then((data) => {
-          this.props.changeIsFetched(false); // убираем крутилка
-
-          this.props.setUsers(data.items);
-          this.props.setTotalUsersCount(data.totalCount / 500);
-        });
-
+      this.props.getUsers(this.props.pageCount,this.props.currentPage)
   }
 
   setCurrentPage = (currentPageNumber: number) => {
     this.props.setCurrentPage(currentPageNumber);
-    this.props.changeIsFetched(true); //запускаем крутилку
-
     //здесь в &page=${currentPageNumber}`) нужно именно указывать currentPageNumber
     // а не this.props.currentPAge, потому что к этому момоенту запрос не будет знать обновленное значение currentPage
 
-    usersApi.getUsers(this.props.pageCount,currentPageNumber)
-      .then((data) => {
-        this.props.changeIsFetched(false); // убираем крутилку
-        this.props.setUsers(data.items);
-      }
-    );
+    this.props.getUsers(this.props.pageCount,currentPageNumber)
   }
 
   render () { //обязательно наличие метода render(), чтобы вернуть JSX
@@ -124,11 +105,9 @@ export const UsersContainer = connect(mapStateToProps, {
   //Здесь автоматически connect к каждому значению свойства применяет dispatch,
   // создавая таким образом callback как в ф-ции mapDispatchToProps
   updateFollow: updateFollowAC,
-  setUsers: setUsersAC,
   setCurrentPage: setCurrentPageAC,
-  setTotalUsersCount: setTotalUsersCountAC,
-  changeIsFetched: changeIsFetchedAC,
-  toggleIsFollingInProgress: toggleIsFollingInProgressAC
+  toggleIsFollingInProgress: toggleIsFollingInProgressAC,
+  getUsers: getUsersTC
 })(UsersComponent);
 
 
@@ -137,8 +116,6 @@ export const UsersContainer = connect(mapStateToProps, {
 
 /* export const UsersContainer = connect(mapStateToProps, {
   updateFollow,
-  setUsers,
   setCurrentPage,
-  setTotalUsersCount,
   changeIsFetched,
 })(UsersComponent); */

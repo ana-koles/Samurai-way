@@ -1,3 +1,6 @@
+import { Dispatch } from "redux";
+import { authApi, profileApi } from "./api";
+import { UserProfileType, setProfileAC } from "./profile-reducer";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
 const SET_IS_AUTH = 'SET_IS_AUTH';
@@ -25,9 +28,6 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
     case SET_AUTH_USER_DATA: {
       return {...state, ...action.payload, isAuth: true};
     }
-
-
-
     default:
       return state
   }
@@ -41,3 +41,19 @@ export const setAuthUserData = (userId: number | null, email: string|null, login
   }} as const
 }
 
+export const setAuthUserDataTC = () => (dispatch: Dispatch) => {
+  authApi.getAuth()
+    .then(data => {
+      if (data.resultCode === 0) {
+        let {id, email, login} = data.data;
+        dispatch(setAuthUserData(id, email, login));
+
+        if (id !== undefined) {
+          profileApi.getProfileData(id)
+            .then(res => {
+            dispatch(setProfileAC(res.data))
+          })
+        }
+      }
+    })
+}

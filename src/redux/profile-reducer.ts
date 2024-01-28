@@ -1,4 +1,6 @@
+import { Dispatch } from "redux"
 import { v1 } from "uuid"
+import { profileApi } from "./api"
 
 export type PostType = {
   id: string
@@ -10,33 +12,33 @@ export type PostType = {
 export type ProfilePageType = {
   currentText: string
   posts: PostType[]
-  profile: UserProfile | null
+  profile: UserProfileType | null
 }
 
 type ContactsType = {
-  facebook: string | null;
-  website: string | null;
-  vk: string | null;
-  twitter: string | null;
-  instagram: string | null;
-  youtube: string | null;
-  github: string | null;
-  mainLink: string | null;
+  facebook: string | null
+  website: string | null
+  vk: string | null
+  twitter: string | null
+  instagram: string | null
+  youtube: string | null
+  github: string | null
+  mainLink: string | null
 };
 
 type PhotosType = {
-  small: string | null;
-  large: string | null;
+  small: string | null
+  large: string | null
 };
 
-export type UserProfile = {
-  aboutMe: string;
-  contacts: ContactsType;
-  lookingForAJob: boolean;
-  lookingForAJobDescription: string | null;
-  fullName: string;
-  userId: number;
-  photos: PhotosType;
+export type UserProfileType = {
+  userId: number
+  lookingForAJob: boolean
+  lookingForAJobDescription: string | null
+  fullName: string
+  contacts: ContactsType
+  photos: PhotosType
+  aboutMe?: string
 };
 
 const ADD_POST = 'ADD-POST' as const;
@@ -103,4 +105,9 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
 
 export const addPostAC = (name: string) => ({type: ADD_POST, userName: name} as const);
 export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const);
-export const setProfileAC = (user: UserProfile) => ({type: SET_PROFILE, user})
+export const setProfileAC = (user: UserProfileType) => ({type: SET_PROFILE, user})
+
+export const setProfileTC = (userId: number) => (dispatch: Dispatch) => {
+  profileApi.getProfileData(userId)
+  .then((res) => dispatch(setProfileAC(res.data)))
+}

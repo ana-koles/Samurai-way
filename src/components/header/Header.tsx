@@ -4,13 +4,13 @@ import photo from '../../assets/cat-profile2.jpg';
 import s from './Header.module.css'
 import { NavLink } from 'react-router-dom';
 import { UserDataType } from './HeaderComponent';
-import { UserProfile } from '../../redux/profile-reducer';
+import { UserProfileType } from '../../redux/profile-reducer';
 
 
 type HeaderPropsType = {
   login: string | null
   isAuth: boolean
-  profile: UserProfile | null
+  profile: UserProfileType | null
 }
 
 export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {

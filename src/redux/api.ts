@@ -1,5 +1,6 @@
 import axios from "axios"
 import { UserType } from "./users-reducer"
+import { UserProfileType } from "./profile-reducer"
 
 type UsersGetType = {
   items: UserType[]
@@ -7,11 +8,21 @@ type UsersGetType = {
   error: null | string
 }
 
+type UsersAuthDataType = {
+  id: number,
+  email: string,
+  login: string
+}
+
 type RequestType<T = {}> = {
   resultCode: number
   messages: string[],
   data: T
 }
+
+/*   withCredentials: true используется для включения передачи куки (cookies) вместе с запросом.
+Это особенно важно, когда вы обращаетесь к серверу с использованием кросс-доменных запросов
+(CORS - Cross-Origin Resource Sharing).*/
 
 const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -23,7 +34,7 @@ const instance = axios.create({
 
 export const usersApi = {
   getUsers(pageCount: number, currentPage: number) {
-    //возвращаем не response, response.data
+    //возвращаем не response, а response.data
     return instance.get<UsersGetType>(`users?count=${pageCount}&page=${currentPage}`)
             .then(response => response.data)
   },
@@ -39,5 +50,18 @@ export const usersApi = {
   }
 }
 
+export const authApi = {
+  getAuth() {
+    return instance.get<RequestType<UsersAuthDataType>>(`auth/me`)
+      .then(res => res.data)
+  }
+}
+
+
+export const profileApi = {
+  getProfileData(userId: number) {
+    return instance.get<UserProfileType>('profile/' + userId);
+  }
+}
 
 

@@ -1,17 +1,5 @@
-import { v1 } from "uuid"
-import photo from '../assets/friend4.jpg'
-
-/* export type UserType = {
-  id: string
-  photo: string
-  followed: boolean
-  name:  string
-  status: string
-  location: {
-    city: string
-    country: string
-  }
-} */
+import { Dispatch } from "redux"
+import { usersApi } from "./api"
 
 
 export type UserType = {
@@ -165,3 +153,13 @@ export const toggleIsFollingInProgressAC = (userId: number, isFetched: boolean) 
   return {type: TOGGLE_IS_FOLLOWINT_IN_PROGRESS, userId, isFetched} as const;
 }
 
+export const getUsersTC = (pageCount: number, currentPage: number ) => (dispatch: Dispatch) => {
+  dispatch(changeIsFetchedAC(true)); //запускаем крутилку
+
+  usersApi.getUsers(pageCount, currentPage)
+    .then((data) => {
+      dispatch(changeIsFetchedAC(false)); // убираем крутилка
+      dispatch(setUsersAC(data.items));
+      dispatch(setTotalUsersCountAC(data.totalCount / 500));
+    });
+}

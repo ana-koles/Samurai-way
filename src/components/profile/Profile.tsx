@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Profile.module.css'
 import { PostSectionContainer } from './postSection/PostSectionContainer';
 import { connect } from 'react-redux';
-import { UserProfile } from '../../redux/profile-reducer';
+import { UserProfileType } from '../../redux/profile-reducer';
 import photo from '../../assets/cat-profile2.jpg'
 import { Preloader } from '../common/Preloader';
 
@@ -14,7 +14,7 @@ type ProfilePropsType = {
   addPost: () => void */
   /* dispatch: (action: ActionType) => void
   user: UserType */
-  profile: UserProfile | null
+  profile: UserProfileType | null
 }
 
 

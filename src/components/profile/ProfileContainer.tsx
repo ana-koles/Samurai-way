@@ -2,17 +2,18 @@ import { Component } from "react";
 import { AppRootStateType } from "../../redux/redux-store";
 import { Profile } from "./Profile";
 import axios from "axios";
-import { ProfileReducerActionType, UserProfile, setProfileAC } from "../../redux/profile-reducer";
+import { ProfileReducerActionType, UserProfileType, setProfileAC, setProfileTC } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 type MapStateToPropsType = {
-  profile: UserProfile | null
+  profile: UserProfileType | null
 }
 
 type MapDispatchToPropsType = {
-  setProfile: (userProfile: UserProfile) => void
+/*   setProfile: (userProfile: UserProfileType) => void */
+  setProfile: (userId: number) => void
 }
 
 //типизация useID
@@ -21,20 +22,16 @@ type PathParamsType = {
 }
 
 type OnPropsType = MapStateToPropsType & MapDispatchToPropsType;
-
 type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OnPropsType;
 
-
 class ProfileComponent extends Component<ProfileContainerPropsType> {
-
   componentDidMount(): void {
     let userId = this.props.match.params.userId;
     if (!userId) {
       userId = '2';
     }
 
-    axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + +userId)
-      .then((res) => this.props.setProfile(res.data))
+    this.props.setProfile(+userId)
   }
 
   render() {
@@ -51,17 +48,17 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<ProfileReducerActionType>): MapDispatchToPropsType => {
+/* const mapDispatchToProps = (dispatch: Dispatch<ProfileReducerActionType>): MapDispatchToPropsType => {
     return {
-      setProfile: (userProfile: UserProfile) => { //возможно надо удет исправить на string
+      setProfile: (userProfile: UserProfileType) => { //возможно надо удет исправить на string
       dispatch(setProfileAC(userProfile))
     }
   }
-}
+} */
 
 //тоже вернет новую компоненту, по факту тоже отрисуется ProfileComponent и закинутся данные из URL
 const ProfileComponentWithURLData = withRouter(ProfileComponent);
 
 //connect вернет новую компоненту, по факту отрисуется ProfileComponent и закинет данные из store
-export const ProfileContainer = connect(mapStateToProps, {setProfile: setProfileAC})(ProfileComponentWithURLData)
+export const ProfileContainer = connect(mapStateToProps, {setProfile: setProfileTC})(ProfileComponentWithURLData)
 
