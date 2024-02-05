@@ -6,6 +6,7 @@ import { UserProfileType } from '../../redux/profile-reducer';
 import photo from '../../assets/cat-profile2.jpg'
 import { Preloader } from '../common/Preloader';
 import noPhoto from '../../assets/no_photo.jpg'
+import { ProfileStatus } from './ProfileStatus';
 
 type ProfilePropsType = {
   profile: UserProfileType | null
@@ -30,6 +31,7 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
             </div>
             <div className={s.info_wrapper}>
               <h2>{props.profile.fullName}</h2>
+              <ProfileStatus status={'Hello everyone'}/>
               <p>About me: {props.profile.aboutMe}</p>
               <p>Instagram: {props.profile.contacts.instagram}</p>
               <p>Looking for a job: {props.profile.lookingForAJob}</p>
