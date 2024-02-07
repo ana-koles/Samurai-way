@@ -1,19 +1,21 @@
 import { Component } from "react";
 import { AppRootStateType } from "../../redux/redux-store";
 import { Profile } from "./Profile";
-import axios from "axios";
-import { ProfileReducerActionType, UserProfileType, setProfileAC, setProfileTC } from "../../redux/profile-reducer";
+import { UserProfileType, setProfileTC, setStatusTC, updateStatusTC } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
-import { Dispatch, compose } from "redux";
-import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import {  compose } from "redux";
+import {  RouteComponentProps, withRouter } from "react-router-dom";
+
 
 type MapStateToPropsType = {
   profile: UserProfileType | null
+  status: string
 }
 
 type MapDispatchToPropsType = {
   setProfile: (userId: number) => void
+  setStatus: (userId: number) => void
+  updateStatus: (status: string) => void
 }
 
 //типизация userID
@@ -28,15 +30,19 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
   componentDidMount(): void {
     let userId = this.props.match.params.userId;
     if (!userId) {
-      userId = '2';
+      userId = '30464';
     }
-
-    this.props.setProfile(+userId)
+    this.props.setProfile(+userId);
+    this.props.setStatus(+userId);
   }
 
   render() {
     return (
-      <Profile {...this.props}/>
+      <Profile {...this.props}
+        status={this.props.status}
+        profile={this.props.profile}
+        updateStatus={this.props.updateStatus}
+      />
     )
   }
 }
@@ -47,6 +53,7 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     profile: state.profilePage.profile,
+    status: state.profilePage.status
   }
 }
 
@@ -65,7 +72,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 //export const ProfileContainer = connect(mapStateToProps, {setProfile: setProfileTC})(ProfileComponentWithURLData)
 
 export const ProfileContainer = compose<React.ComponentType>( //говорим что передаем компоненту
-  connect(mapStateToProps, {setProfile: setProfileTC}),
+  connect(mapStateToProps, {setProfile: setProfileTC, setStatus: setStatusTC, updateStatus: updateStatusTC}),
   withRouter,
   //withAuthRedirect
 )(ProfileComponent)

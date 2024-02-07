@@ -14,7 +14,7 @@ type UsersAuthDataType = {
   login: string
 }
 
-type RequestType<T = {}> = {
+type ResponseType<T = {}> = {
   resultCode: number
   messages: string[],
   data: T
@@ -40,19 +40,19 @@ export const usersApi = {
   },
 
   unfollowUser(userId: number){
-    return instance.delete<RequestType>(`follow/${userId}`)
+    return instance.delete<ResponseType>(`follow/${userId}`)
             .then(res => res.data)
   },
 
   followUser(userId: number) {
-    return instance.post<RequestType>(`follow/${userId}`)
+    return instance.post<ResponseType>(`follow/${userId}`)
               .then(res => res.data)
   }
 }
 
 export const authApi = {
   getMeAuth() {
-    return instance.get<RequestType<UsersAuthDataType>>(`auth/me`)
+    return instance.get<ResponseType<UsersAuthDataType>>(`auth/me`)
       .then(res => res.data)
   }
 }
@@ -61,7 +61,16 @@ export const authApi = {
 export const profileApi = {
   getProfileData(userId: number) {
     return instance.get<UserProfileType>('profile/' + userId);
+  },
+
+  getStatus(userId: number) {
+    return instance.get<string>(`profile/status/${userId}`)
+  },
+
+  updateStatus(status: string) {
+    return instance.put<ResponseType>('/profile/status', {status: status} )
   }
+
 }
 
 

@@ -10,6 +10,8 @@ import { ProfileStatus } from './ProfileStatus';
 
 type ProfilePropsType = {
   profile: UserProfileType | null
+  status: string
+  updateStatus: (status: string) => void
 }
 
 
@@ -31,7 +33,7 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
             </div>
             <div className={s.info_wrapper}>
               <h2>{props.profile.fullName}</h2>
-              <ProfileStatus status={'Hello everyone'}/>
+              <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
               <p>About me: {props.profile.aboutMe}</p>
               <p>Instagram: {props.profile.contacts.instagram}</p>
               <p>Looking for a job: {props.profile.lookingForAJob}</p>
