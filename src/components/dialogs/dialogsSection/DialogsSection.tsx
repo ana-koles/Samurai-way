@@ -1,11 +1,10 @@
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import s from './DialogsSection.module.css'
 import { MyDialog } from './myDialog/MyDialog';
 import { DialogFriend } from './dialogFriend/DialogFriend';
 import { Button } from '../../button/Button';
-import { DialogItemType, addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/dialogs-reducer';
 import { DialogsSectionPropsType } from './DialogsSectionContainer';
-import { Redirect } from 'react-router-dom';
+import { DialogFormDataType, DialogReduxForm } from './dialogForm/DialogForm';
 
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
@@ -16,15 +15,14 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
  */
   const newDialogMessage:React.LegacyRef<HTMLTextAreaElement> = React.createRef();
 
-  const onChangeHandler = () => {
-    if (newDialogMessage.current) {
-      props.updateNewMessageText(newDialogMessage.current.value)
-    }
+
+
+  const addMessageToDialog = (values: DialogFormDataType) => { //приходят данные из формы
+    let newMessage = values.currentMessageText
+    props.addMessageToDialog(0, "Fluffy Gangster", newMessage)
   }
 
-  const addMessageToDialog = () => {
-    props.addMessageToDialog(0, "Fluffy Gangster")
-  }
+
 
 /*   if (!props.isAuth) {
     return <Redirect to={'/login'}/>
@@ -38,7 +36,8 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
 
         {props.dialog.map(d => d.name === 'Fluffy Gangster' ?  <MyDialog dialog={d} key={d.id}/> : <DialogFriend dialog={d} key={d.id}/>)}
 
-        <div className={s.message_input}>
+        <DialogReduxForm onSubmit={addMessageToDialog}/>
+        {/* <div className={s.message_input}>
           <textarea
                   ref={newDialogMessage}
                   placeholder='Enter message...'
@@ -46,7 +45,7 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
                   onChange={onChangeHandler}>
           </textarea>
           <Button name='post' callback={addMessageToDialog}/>
-        </div>
+        </div> */}
     </div>
   );
 };

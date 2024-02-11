@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import { DialogItemType, DialogReducerActionType, addMessageToDialogAC, updateNewMessageTextAC } from '../../../redux/dialogs-reducer';
+import { DialogItemType, DialogReducerActionType, addMessageToDialogAC } from '../../../redux/dialogs-reducer';
 import { DialogsSection } from './DialogsSection';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../../redux/redux-store';
@@ -9,12 +9,10 @@ import { compose } from 'redux';
 
 type MapStateToPropsType = {
   dialog: DialogItemType[],
-  currentMessageText: string,
 }
 
 type MapDispatchToPropsType = {
-  addMessageToDialog: (userId: number, userName: string) => void
-  updateNewMessageText: (newText: string) => void
+  addMessageToDialog: (userId: number, userName: string, newMessage: string) => void
 }
 
 export type DialogsSectionPropsType = MapDispatchToPropsType & MapStateToPropsType;
@@ -25,18 +23,14 @@ export type DialogsSectionPropsType = MapDispatchToPropsType & MapStateToPropsTy
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     dialog: state.dialogsPage.dialogs[1],
-    currentMessageText: state.dialogsPage.currentMessageText,
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<DialogReducerActionType>): MapDispatchToPropsType => {
   return {
-    addMessageToDialog: (userId, userName) => {
-      dispatch(addMessageToDialogAC(userId, userName))
+    addMessageToDialog: (userId, userName, newMessage) => {
+      dispatch(addMessageToDialogAC(userId, userName, newMessage))
     },
-    updateNewMessageText: (newText) => {
-      dispatch(updateNewMessageTextAC(newText))
-    }
   }
 }
 

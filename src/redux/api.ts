@@ -14,6 +14,12 @@ type UsersAuthDataType = {
   login: string
 }
 
+export type LoginDataType = {
+  email: string,
+  password: string
+  rememberMe: boolean | null
+}
+
 type ResponseType<T = {}> = {
   resultCode: number
   messages: string[],
@@ -54,6 +60,14 @@ export const authApi = {
   getMeAuth() {
     return instance.get<ResponseType<UsersAuthDataType>>(`auth/me`)
       .then(res => res.data)
+  },
+  login(data:LoginDataType ) {
+    console.log(data)
+    debugger;
+    return instance.put<ResponseType>('/auth/login', data)
+  },
+  logout() {
+    return instance.delete<ResponseType>('/auth/login')
   }
 }
 
@@ -72,5 +86,6 @@ export const profileApi = {
   }
 
 }
+
 
 

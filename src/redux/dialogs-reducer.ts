@@ -14,16 +14,13 @@ type MessageContactsType = Array<{id: number, name: string}>
 
 export type DialogPageType = {
   messageContacts: MessageContactsType
-  currentMessageText: string
   dialogs: DialogType
 }
 
 const ADD_MESSAGE_TO_DIALOG = 'ADD-MESSAGE-TO-DIALOG';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
-type UpdateNewMessageTextAT = ReturnType<typeof updateNewMessageTextAC>;
 type AddMessageToDialogAT = ReturnType<typeof addMessageToDialogAC>;
-export type DialogReducerActionType = UpdateNewMessageTextAT | AddMessageToDialogAT;
+export type DialogReducerActionType =  AddMessageToDialogAT;
 
 let dialogsInitialState: DialogPageType = {
   messageContacts: [
@@ -35,7 +32,6 @@ let dialogsInitialState: DialogPageType = {
     { id: 5, name: 'Choupette' },
     { id: 6, name: 'Pumpkine' },
   ],
-  currentMessageText: '',
   dialogs: {
     [1]: [
       {
@@ -100,24 +96,21 @@ export const dialogsReducer = (state: DialogPageType = dialogsInitialState, acti
       const newMessage = {
         id: v1(),
         name: 'Fluffy Gangster',
-        message: state.currentMessageText
+        message: action.newMessage
       }
       let copyState = {...state, currentMessageText: '', dialogs: {...state.dialogs, [action.userId + 1]: [...state.dialogs[action.userId + 1], newMessage]}}
       return copyState;
-
-    case UPDATE_NEW_MESSAGE_TEXT:
-      return {...state, currentMessageText: action.newText};
 
     default:
       return state
   }
 }
 
-export const updateNewMessageTextAC = (text: string) => ({type: 'UPDATE-NEW-MESSAGE-TEXT', newText: text } as const)
-export const addMessageToDialogAC = (userId: number, userName: string) => {
+export const addMessageToDialogAC = (userId: number, userName: string, newMessage: string) => {
   return {
     type: 'ADD-MESSAGE-TO-DIALOG',
     userId,
-    userName
+    userName,
+    newMessage
   } as const
 }

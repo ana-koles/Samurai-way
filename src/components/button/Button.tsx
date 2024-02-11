@@ -2,18 +2,22 @@ import React from 'react';
 
 type ButtonPropsType = {
   name: string
-  callback: () => void
+  callback?: () => void
+  type?: 'button' | 'submit' | 'reset'
 }
 
 export const Button:React.FC<ButtonPropsType> = (props) => {
 
 const onClickHandler = () => {
-  props.callback();
+  if( props.callback) {
+    props.callback();
+  }
+
 }
 
   return (
 
-    <button onClick={onClickHandler}>{props.name}</button>
+    <button type={props.type ? props.type : 'button'} onClick={onClickHandler}>{props.name}</button>
 
   );
 };

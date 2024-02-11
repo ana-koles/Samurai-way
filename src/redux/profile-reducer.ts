@@ -10,7 +10,6 @@ export type PostType = {
 }
 
 export type ProfilePageType = {
-  currentText: string
   posts: PostType[]
   profile: UserProfileType | null
   status: string
@@ -43,21 +42,18 @@ export type UserProfileType = {
 };
 
 const ADD_POST = 'ADD-POST' as const;
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT' as const;
 const SET_PROFILE = 'SET_PROFILE'as const;
 const SET_STATUS = 'SET_STATUS' as const
 
 //types
 type AddPostAT = ReturnType<typeof addPostAC>;
-type UpdateNewPostTextAT = ReturnType<typeof updateNewPostTextAC>;
 type SetProfileAT = ReturnType<typeof setProfileAC>;
 type SetStatusAT = ReturnType<typeof setStatusAC>
-export type ProfileReducerActionType = AddPostAT | UpdateNewPostTextAT | SetProfileAT | SetStatusAT;
+export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT;
 
 
 
 let profileInitialState: ProfilePageType = {
-  currentText: '',
   posts: [
     {
       id: v1(),
@@ -94,14 +90,11 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
       const newPost = {
         id: v1(),
         name: action.userName,
-        message: state.currentText,
+        message: action.newMessage,
         likes: 0
       }
       let copyState = {...state, posts: [newPost, ...state.posts], currentText: ''};
       return copyState;
-
-    case UPDATE_NEW_POST_TEXT:
-      return {...state, currentText: action.newText};
 
     case SET_STATUS:
       return {...state, status: action.status};
@@ -112,8 +105,7 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
 }
 
 //actions
-export const addPostAC = (name: string) => ({type: ADD_POST, userName: name} as const);
-export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const);
+export const addPostAC = (name: string, newMessage: string) => ({type: ADD_POST, userName: name, newMessage} as const);
 export const setProfileAC = (user: UserProfileType) => ({type: SET_PROFILE, user})
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status})
 
