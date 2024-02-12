@@ -1,5 +1,5 @@
-import thunkMidleware from 'redux-thunk';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
+import thunkMidleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux';
 import { profileReducer } from './profile-reducer';
 import { dialogsReducer } from './dialogs-reducer';
 import { usersReducer } from './users-reducer';
@@ -20,6 +20,8 @@ export let rootReducer = combineReducers({
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMidleware));
 export type AppRootStateType  = ReturnType<typeof rootReducer>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AnyAction>; //чтобы можно было в санке диспачить другие санки
+export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AnyAction>;
 
 
 

@@ -10,7 +10,7 @@ import { minLengthCreator, required } from '../../utils/validators/validators';
 export type LoginFormPropsType = {
   email: string
   password: string
-  rememberMe: boolean
+  rememberMe: boolean | false
 }
 
 type LoginPageType = {
@@ -20,8 +20,8 @@ type LoginPageType = {
 export const LoginPage: React.FC<LoginPageType> = (props: LoginPageType) => {
   const dispatch = useDispatch();
 
-  const onSubmit = (formData: LoginFormPropsType) => { //будут содержать данные из формы и вызыватся при отправке формы на сервер
-    dispatch(loginTC(formData))
+  const onSubmit = (data: LoginFormPropsType) => { //будут содержать данные из формы и вызыватся при отправке формы на сервер
+    dispatch(loginTC(data.email, data.password, data.rememberMe))
   }
 
   return (

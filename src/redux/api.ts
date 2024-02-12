@@ -61,10 +61,8 @@ export const authApi = {
     return instance.get<ResponseType<UsersAuthDataType>>(`auth/me`)
       .then(res => res.data)
   },
-  login(data:LoginDataType ) {
-    console.log(data)
-    debugger;
-    return instance.put<ResponseType>('/auth/login', data)
+  login(email: string, password: string, rememberMe: boolean = false ) {
+    return instance.put<ResponseType>('/auth/login', {email, password, rememberMe})
   },
   logout() {
     return instance.delete<ResponseType>('/auth/login')

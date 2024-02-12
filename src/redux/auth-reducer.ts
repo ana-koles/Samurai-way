@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
 import { LoginDataType, authApi } from "./api";
 import { LoginFormPropsType } from "../components/login/Login";
+import { ThunkAction } from "redux-thunk";
+import { AppThunk } from "./redux-store";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
 const LOGIN = 'LOGIN';
@@ -21,20 +23,14 @@ type InitialStateType = {
 }
 
 type SetAuthUserDataAT = ReturnType<typeof setAuthUserData>;
-type LoginAT = ReturnType<typeof loginAC>
-type AuthActionType = SetAuthUserDataAT | LoginAT
+type AuthActionType = SetAuthUserDataAT
 
 export const authReducer = (state: InitialStateType = initialState, action: AuthActionType): InitialStateType => {
 
   switch(action.type) {
     case SET_AUTH_USER_DATA: {
-      return {...state, ...action.payload, isAuth: true};
+      return {...state, ...action.payload};
     }
-
-    case LOGIN: {
-      return {...state, isAuth: action.payload.isLogin};
-    }
-
 
     default:
       return state
@@ -42,36 +38,47 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 }
 
 //actions
-export const setAuthUserData = (userId: number | null, email: string|null, login: string|null) => {
+export const setAuthUserData = (userId: number | null, email: string|null, login: string|null, isAuth: boolean) => {
   return {type: SET_AUTH_USER_DATA, payload: {
     userId,
     email,
-    login
+    login,
+    isAuth
   }} as const
-}
-
-const loginAC = (isLogin: boolean) => {
-  return  {type: LOGIN, payload: {isLogin}} as const
 }
 
 
 //thunk
-export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
+export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //Is current user authorized
   authApi.getMeAuth()
     .then(data => {
-      if (data.resultCode === 0) {
+      if (data.resultCode === 0) { //Authorize on the service is successed
         let {id, email, login} = data.data;
-        dispatch(setAuthUserData(id, email, login));
+        dispatch(setAuthUserData(id, email, login, true));
       }
     })
 }
 
-export const loginTC = (data: LoginDataType) => (dispatch: Dispatch) => {
-  debugger;
-  authApi.login(data)
+export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
+  authApi.login(email, password, rememberMe)
+    .then(response => {
+      if (response.data.resultCode === 0) { //authentification in the service is successed
+        dispatch(getAuthUserDataTC());
+
+      } else {
+        console.log(response)
+      }
+    })
+    .catch((error: Error) => {
+      console.log(error.message)
+    })
+}
+
+export const logoutTC = () => (dispatch: Dispatch) => {
+  authApi.logout()
     .then(response => {
       if (response.data.resultCode === 0) {
-        dispatch(loginAC(true))
+        dispatch(setAuthUserData(null, null, null, false)); //надо убить все куки
       } else {
         console.log(response)
       }
