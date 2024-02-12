@@ -3,6 +3,8 @@ import s from './Login.module.css'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { useDispatch } from 'react-redux';
 import { loginTC } from '../../redux/auth-reducer';
+import { Input } from '../common/formContolls/FormControls';
+import { minLengthCreator, required } from '../../utils/validators/validators';
 
 //тип данных полей формы
 export type LoginFormPropsType = {
@@ -23,11 +25,11 @@ export const LoginPage: React.FC<LoginPageType> = (props: LoginPageType) => {
   }
 
   return (
-    <LoginReduxForm onSubmit={onSubmit}/> // обертка для формы 
+    <LoginReduxForm onSubmit={onSubmit}/> // обертка для формы
   )
 }
 
-
+const minLenght6 = minLengthCreator(6)
 
 //component for standard form
 const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: InjectedFormProps<LoginFormPropsType>) => {
@@ -35,9 +37,10 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: Injec
     <div className={s.content}>
       <h1>Login</h1>
       <form onSubmit={props.handleSubmit}> {/*  принимает вводные данные формы, вызовет ф-цию, к-ая пришла из пропсов - onSubmit  */}
-        <div><Field type="text" placeholder='Email' name='email' component={'input'}/></div>
-        <div><Field type="password" placeholder='Password' name='password' component={'input'}/></div>
-        <div><Field type="checkbox" name='rememberMe' component={'input'}/>Remember me</div>
+        <div><Field type="text" placeholder='Email' name='email' component={Input} validate={[required]}/></div>
+        <div><Field type="password" placeholder='Password' name='password' component={Input} validate={[required, minLenght6]}/></div>
+        {/* <div><Field type="checkbox" name='rememberMe' component={'input'}/>Remember me</div> */}
+        <div><Field type="checkbox" name='rememberMe' component={'input'} validate={[required]}/>Remember me</div>
         <button type='submit'>Submit</button>
       </form>
     </div>
