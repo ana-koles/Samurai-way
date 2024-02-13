@@ -34,8 +34,10 @@ export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsTy
 
 export class UsersComponent extends Component<UsersContainerPropsType>{
 
+
   constructor (props: UsersContainerPropsType) {
-    super(props)
+    super(props);
+    console.log(props)
   }
 
   componentDidMount(): void {

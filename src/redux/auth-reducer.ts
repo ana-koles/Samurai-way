@@ -5,14 +5,13 @@ import { ThunkAction } from "redux-thunk";
 import { AppThunk } from "./redux-store";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
-const LOGIN = 'LOGIN';
-const LOGOUT = 'LOGOUT';
+
 
 let initialState: InitialStateType = {
   id: null,
   email: null,
   login: null,
-  isAuth: true
+  isAuth: false
 }
 
 type InitialStateType = {
@@ -49,11 +48,11 @@ export const setAuthUserData = (userId: number | null, email: string|null, login
 
 
 //thunk
-export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //Is current user authorized
+export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //get users authentification  data
   authApi.getMeAuth()
-    .then(data => {
-      if (data.resultCode === 0) { //Authorize on the service is successed
-        let {id, email, login} = data.data;
+    .then(response => {
+      if (response.data.resultCode === 0) { //юзер залогинен
+        let {id, email, login} = response.data.data;
         dispatch(setAuthUserData(id, email, login, true));
       }
     })
@@ -61,12 +60,12 @@ export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //Is current us
 
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
   authApi.login(email, password, rememberMe)
-    .then(response => {
-      if (response.data.resultCode === 0) { //authentification in the service is successed
+    .then(data => {
+      if (data.resultCode === 0) { //authentification in the service is successed
         dispatch(getAuthUserDataTC());
 
       } else {
-        console.log(response)
+        console.log(data)
       }
     })
     .catch((error: Error) => {

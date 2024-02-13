@@ -31,7 +31,7 @@ type ResponseType<T = {}> = {
 (CORS - Cross-Origin Resource Sharing).*/
 
 const instance = axios.create({
-  baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+  baseURL: 'https://social-network.samuraijs.com/api/1.0',
   withCredentials: true,
                   headers: {
                     "API-KEY": "f8f6fe16-bb80-454f-8b60-979f91c82094"
@@ -59,13 +59,13 @@ export const usersApi = {
 export const authApi = {
   getMeAuth() {
     return instance.get<ResponseType<UsersAuthDataType>>(`auth/me`)
-      .then(res => res.data)
   },
   login(email: string, password: string, rememberMe: boolean = false ) {
-    return instance.put<ResponseType>('/auth/login', {email, password, rememberMe})
+    return instance.post<ResponseType<{userId?: number}>>('auth/login', {email , password , rememberMe})
+    .then(res => res.data)
   },
   logout() {
-    return instance.delete<ResponseType>('/auth/login')
+    return instance.delete<ResponseType>('auth/login')
   }
 }
 

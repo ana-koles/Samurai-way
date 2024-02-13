@@ -9,7 +9,7 @@ import { UserProfileType } from '../../redux/profile-reducer';
 type HeaderPropsType = {
   login: string | null
   isAuth: boolean
-/*   profile: UserProfileType | null */
+  logOut: () => void
 }
 
 export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
@@ -25,10 +25,15 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
         <li><NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink></li>
         <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>
         {props.isAuth ?
-          <li><NavLink to='/auth'><span>{props.login}</span><img src={photo} alt="photo" /></NavLink></li>
+
+          <div>{props.login} - <button onClick={props.logOut}>Logout</button></div>
           :
-          <li><NavLink to='/auth'><span>Login</span></NavLink></li>}
+          <li><NavLink to='/login'><span>Login</span></NavLink></li>
+          }
       </ul>
     </header>
   );
 };
+
+
+//{/* <li><NavLink to='/profile'><span>{props.login}</span><img src={photo} alt="photo" /></NavLink></li> */}

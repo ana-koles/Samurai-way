@@ -12,7 +12,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { UsersContainer } from './components/users/UsersContainer';
 import { ProfileContainer } from './components/profile/ProfileContainer';
 import { HeaderContainer } from './components/header/HeaderComponent';
-import { LoginPage } from './components/login/Login';
+import { LoginPageContainer } from './components/login/Login';
 
 
 type AppPropsType = {
@@ -36,7 +36,7 @@ const App: React.FC<AppPropsType> = (props) => {
         <Route path='/music' component={Music}/>
         <Route path='/settings' component={Settings}/>
         <Route path='/users' component={UsersContainer}/>
-        <Route path='/login' component={LoginPage}/>
+        <Route path='/login' component={LoginPageContainer}/>
         <Route exact path='/' render={() => <ProfileContainer/>}/>
       </div>
     </BrowserRouter>

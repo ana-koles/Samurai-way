@@ -16,8 +16,6 @@ const maxLength30 = maxLenghtCreator(30); //выносим ф-цию отдел�
 
 const PostForm: React.FC<InjectedFormProps<PostFormDataType>> = (props:InjectedFormProps<PostFormDataType>) => {
 
-  //const newPostElement: React.LegacyRef<HTMLTextAreaElement> = React.createRef();
-
   return (
     <div className={s.post_input}>
       <form  onSubmit={props.handleSubmit}>{/* внутри handleSubmit будет preventDefault, сбор данных формы и вызов callback для передачи данных из формы */}

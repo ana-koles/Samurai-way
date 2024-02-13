@@ -1,10 +1,12 @@
 import React from 'react';
 import s from './Login.module.css'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { loginTC } from '../../redux/auth-reducer';
 import { Input } from '../common/formContolls/FormControls';
 import { minLengthCreator, required } from '../../utils/validators/validators';
+import { AppRootStateType } from '../../redux/redux-store';
+import { Redirect } from 'react-router-dom';
 
 //тип данных полей формы
 export type LoginFormPropsType = {
@@ -13,21 +15,31 @@ export type LoginFormPropsType = {
   rememberMe: boolean | false
 }
 
-type LoginPageType = {
-
+type MapDispatchToPropsType = {
+  logIn: (email: string, password: string, rememberMe: boolean ) => void
 }
 
-export const LoginPage: React.FC<LoginPageType> = (props: LoginPageType) => {
-  const dispatch = useDispatch();
+type MapStateToPropsType = {
+  isAuth: boolean
+}
 
+type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType
+
+const LoginPage: React.FC<LoginPagePropsType> = (props: LoginPagePropsType) => {
   const onSubmit = (data: LoginFormPropsType) => { //будут содержать данные из формы и вызыватся при отправке формы на сервер
-    dispatch(loginTC(data.email, data.password, data.rememberMe))
+    props.logIn(data.email, data.password, data.rememberMe)
+    //dispatch(loginTC(data.email, data.password, data.rememberMe))
+  }
+
+  if (props.isAuth) {
+    return <Redirect to={'/profile'}/> //если мы залогинены, но перекидывать на профль
   }
 
   return (
     <LoginReduxForm onSubmit={onSubmit}/> // обертка для формы
   )
 }
+
 
 const minLenght6 = minLengthCreator(6)
 
@@ -40,7 +52,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: Injec
         <div><Field type="text" placeholder='Email' name='email' component={Input} validate={[required]}/></div>
         <div><Field type="password" placeholder='Password' name='password' component={Input} validate={[required, minLenght6]}/></div>
         {/* <div><Field type="checkbox" name='rememberMe' component={'input'}/>Remember me</div> */}
-        <div><Field type="checkbox" name='rememberMe' component={'input'} validate={[required]}/>Remember me</div>
+        <div><Field type="checkbox" name='rememberMe' component={'input'} />Remember me</div>
         <button type='submit'>Submit</button>
       </form>
     </div>
@@ -56,3 +68,16 @@ const LoginReduxForm = reduxForm<LoginFormPropsType>({
 })(LoginForm)
 
 
+const MapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
+  isAuth: state.auth.isAuth
+}
+)
+
+//делаем контейнерную компоненту, чтобы loginPAge получит доступ к store
+export const LoginPageContainer = connect(MapStateToProps, {logIn: loginTC})(LoginPage); //есл нам не нужны MapStateToProps,  обозначаем их как null
+
+/* Здесь автоматически connect к каждому значению свойства применяет dispatch,
+создавая таким образом callback как в ф-ции mapDispatchToProps, т.е. как
+updateFollow: (userId: number) => {
+  dispatch(UpdateFollowAC(userId))
+},  станет props.updateFollow: (userId: number) */
