@@ -45,6 +45,7 @@ const minLenght6 = minLengthCreator(6)
 
 //component for standard form
 const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: InjectedFormProps<LoginFormPropsType>) => {
+
   return (
     <div className={s.content}>
       <h1>Login</h1>
@@ -53,6 +54,9 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: Injec
         <div><Field type="password" placeholder='Password' name='password' component={Input} validate={[required, minLenght6]}/></div>
         {/* <div><Field type="checkbox" name='rememberMe' component={'input'}/>Remember me</div> */}
         <div><Field type="checkbox" name='rememberMe' component={'input'} />Remember me</div>
+
+        {props.error && <div className={s.errorWrapper} ><span className={s.error}>{props.error}</span></div>}
+
         <button type='submit'>Submit</button>
       </form>
     </div>

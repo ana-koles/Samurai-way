@@ -19,7 +19,7 @@ export function withAuthRedirect<T>(ComponentForRedirect: ComponentType<T>) {
   const RedirectComponent = (props: MapStateToPropsType) => { //приходит компонента с пропсами с типами MapStateToPropsType
                                                           //потому что мы законнектили ее (см ниже)
     let {isAuth, ...restProps} = props; //здесь будут пропсы от ComponentForRedirect +  MapStateToPropsType
-    console.log(isAuth)
+
     if (!isAuth) { //if user is not authorized, redirect to Login page
       return <Redirect to='/login'/>
     }

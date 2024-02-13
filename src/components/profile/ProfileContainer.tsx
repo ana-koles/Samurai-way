@@ -10,6 +10,8 @@ import {  RouteComponentProps, withRouter } from "react-router-dom";
 type MapStateToPropsType = {
   profile: UserProfileType | null
   status: string
+  isAuth: boolean
+  authorizedUserId: number | null
 }
 
 type MapDispatchToPropsType = {
@@ -29,8 +31,10 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OnPropsTy
 class ProfileComponent extends Component<ProfileContainerPropsType> {
   componentDidMount(): void {
     let userId = this.props.match.params.userId;
-    if (!userId) {
-      userId = '30464';
+    if (!userId && this.props.authorizedUserId) {
+      userId = this.props.authorizedUserId.toString();
+    } else if(!userId) {
+      userId = '3';
     }
     this.props.setProfile(+userId);
     this.props.setStatus(+userId);
@@ -53,7 +57,9 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    isAuth: state.auth.isAuth,
+    authorizedUserId: state.auth.userId
   }
 }
 
