@@ -29,8 +29,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 
   switch(action.type) {
     case SET_AUTH_USER_DATA: {
-      console.log('action.payload', action.payload);
-      return {...state, ...action.payload};
+        return {...state, ...action.payload};
     }
 
     default:
@@ -51,14 +50,12 @@ export const setAuthUserData = (userId: number | null, email: string|null, login
 
 //thunk
 export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //get users authentification  data
-  authApi.getMeAuth()
+  return authApi.getMeAuth() //чтобы подписаться на промис из этого диспача в app-reducer
     .then(response => {
       if (response.data.resultCode === 0) { //юзер залогинен
         let {id, email, login} = response.data.data;
         dispatch(setAuthUserData(id, email, login, true));
-      }
-
-    })
+  }})
 }
 
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {

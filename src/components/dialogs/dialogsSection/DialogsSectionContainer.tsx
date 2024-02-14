@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch: Dispatch<DialogReducerActionType>): MapDis
 // в последующую
 export const DialogsSectionContainer = compose<React.ComponentType>( //говорит реакту, что создаем комоненту
   connect(mapStateToProps, mapDispatchToProps),
-  withAuthRedirect
+  withAuthRedirect  //защищаем от вхождения, если не залогинены в системе
 )(DialogsSection)
 
 //export const DialogsSectionContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)

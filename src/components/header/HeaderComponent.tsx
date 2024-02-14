@@ -19,17 +19,12 @@ type MapStateToProps = {
 }
 
 type MapDispatchToPropsType = {
-  getAuthUserData: () => void
   logOut: () => void
 }
 
 type HeaderContainerPropsType = MapStateToProps & MapDispatchToPropsType
 
 class HeaderComponent extends Component<HeaderContainerPropsType> {
-
-  componentDidMount(): void {
-    this.props.getAuthUserData()
-  }
 
   render () {
     return <Header {...this.props}/>

@@ -5,6 +5,7 @@ import { dialogsReducer } from './dialogs-reducer';
 import { usersReducer } from './users-reducer';
 import { authReducer } from './auth-reducer';
 import {reducer as formReducer} from 'redux-form';
+import { appReducer } from './app-reducer';
 
 
 
@@ -14,6 +15,7 @@ export let rootReducer = combineReducers({
   dialogsPage: dialogsReducer,
   usersPage: usersReducer,
   auth: authReducer,
+  app: appReducer,
   form: formReducer //Обязательно название 'form', т.к. библиотека будет искать именно это название
                     //это стейт, с к-ым работает redux-form
 })
