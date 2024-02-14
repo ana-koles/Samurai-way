@@ -1,11 +1,12 @@
 import { connect, useDispatch } from "react-redux";
 import { AppRootStateType } from "../../redux/redux-store";
-import { changeIsFetchedAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, updateFollowAC, UserType, toggleIsFollingInProgressAC, getUsersTC } from "../../redux/users-reducer";
+import { changeIsFetchedAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, updateFollowAC, UserType, toggleIsFollingInProgressAC, requestUsersTC } from "../../redux/users-reducer";
 import { Component } from "react";
 import axios from "axios";
 import { Users } from "./Users";
 import loadingImg from '../../assets/spinning-dots.svg'
 import { usersApi } from "../../redux/api";
+import { getCurrentPage, getIsFetched, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers } from "../../redux/users-selectors";
 
 //типизация стейта
 type MapStateToPropsType = {
@@ -68,7 +69,19 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
   }
 }
 
-let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
+//используем селекторы
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
+  return {
+    users: getUsers(state),
+    currentPage: getCurrentPage(state),
+    totalUsersCount: getTotalUsersCount(state),
+    pageCount: getPageCount(state),
+    isFetched: getIsFetched(state),
+    isFollowingInProgress: getIsFollowingInProgress(state),
+  }
+}
+
+/* let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     users: state.usersPage.users,
     currentPage: state.usersPage.currentPage,
@@ -78,7 +91,7 @@ let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     isFollowingInProgress: state.usersPage.isFollowingInProgress,
   }
 }
-
+ */
 /* let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchToPropsType => {
   return {
     updateFollow: (userId: number) => { //возможно надо удет исправить на string
@@ -105,7 +118,7 @@ export const UsersContainer = connect(mapStateToProps, {
   updateFollow: updateFollowAC,
   setCurrentPage: setCurrentPageAC,
   toggleIsFollingInProgress: toggleIsFollingInProgressAC,
-  getUsers: getUsersTC
+  getUsers: requestUsersTC
 })(UsersComponent);
 
 

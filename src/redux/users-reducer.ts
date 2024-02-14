@@ -153,10 +153,11 @@ export const toggleIsFollingInProgressAC = (userId: number, isFetched: boolean) 
   return {type: TOGGLE_IS_FOLLOWINT_IN_PROGRESS, userId, isFetched} as const;
 }
 
-export const getUsersTC = (pageCount: number, currentPage: number ) => (dispatch: Dispatch) => {
+export const requestUsersTC = (pageCount: number, requestedPage: number ) => (dispatch: Dispatch) => {
   dispatch(changeIsFetchedAC(true)); //запускаем крутилку
+  dispatch(setCurrentPageAC(requestedPage));
 
-  usersApi.getUsers(pageCount, currentPage)
+  usersApi.getUsers(pageCount, requestedPage)
     .then((data) => {
       dispatch(changeIsFetchedAC(false)); // убираем крутилка
       dispatch(setUsersAC(data.items));
