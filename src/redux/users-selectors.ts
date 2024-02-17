@@ -1,8 +1,18 @@
+import { createSelector } from "reselect";
 import { AppRootStateType } from "./redux-store";
 
-export const getUsers = (state: AppRootStateType) => {
-  return state.usersPage.users
+const getUsersSelector = (state: AppRootStateType) => {
+  return state.usersPage.users.filter(user => true)
 };
+
+// если у нас несколько зависимостей
+// const getUsers = createSelector(getUsersSelect, isFetched, (users, isFetched) => {
+  //return users.filter(u => u.lenght > 1)
+//})
+
+export const getUsers = createSelector(getUsersSelector, (users) => { //getUsers - все еще селектор
+  return users
+});
 
 export const getCurrentPage = (state: AppRootStateType) => {
   return state.usersPage.currentPage

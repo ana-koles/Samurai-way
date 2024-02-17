@@ -22,6 +22,7 @@ type UsersPropsType = {
 }
 
 export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
+  console.log('Users')
 
   let totalPageCount = Math.ceil(props.totalUsersCount / props.pageCount);
   const totalPageCountArr = [];
