@@ -31,15 +31,13 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OnPropsTy
 class ProfileComponent extends Component<ProfileContainerPropsType> {
   componentDidMount(): void {
     let userId = this.props.match.params.userId;
-    if (!userId) {
-      if (this.props.authorizedUserId) {
+    if (!userId && this.props.authorizedUserId) {
+
         userId = this.props.authorizedUserId.toString();
-      } else {
-        this.props.history.push('/login') //системый редирект на логин, если нет id пользователя (т.е. когда мы вылогиниваемся)
-      }
+        this.props.setProfile(+userId);
+        this.props.setStatus(+userId);
     } else {
-      this.props.setProfile(+userId);
-      this.props.setStatus(+userId);
+        this.props.history.push('/login') //системый редирект на логин, если нет id пользователя (т.е. когда мы вылогиниваемся)
     }
 
   }

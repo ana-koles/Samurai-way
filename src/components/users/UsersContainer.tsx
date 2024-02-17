@@ -43,7 +43,7 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
 
   componentDidMount(): void {
     //чтобы данные загружались сразу при загрузке страницы
-      this.props.getUsers(this.props.pageCount,this.props.currentPage)
+      this.props.getUsers(this.props.pageCount,this.props.currentPage);
   }
 
   setCurrentPage = (currentPageNumber: number) => {
