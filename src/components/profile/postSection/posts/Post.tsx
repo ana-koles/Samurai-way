@@ -13,7 +13,7 @@ type PostPropsType = {
 
 export const Post: React.FC<PostPropsType> = (props) => {
 
-  const {name, message, likes} = props
+  const {name, message, likes} = props;
 
   return (
     <div className={s.message_user_wrapper}>

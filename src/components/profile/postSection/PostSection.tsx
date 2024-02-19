@@ -14,7 +14,7 @@ import { PostFormDataType, PostReduxForm } from './postForm/PostForm';
 } */
 
 
-export const PostSection: React.FC<PostSectionPropsType> = (props) => {
+export const PostSection: React.FC<PostSectionPropsType> = React.memo((props) => {
 
   //с помощью React.createRef
 /*   переменная newPostText будет содержать ссылку на DOM-узел <textarea>, и вы можете
@@ -52,5 +52,5 @@ export const PostSection: React.FC<PostSectionPropsType> = (props) => {
       {postedMessages}
     </div>
   );
-};
+});
 
