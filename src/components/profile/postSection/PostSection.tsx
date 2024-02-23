@@ -40,7 +40,7 @@ export const PostSection: React.FC<PostSectionPropsType> = React.memo((props) =>
   return (
     <div className={s.message_wrapper}>
       <PostReduxForm onSubmit={onClickHandler}/>
-     {/*  <div className={s.post_input}>
+      {/*  <div className={s.post_input}>
         <textarea
                 ref={newPostElement}
                 onChange={onChangeHandler}

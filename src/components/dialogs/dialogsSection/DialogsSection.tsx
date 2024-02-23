@@ -15,11 +15,11 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
  */
   const newDialogMessage:React.LegacyRef<HTMLTextAreaElement> = React.createRef();
 
-
-
   const addMessageToDialog = (values: DialogFormDataType) => { //приходят данные из формы
-    let newMessage = values.currentMessageText
-    props.addMessageToDialog(0, "Fluffy Gangster", newMessage)
+    let newMessage = values.currentMessageText;
+    props.addMessageToDialog(0, 'Fluffy Gangster', newMessage)
+
+
   }
 
 
