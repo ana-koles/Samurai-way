@@ -15,9 +15,8 @@ type UserProps = {
 
 export const User = ({user, toggleIsFollingInProgress, isFollowingInProgressUsersId, updateFollow}: UserProps) => {
 
-
   return (
-    <div key={user.id + Math.random()} className={s.user_wrapper}>
+    <div className={s.user_wrapper}>
         <div className={s.user_info}>
           <NavLink to={'profile/' + user.id}><img src={user.photos.small != null ? user.photos.small : photo} alt="user" /></NavLink>
 

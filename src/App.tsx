@@ -59,7 +59,6 @@ class App extends Component<AppPropsType> {
           <Route path='/login' component={LoginPageContainer}/>
           <Route exact path='/' render={() => <ProfileContainer/>}/>
         </div>
-
     );
 
   }

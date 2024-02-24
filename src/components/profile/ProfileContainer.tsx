@@ -29,10 +29,13 @@ type OnPropsType = MapStateToPropsType & MapDispatchToPropsType;
 type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OnPropsType;
 
 class ProfileComponent extends Component<ProfileContainerPropsType> {
+
   componentDidMount(): void {
     let userId = this.props.match.params.userId;
-    if (!userId && this.props.authorizedUserId) {
-
+    if (userId) {
+      this.props.setProfile(+userId);
+      this.props.setStatus(+userId);
+    } else if (!userId && this.props.authorizedUserId) {
         userId = this.props.authorizedUserId.toString();
         this.props.setProfile(+userId);
         this.props.setStatus(+userId);

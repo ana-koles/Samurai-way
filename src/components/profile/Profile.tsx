@@ -20,12 +20,13 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
   if (!props.profile ) {
     return (<Preloader/>)
   }
+  
 
   return (
     <div className={s.content}>
         <div className={s.profile_wrapper}>
           <div className ={s.content_wrapper}>
-          <div /* className={props.profile.photos.large === null ? `${s.photo} ${s.photoBackground}` : `${s.photo}`} */>
+          <div>
             {props.profile.photos.large !== null ? (
               <img className={s.photo} src={props.profile.photos.large} alt="Profile Photo" />
             ) : (

@@ -56,3 +56,11 @@ li img {
 .icon_list a.activeLink {
   color: gold;
 }
+
+.loginName > span{
+  color: white
+}
+
+li > button {
+  margin-left: 10px;
+}

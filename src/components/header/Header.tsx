@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
         <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>
         {props.isAuth ?
 
-          <div>{props.login} - <button onClick={props.logOut}>Logout</button></div>
+          <li className={s.loginName}><NavLink to='/'>{props.login}</NavLink> <button onClick={props.logOut}>Logout</button></li>
           :
           <li><NavLink to='/login'><span>Login</span></NavLink></li>
           }

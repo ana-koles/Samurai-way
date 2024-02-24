@@ -7,13 +7,11 @@ type ProfileStatusWithHooksPropsType = {
 }
 
 export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> = (props: ProfileStatusWithHooksPropsType) => {
-  console.log('component')
 
   const [editMode, setEditMode] = useState(false);
   const [status, setStatus] = useState(props.status);
 
   useEffect(() => {
-    console.log('effect')
     setStatus(props.status)
   }, [props.status])
 
@@ -24,7 +22,6 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> =
   const deactivateEditMode = () => {
     setEditMode(false);
     props.updateStatus(status)
-
   }
 
   const activateEditMode = () => {
@@ -46,8 +43,6 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> =
       <span onDoubleClick={activateEditMode}>{status || 'Here should be my status'}</span>
     </div>
     }
-
-
   </div>
   );
 };

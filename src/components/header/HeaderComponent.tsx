@@ -3,7 +3,6 @@ import { Header } from "./Header";
 import { AppRootStateType } from "../../redux/redux-store";
 import { Component } from "react";
 import { getAuthUserDataTC, logoutTC} from "../../redux/auth-reducer";
-import { UserProfileType } from "../../redux/profile-reducer";
 
 
 export type UserDataType = {
