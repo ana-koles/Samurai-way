@@ -10,7 +10,7 @@ type ChatMenyPropsType = {
   messageContacts: ContactType[]
 }
 
-export const ChatMenu: React.FC<ChatMenyPropsType>= (props) => {
+export const ChatMenu = ({messageContacts}: ChatMenyPropsType) => {
 
   return (
     <div className={s.chat_wrapper}>
@@ -18,13 +18,12 @@ export const ChatMenu: React.FC<ChatMenyPropsType>= (props) => {
         <h2>Let's Chat</h2>
 
         <ul>
-          {props.messageContacts.map(contact => {
+          {messageContacts.map(contact => {
             return <ChatMenuItem name={contact.name} id={contact.id}/>
           })}
         </ul>
-
+        
       </div>
-
     </div>
   );
 };

@@ -25,7 +25,9 @@ type MapStateToPropsType = {
 
 type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType
 
-const LoginPage: React.FC<LoginPagePropsType> = (props: LoginPagePropsType) => {
+
+const LoginPage = (props: LoginPagePropsType) => {
+  
   const onSubmit = (data: LoginFormPropsType) => { //будут содержать данные из формы и вызыватся при отправке формы на сервер
     props.logIn(data.email, data.password, data.rememberMe)
     //dispatch(loginTC(data.email, data.password, data.rememberMe))
@@ -45,17 +47,6 @@ export const minLenght6 = minLengthCreator(6)
 
 //component for standard form
 const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: InjectedFormProps<LoginFormPropsType>) => {
-
-/*
-  type CreateFieldProps = {
-    type: string,
-    placeholder?: string,
-    name: string,
-    component: React.ComponentType<CommonInputType>,
-    validators?: Validators,
-    text?: string,
-  }
- */
 
 
   return (

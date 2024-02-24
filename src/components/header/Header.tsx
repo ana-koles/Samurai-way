@@ -1,9 +1,7 @@
 import React from 'react';
 import logo from '../../assets/logo.svg';
-import photo from '../../assets/cat-profile2.jpg';
 import s from './Header.module.css'
 import { NavLink } from 'react-router-dom';
-import { UserProfileType } from '../../redux/profile-reducer';
 
 
 type HeaderPropsType = {
@@ -13,6 +11,8 @@ type HeaderPropsType = {
 }
 
 export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
+
+  console.log('Header')
   return (
     <header className={s.header}>
 
@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
         <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>
         {props.isAuth ?
 
-          <li className={s.loginName}><NavLink to='/'>{props.login}</NavLink> <button onClick={props.logOut}>Logout</button></li>
+          <li className={s.loginName}>{props.login}<button onClick={props.logOut}>Logout</button></li>
           :
           <li><NavLink to='/login'><span>Login</span></NavLink></li>
           }

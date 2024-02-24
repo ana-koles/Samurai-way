@@ -17,10 +17,11 @@ type ProfilePropsType = {
 
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
+
   if (!props.profile ) {
     return (<Preloader/>)
   }
-  
+
 
   return (
     <div className={s.content}>

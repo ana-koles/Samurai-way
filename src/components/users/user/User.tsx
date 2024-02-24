@@ -5,7 +5,6 @@ import { UserType } from '../../../redux/users-reducer';
 import { NavLink } from 'react-router-dom';
 import { usersApi } from '../../../redux/api';
 
-
 type UserProps = {
   user: UserType
   isFollowingInProgressUsersId: Array<number>

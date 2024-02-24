@@ -26,7 +26,6 @@ const PostForm: React.FC<InjectedFormProps<PostFormDataType>> = (props:InjectedF
                 name='newPostMessage'
                 placeholder='Your text...'
                 validate={[required, maxLength30]}
-                tagName = 'textarea' //для передачи в FormContols
         />
       <Button type='submit' name='post'/>
     </form>

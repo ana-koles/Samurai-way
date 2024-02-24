@@ -4,7 +4,7 @@ import { Profile } from "./Profile";
 import { UserProfileType, setProfileTC, setStatusTC, updateStatusTC } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import {  compose } from "redux";
-import {  RouteComponentProps, withRouter } from "react-router-dom";
+import {  Redirect, RouteComponentProps, withRouter } from "react-router-dom";
 
 
 type MapStateToPropsType = {
@@ -40,12 +40,23 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
         this.props.setProfile(+userId);
         this.props.setStatus(+userId);
     } else {
-        this.props.history.push('/login') //системый редирект на логин, если нет id пользователя (т.е. когда мы вылогиниваемся)
+      this.props.history.push('/login') //системый редирект на логин, если нет id пользователя (т.е. когда мы вылогиниваемся)
     }
+  }
 
+  componentDidUpdate(): void {
+
+    if (!this.props.isAuth) {
+      this.props.history.push('/login')
+    }
   }
 
   render() {
+
+/*     if (!this.props.isAuth) {
+      return <Redirect to="/login" />;
+    }
+ */
     return (
       <Profile {...this.props}
         status={this.props.status}

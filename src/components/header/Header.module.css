@@ -57,6 +57,10 @@ li img {
   color: gold;
 }
 
+.loginName {
+  color: white;
+}
+
 .loginName > span{
   color: white
 }

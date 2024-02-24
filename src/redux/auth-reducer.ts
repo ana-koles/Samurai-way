@@ -27,6 +27,7 @@ type AuthActionType = SetAuthUserDataAT
 
 export const authReducer = (state: InitialStateType = initialState, action: AuthActionType): InitialStateType => {
 
+
   switch(action.type) {
     case SET_AUTH_USER_DATA: {
         return {...state, ...action.payload};
@@ -39,6 +40,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 
 //actions
 export const setAuthUserData = (userId: number | null, email: string|null, login: string|null, isAuth: boolean) => {
+  debugger;
   return {type: SET_AUTH_USER_DATA, payload: {
     userId,
     email,
@@ -64,6 +66,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): A
       if (data.resultCode === 0) { //authentification in the service is successed
         dispatch(getAuthUserDataTC());
 
+        console.log('login')
       } else {
           let message = data.messages.length > 0 ? data.messages[0] : 'Common Error'
           let action = stopSubmit('login', {_error: message}); //экшен который предоставляет redux-form, чтобы обрабатывать ошибки.
@@ -81,6 +84,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
     .then(response => {
       if (response.data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false)); //надо убить все куки
+        console.log('logout')
       } else {
         console.log(response)
       }

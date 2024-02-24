@@ -8,7 +8,7 @@ type ChatMenuItemPropsType = {
   id: number
 }
 
-export const ChatMenuItem: React.FC<ChatMenuItemPropsType> = (props) => {
+export const ChatMenuItem = (props:ChatMenuItemPropsType) => {
 
   let {name, id} = props;
 
