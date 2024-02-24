@@ -2,27 +2,23 @@ import React from 'react';
 import s from './User.module.css'
 import { UserType } from '../../redux/users-reducer';
 import photo from '../../assets/friend4.jpg';
-import loadingImg from '../../assets/spinning-dots.svg'
 import { Preloader } from '../common/Preloader';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
 import { usersApi } from '../../redux/api';
-import { useDispatch } from 'react-redux';
 
 type UsersPropsType = {
   totalUsersCount: number
   pageCount: number
   currentPage: number
+  users: UserType[]
+  isFetched: boolean
+  isFollowingInProgressUsersId: Array<number>
   setCurrentPage: (pageNumber: number) => void
   updateFollow: (userId: number) => void
   toggleIsFollingInProgress: (userId: number, isFetched: boolean) => void
-  users: UserType[]
-  isFetched: boolean
-  isFollowingInProgress: Array<number>
 }
 
-export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
-  console.log('Users')
+export const Users = (props: UsersPropsType) => {
 
   let totalPageCount = Math.ceil(props.totalUsersCount / props.pageCount);
   const totalPageCountArr = [];
@@ -37,11 +33,7 @@ export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
 
     {totalPageCountArr.map(page => {
       return <span key={page + 156789}
-                    className={`${s.page_number}
-                    ${props.currentPage === page
-                      ? s.page_current
-                      : ''}
-                    `}
+                    className={`${props.currentPage === page ? s.page_current : ''}`}
                     onClick={(e) => props.setCurrentPage(page)}>
               {page}
             </span>
@@ -53,7 +45,7 @@ export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
           <NavLink to={'profile/' + user.id}><img src={user.photos.small != null ? user.photos.small : photo} alt="user" /></NavLink>
 
           {user.followed === true
-            ? <button disabled={props.isFollowingInProgress.some(id => id === user.id)} onClick={() => {
+            ? <button disabled={props.isFollowingInProgressUsersId.some(id => id === user.id)} onClick={() => {
               //unfollow the user
               props.toggleIsFollingInProgress(user.id, true);
               usersApi.unfollowUser(user.id)
@@ -66,7 +58,7 @@ export const Users: React.FC<UsersPropsType> = (props: UsersPropsType) => {
             }}>
             Unfollow</button>
 
-            : <button disabled={props.isFollowingInProgress.some(id => id === user.id)} onClick={() => {
+            : <button disabled={props.isFollowingInProgressUsersId.some(id => id === user.id)} onClick={() => {
               //follow the user
                 props.toggleIsFollingInProgress(user.id, true);
                 usersApi.followUser(user.id)

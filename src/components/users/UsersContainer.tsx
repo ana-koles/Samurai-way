@@ -1,11 +1,8 @@
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { AppRootStateType } from "../../redux/redux-store";
-import { changeIsFetchedAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, updateFollowAC, UserType, toggleIsFollingInProgressAC, requestUsersTC } from "../../redux/users-reducer";
+import {setCurrentPageAC, updateFollowAC, UserType, toggleIsFollingInProgressAC, requestUsersTC } from "../../redux/users-reducer";
 import { Component } from "react";
-import axios from "axios";
 import { Users } from "./Users";
-import loadingImg from '../../assets/spinning-dots.svg'
-import { usersApi } from "../../redux/api";
 import { getCurrentPage, getIsFetched, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers } from "../../redux/users-selectors";
 
 //типизация стейта
@@ -15,7 +12,7 @@ type MapStateToPropsType = {
   totalUsersCount: number
   pageCount: number
   isFetched: boolean
-  isFollowingInProgress: Array<number>
+  isFollowingInProgressUsersId: Array<number>
 }
 
 
@@ -35,10 +32,8 @@ export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsTy
 
 export class UsersComponent extends Component<UsersContainerPropsType>{
 
-
   constructor (props: UsersContainerPropsType) {
     super(props);
-    console.log(props)
   }
 
   componentDidMount(): void {
@@ -64,7 +59,7 @@ export class UsersComponent extends Component<UsersContainerPropsType>{
                   setCurrentPage={this.setCurrentPage}
                   isFetched={this.props.isFetched}
                   toggleIsFollingInProgress={this.props.toggleIsFollingInProgress}
-                  isFollowingInProgress={this.props.isFollowingInProgress}
+                  isFollowingInProgressUsersId={this.props.isFollowingInProgressUsersId}
                   />
   }
 }
@@ -77,7 +72,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     totalUsersCount: getTotalUsersCount(state),
     pageCount: getPageCount(state),
     isFetched: getIsFetched(state),
-    isFollowingInProgress: getIsFollowingInProgress(state),
+    isFollowingInProgressUsersId: getIsFollowingInProgress(state),
   }
 }
 

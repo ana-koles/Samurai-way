@@ -3,7 +3,7 @@ import s from './Login.module.css'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { loginTC } from '../../redux/auth-reducer';
-import { Input } from '../common/formContolls/FormControls';
+import { Input, createField } from '../common/formContolls/FormControls';
 import { minLengthCreator, required } from '../../utils/validators/validators';
 import { AppRootStateType } from '../../redux/redux-store';
 import { Redirect } from 'react-router-dom';
@@ -41,19 +41,35 @@ const LoginPage: React.FC<LoginPagePropsType> = (props: LoginPagePropsType) => {
 }
 
 
-const minLenght6 = minLengthCreator(6)
+export const minLenght6 = minLengthCreator(6)
 
 //component for standard form
 const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: InjectedFormProps<LoginFormPropsType>) => {
+
+/*
+  type CreateFieldProps = {
+    type: string,
+    placeholder?: string,
+    name: string,
+    component: React.ComponentType<CommonInputType>,
+    validators?: Validators,
+    text?: string,
+  }
+ */
+
 
   return (
     <div className={s.content}>
       <h1>Login</h1>
       <form onSubmit={props.handleSubmit}> {/*  принимает вводные данные формы, вызовет ф-цию, к-ая пришла из пропсов - onSubmit  */}
-        <div><Field type="text" placeholder='Email' name='email' component={Input} validate={[required]}/></div>
-        <div><Field type="password" placeholder='Password' name='password' component={Input} validate={[required, minLenght6]}/></div>
-        {/* <div><Field type="checkbox" name='rememberMe' component={'input'}/>Remember me</div> */}
-        <div><Field type="checkbox" name='rememberMe' component={'input'} />Remember me</div>
+        {createField({type: 'text', placeholder: 'Email', name: 'email', component: Input, validators: [required]})}
+        {createField({type: 'password', placeholder: 'Password', name:'password', component: Input, validators: [required, minLenght6]})}
+        {createField({type: 'checkbox', name: 'rememberMe', component: Input, text: 'Remember me'})}
+
+       {/*  без использования ф-ции CreateFiel */}
+        {/* <div><Field type="text" placeholder='Email' name='email' component={Input} validate={[required]}/></div> */}
+        {/* <div><Field type="password" placeholder='Password' name='password' component={Input} validate={[required, minLenght6]}/></div> */}
+       {/*  <div><Field type="checkbox" name='rememberMe' component={Input} />Remember me</div> */}
 
         {props.error && <div className={s.errorWrapper} ><span className={s.error}>{props.error}</span></div>}
 

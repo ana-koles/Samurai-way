@@ -31,5 +31,5 @@ export const getIsFetched = (state: AppRootStateType) => {
 }
 
 export const getIsFollowingInProgress = (state: AppRootStateType) => {
-  return state.usersPage.isFollowingInProgress
+  return state.usersPage.isFollowingInProgressUsersId
 }

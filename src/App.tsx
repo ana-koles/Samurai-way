@@ -44,7 +44,6 @@ class App extends Component<AppPropsType> {
     }
 
     return (
-      <BrowserRouter>
         <div className="app-wrapper">
           <HeaderContainer/>
           <NavBar/>
@@ -60,7 +59,6 @@ class App extends Component<AppPropsType> {
           <Route path='/login' component={LoginPageContainer}/>
           <Route exact path='/' render={() => <ProfileContainer/>}/>
         </div>
-      </BrowserRouter>
 
     );
 

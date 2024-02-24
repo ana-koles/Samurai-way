@@ -20,7 +20,7 @@ export type UsersType = {
   totalUsersCount: number
   pageCount: number
   isFetched: boolean
-  isFollowingInProgress: Array<number> // хранит id тех пользователей к-ые в процессе follow/unfollow
+  isFollowingInProgressUsersId: Array<number> // хранит id тех пользователей к-ые в процессе follow/unfollow
 }
 
 
@@ -75,7 +75,7 @@ let usersInitialState: UsersType = {
   totalUsersCount: 0,
   pageCount: 5,
   isFetched: false,
-  isFollowingInProgress: []
+  isFollowingInProgressUsersId: []
 }
 
 const UPDATE_FOLLOW = 'UPDATE-FOLLOW';
@@ -83,7 +83,7 @@ const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const CHANGE_IS_FETCHED = 'CHANGE_IS_FETCHED';
-const TOGGLE_IS_FOLLOWINT_IN_PROGRESS = 'TOGGLE_IS_FOLLOWINT_IN_PROGRESS';
+const TOGGLE_IS_FOLLOWING_IN_PROGRESS = 'TOGGLE_IS_FOLLOWING_IN_PROGRESS';
 
 type UpdateFollowType = ReturnType<typeof updateFollowAC>;
 type SetUsersType = ReturnType<typeof setUsersAC>;
@@ -104,11 +104,9 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
 
   switch(action.type) {
     case UPDATE_FOLLOW:
-      let newState = {...state, users: state.users.map(user => user.id === action.userId ? {...user, followed: !user.followed} : user )};
-      return newState
+      return  {...state, users: state.users.map(user => user.id === action.userId ? {...user, followed: !user.followed} : user )};
 
     case SET_USERS:
-
       return {...state, users: [...action.users]}
 
     case SET_CURRENT_PAGE:
@@ -120,11 +118,11 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
     case CHANGE_IS_FETCHED:
       return {...state, isFetched: action.isFetched};
 
-    case TOGGLE_IS_FOLLOWINT_IN_PROGRESS:
-      return {...state, isFollowingInProgress:
+    case TOGGLE_IS_FOLLOWING_IN_PROGRESS:
+      return {...state, isFollowingInProgressUsersId:
           action.isFetched //если мы в процессе follow/unfollow, то добавить юзера в массив
-          ?  [...state.isFollowingInProgress, action.userId]
-          : state.isFollowingInProgress.filter(id => id !== action.userId) // если процесс закончился, юзера из массива убрать
+          ?  [...state.isFollowingInProgressUsersId, action.userId]
+          : state.isFollowingInProgressUsersId.filter(id => id !== action.userId) // если процесс закончился, юзера из массива убрать
       }
 
       default:
@@ -132,6 +130,7 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
   }
 }
 
+//actions
 //возможно userId надо будет исрпавить на string
 export const updateFollowAC = (userId: number) => ({type: UPDATE_FOLLOW, userId: userId} as const);
 
@@ -150,8 +149,10 @@ export const changeIsFetchedAC = (isFetched: boolean) => {
 }
 
 export const toggleIsFollingInProgressAC = (userId: number, isFetched: boolean) => {
-  return {type: TOGGLE_IS_FOLLOWINT_IN_PROGRESS, userId, isFetched} as const;
+  return {type: TOGGLE_IS_FOLLOWING_IN_PROGRESS, userId, isFetched} as const;
 }
+
+//thunk
 
 export const requestUsersTC = (pageCount: number, requestedPage: number ) => (dispatch: Dispatch) => {
   dispatch(changeIsFetchedAC(true)); //запускаем крутилку
@@ -159,7 +160,7 @@ export const requestUsersTC = (pageCount: number, requestedPage: number ) => (di
 
   usersApi.getUsers(pageCount, requestedPage)
     .then((data) => {
-      dispatch(changeIsFetchedAC(false)); // убираем крутилка
+      dispatch(changeIsFetchedAC(false)); // убираем крутилку
       dispatch(setUsersAC(data.items));
       dispatch(setTotalUsersCountAC(data.totalCount / 500));
     });

@@ -1,5 +1,6 @@
-import React, { ReactNode, TextareaHTMLAttributes } from 'react';
+import React, { ReactNode } from 'react';
 import s from './FormControls.module.css'
+import { Field } from 'redux-form';
 
 type  TextareaProps = {
   input: {
@@ -32,47 +33,58 @@ type ChildrenType = {
 type CommonInputType = TextareaProps & ChildrenType
 
 
-const FormCreateor: React.FC<CommonInputType> = ({input, meta, children, ...restProps}) => {
+const FormControl = ({input, meta, children}: CommonInputType) => {
 
   return (
     <div>
       <div className={meta.error && meta.touched ? s.error : ''}>
-        {children} {/* в качестве children придет texarea и Input */}
-    </div>
-    <div className={s.spanWrapper}>
-      {meta.error && meta.touched && <span>{meta.error}</span> } {/* показывать только если есть ошибка и поле было посещено */}
-    </div>
-
+        {children} {/* в качестве children придет textarea или Input */}
+      </div>
+      <div className={s.spanWrapper}>
+        {meta.error && meta.touched && <span>{meta.error}</span> } {/* показывать только если есть ошибка и поле было посещено */}
+      </div>
     </div>
 
   );
 
 }
 
-export const Textarea: React.FC<TextareaProps> = (props: TextareaProps) => {
+export const Textarea = (props: TextareaProps) => {
   const {input, meta, ...restProps} = props;
 
   return (
-    <FormCreateor {...props}><textarea {...input} {...restProps}/></FormCreateor>
+    <FormControl {...props}><textarea {...input} {...restProps}/></FormControl>
 
   );
 };
 
-export const Input: React.FC<TextareaProps> = (props: TextareaProps) => {
+export const Input = (props: TextareaProps) => {
   const {input, meta, ...restProps} = props;
 
   return (
-    <FormCreateor {...props}> <input {...input} {...restProps}/>{/*  таким образом мы передадим все, кроме meta */}</FormCreateor>
+    <FormControl {...props}> <input {...input} {...restProps}/>{/*  таким образом мы передадим все, кроме meta */}</FormControl>
 
   );
 }
 
+export const createField = (props: CreateFieldProps)=> {
+  return (
+  <div><Field type={props.type} placeholder={props.placeholder} name={props.name} component={props.component} validate={props.validators}/>{props.text}</div>)
+}
+
+type Validator = ((value:string) => string | undefined) | undefined
+
+type Validators = Validator[] | undefined
 
 
-
-
-
-
+type CreateFieldProps = {
+  type: string,
+  placeholder?: string,
+  name: string,
+  component: React.ComponentType<CommonInputType>,
+  validators?: Validators,
+  text?: string,
+}
 
 
 
