@@ -5,6 +5,7 @@ import photo from '../../assets/friend4.jpg';
 import { Preloader } from '../common/Preloader';
 import { NavLink } from 'react-router-dom';
 import { usersApi } from '../../redux/api';
+import { Pagination } from '../common/pagination/Pagination';
 
 type UsersPropsType = {
   totalUsersCount: number
@@ -20,25 +21,26 @@ type UsersPropsType = {
 
 export const Users = (props: UsersPropsType) => {
 
-  let totalPageCount = Math.ceil(props.totalUsersCount / props.pageCount);
+/*   let totalPageCount = Math.ceil(props.totalUsersCount / props.pageCount);
   const totalPageCountArr = [];
 
   for (let i = 1; i <= totalPageCount; i++) {
     totalPageCountArr.push(i);
-  }
+  } */
 
   return (
     <div className={s.content}>
     {props.isFetched ? <Preloader />: ''}
 
-    {totalPageCountArr.map(page => {
+   {/*  {totalPageCountArr.map(page => {
       return <span key={page + 156789}
                     className={`${props.currentPage === page ? s.page_current : ''}`}
                     onClick={(e) => props.setCurrentPage(page)}>
               {page}
             </span>
-    })}
+    })} */}
 
+    <Pagination  totalUsersCount={props.totalUsersCount} pageCount={props.pageCount} currentPage={props.currentPage} setCurrentPage={props.setCurrentPage}/>
 
     {props.users.map(user => <div key={user.id + Math.random()} className={s.user_wrapper}>
         <div className={s.user_info}>
