@@ -111,24 +111,34 @@ export const setStatusAC = (status: string) => ({type: SET_STATUS, status})
 
 
 //thunk
-export const setProfileTC = (userId: number) => (dispatch: Dispatch) => {
-  profileApi.getProfileData(userId)
-  .then((res) => dispatch(setProfileAC(res.data)))
+export const setProfileTC = (userId: number) => async(dispatch: Dispatch) => {
+  try {
+    let res = await  profileApi.getProfileData(userId)
+    dispatch(setProfileAC(res.data))
+  } catch (error: any) {
+    console.log(error.message)
+  }
 }
 
-export const setStatusTC = (userId: number) => (dispatch: Dispatch) => {
-  profileApi.getStatus(userId)
-  .then((res) => dispatch(setStatusAC(res.data)))
+export const setStatusTC = (userId: number) => async(dispatch: Dispatch) => {
+  try {
+    let res = await profileApi.getStatus(userId)
+    dispatch(setStatusAC(res.data))
+  } catch  (error: any) {
+    console.log(error.message)
+  }
 }
 
-export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
-  profileApi.updateStatus(status)
-  .then((res) => {
+export const updateStatusTC = (status: string) => async(dispatch: Dispatch) => {
+  try {
+    let res = await profileApi.updateStatus(status)
     if (res.data.resultCode === 0) {
       dispatch(setStatusAC(status))
     } else {
       console.log(res)
     }
-  })
+  } catch (error: any) {
+    console.log(error.message)
+  }
 }
 

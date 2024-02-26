@@ -59,36 +59,32 @@ export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //get users aut
   }})
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
-  authApi.login(email, password, rememberMe)
-    .then(data => {
-      if (data.resultCode === 0) { //authentification in the service is successed
-        dispatch(getAuthUserDataTC());
+export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => async(dispatch) => {
+  try {
+    let data = await authApi.login(email, password, rememberMe)
+    if (data.resultCode === 0) { //authentification in the service is successed
+      dispatch(getAuthUserDataTC());
 
-        console.log('login')
-      } else {
-          let message = data.messages.length > 0 ? data.messages[0] : 'Common Error'
-          let action = stopSubmit('login', {_error: message}); //экшен который предоставляет redux-form, чтобы обрабатывать ошибки.
-                                                                  //указываем название формы и общую ошибку или название коркретного поля, для к-го обрабатываем ошибку
-          dispatch(action);
-      }
-    })
-    .catch((error: Error) => {
-      console.log(error.message)
-    })
+    } else {
+        let message = data.messages.length > 0 ? data.messages[0] : 'Common Error'
+        let action = stopSubmit('login', {_error: message}); //экшен который предоставляет redux-form, чтобы обрабатывать ошибки.
+                                                            //указываем название формы и общую ошибку или название конкретного поля, для к-го обрабатываем ошибку
+        dispatch(action);
+    }
+  } catch (error: any) {
+    console.log(error.message)
+  }
 }
 
-export const logoutTC = () => (dispatch: Dispatch) => {
-  authApi.logout()
-    .then(response => {
-      if (response.data.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false)); //надо убить все куки
-        console.log('logout')
-      } else {
-        console.log(response)
-      }
-    })
-    .catch((error: Error) => {
-      console.log(error.message)
-    })
+export const logoutTC = () => async (dispatch: Dispatch) => {
+  try {
+    let response = await authApi.logout()
+    if (response.data.resultCode === 0) {
+      dispatch(setAuthUserData(null, null, null, false)); //надо убить все куки
+    } else {
+      console.log(response)
+    }
+  } catch (error: any) { //error: Error
+    console.log(error.message)
+  }
 }

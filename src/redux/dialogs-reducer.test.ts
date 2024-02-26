@@ -83,5 +83,4 @@ it('dialog message should be added correctly', () => {
 
   expect(newState.dialogs[1].length).toBe(7);
   expect(newState.dialogs[1][6].name).not.toBe('Benny')
-
 })

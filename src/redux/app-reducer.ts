@@ -29,9 +29,7 @@ const setInitialized = () => ({type: SET_INITIALIZED} as const);
 
 //thunk
 
-export const setInitializeAppTC = (): AppThunk => (dispatch) =>{
-  let promise = dispatch(getAuthUserDataTC());
-  promise.then(() => {
-    dispatch(setInitialized());
-  })
+export const setInitializeAppTC = (): AppThunk => async(dispatch) =>{
+  await dispatch(getAuthUserDataTC());
+  dispatch(setInitialized());
 }

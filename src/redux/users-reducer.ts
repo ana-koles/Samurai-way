@@ -154,14 +154,15 @@ export const toggleIsFollingInProgressAC = (userId: number, isFetched: boolean) 
 
 //thunk
 
-export const requestUsersTC = (pageCount: number, requestedPage: number ) => (dispatch: Dispatch) => {
-  dispatch(changeIsFetchedAC(true)); //запускаем крутилку
-  dispatch(setCurrentPageAC(requestedPage));
-
-  usersApi.getUsers(pageCount, requestedPage)
-    .then((data) => {
-      dispatch(changeIsFetchedAC(false)); // убираем крутилку
-      dispatch(setUsersAC(data.items));
-      dispatch(setTotalUsersCountAC(data.totalCount));
-    });
+export const requestUsersTC = (pageCount: number, requestedPage: number ) => async(dispatch: Dispatch) => {
+  try {
+    dispatch(changeIsFetchedAC(true)); //запускаем крутилку
+    dispatch(setCurrentPageAC(requestedPage));
+    let data = await usersApi.getUsers(pageCount, requestedPage)
+    dispatch(changeIsFetchedAC(false)); // убираем крутилку
+    dispatch(setUsersAC(data.items));
+    dispatch(setTotalUsersCountAC(data.totalCount));
+  } catch (error: any) { //error: Error
+    console.log(error.message)
+  }
 }
