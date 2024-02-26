@@ -73,7 +73,7 @@ let usersInitialState: UsersType = {
   ],
   currentPage: 1,
   totalUsersCount: 0,
-  pageCount: 5,
+  pageCount: 10,
   isFetched: false,
   isFollowingInProgressUsersId: []
 }

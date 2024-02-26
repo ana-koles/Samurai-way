@@ -35,7 +35,7 @@ export const Pagination = ({totalItemsCount, pageCount, currentPage, setCurrentP
 
   return (
     <>
-    {portionNumber > 1 && <button onClick={goToPreviousPortion}>Left</button>}
+    {portionNumber > 1 && <button onClick={goToPreviousPortion}>Previous</button>}
 
     {pagesCountArr.filter(page => page >=leftPortionElement && page <=rightPortionElement)
                   .map(page => {
@@ -47,7 +47,7 @@ export const Pagination = ({totalItemsCount, pageCount, currentPage, setCurrentP
                   })
 
     }
-    {portionNumber < portionCount && <button onClick={goToNextPortion}>Right</button> }
+    {portionNumber < portionCount && <button onClick={goToNextPortion}>Next</button> }
 
     </>
 

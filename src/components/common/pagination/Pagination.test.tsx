@@ -7,9 +7,21 @@ describe('Pagination component', () => {
     const component = create(<Pagination totalItemsCount={11}
                                           pageCount={1}
                                           currentPage={1}
+                                          portionSize={10}
                                           setCurrentPage={() => {}}/>)
     const root = component.root;
-    const button = root.findAllByType('button');
-    expect(button.length).toBe(1);
+    const spans = root.findAllByType('span');
+    expect(spans.length).toBe(10);
+  })
+
+  test('if there are more than 10 pages with 1 page per page, button next should appear', () => {
+    const component = create(<Pagination totalItemsCount={11}
+                            pageCount={1}
+                            currentPage={1}
+                            portionSize={10}
+                            setCurrentPage={() => {}}/>)
+    const root = component.root;
+    const button = root.findByType('button');
+    expect(button.children[0]).toBe('Next');
   })
 })
