@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react";
 import s from './Profile.module.css'
 
-type ProfileStatusPropsType = {
+export type ProfileStatusPropsType = {
   status: string
   updateStatus: (status: string) => void
 }

@@ -19,10 +19,10 @@ export const ChatMenu = ({messageContacts}: ChatMenyPropsType) => {
 
         <ul>
           {messageContacts.map(contact => {
-            return <ChatMenuItem name={contact.name} id={contact.id}/>
+            return <ChatMenuItem key={contact.id} name={contact.name} id={contact.id}/>
           })}
         </ul>
-        
+
       </div>
     </div>
   );

@@ -5,25 +5,32 @@ import App from './App';
 import { store } from './redux/redux-store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import MainApp from './App';
 
 
 
 export const rerenderEntireTree = () => {
+  ReactDOM.render(<MainApp/>, document.getElementById('root'));
+}
+
+/* export const rerenderEntireTree = () => {
   ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
-        <App
+        <App */
           /* state={stateNew}
           store={store}
           dispatch={store.dispatch.bind(store)} */
-          />,
+/*           />,
       </Provider>,
     </BrowserRouter>,
 
 
     document.getElementById('root')
   );
-}
+} */
+
+
 
 
 rerenderEntireTree();

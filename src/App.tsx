@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-
-import { Header } from './components/header/Header';
 import { NavBar } from './components/navBar/NavBar';
-import { Profile } from './components/profile/Profile';
 import { Dialogs } from './components/dialogs/Dialogs';
 import { News } from './components/news/News';
 import { Music } from './components/music/Music';
@@ -14,9 +11,9 @@ import { ProfileContainer } from './components/profile/ProfileContainer';
 import { HeaderContainer } from './components/header/HeaderComponent';
 import { LoginPageContainer } from './components/login/Login';
 import { compose } from 'redux';
-import { connect } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { setInitializeAppTC } from './redux/app-reducer';
-import { AppRootStateType } from './redux/redux-store';
+import { AppRootStateType, store } from './redux/redux-store';
 import { Preloader } from './components/common/Preloader';
 
 
@@ -72,9 +69,19 @@ const MapStateToProps = (state: AppRootStateType) => {
 }
 
 
-export default compose<React.ComponentType>(
+const AppContainer =  compose<React.ComponentType>(
   withRouter,
   connect(MapStateToProps, {setInitializeApp: setInitializeAppTC}) //если не передаем MapStateToProps, то вмест них пишем Null
 )(App);
+
+const MainApp = () => {
+  return <BrowserRouter>
+          <Provider store={store}>
+            <AppContainer/>
+          </Provider>,
+        </BrowserRouter>
+}
+
+export default MainApp
 
 
