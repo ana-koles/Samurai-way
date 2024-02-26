@@ -23,7 +23,6 @@ export const Pagination = ({totalItemsCount, pageCount, currentPage, setCurrentP
   const [portionNumber, setPortionNumber] = useState(1); //portion number (we have 3 portions)
   let leftPortionElement = (portionNumber - 1) * portionSize + 1; // (2 - 1) * 10 + 1 = 2nd portion starts with 11;
   let rightPortionElement = portionSize * portionNumber; // 10 * 2 = 2nd portion ends with 20th element
-  console.log(portionNumber);
 
   const goToPreviousPortion = () => {
     setPortionNumber(portionNumber - 1)

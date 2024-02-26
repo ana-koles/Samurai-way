@@ -30,7 +30,7 @@ export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsTy
 базового класса Component, который инициализирует состояние (this.state) и пропсы (this.props).
 Этот конструктор, в свою очередь, устанавливает this.props в значения, переданные компоненте в момент создания. */
 
-export class UsersComponent extends Component<UsersContainerPropsType>{
+class UsersComponent extends Component<UsersContainerPropsType>{
 
   constructor (props: UsersContainerPropsType) {
     super(props);
@@ -116,6 +116,7 @@ export const UsersContainer = connect(mapStateToProps, {
   getUsers: requestUsersTC
 })(UsersComponent);
 
+export default UsersContainer; //обязательно default export доя lazy loading
 
 //еще более короткая версия - нужно будет скорректировать наименования action creators,
 //чтобы они соответствовали названиям свойств

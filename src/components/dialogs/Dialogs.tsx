@@ -4,12 +4,8 @@ import ChatMenu from './chatMenu/ChatMenu';
 import { DialogsSectionContainer } from './dialogsSection/DialogsSectionContainer';
 
 
-
-type DialogsPropsType = {
-}
-
-export const Dialogs: React.FC<DialogsPropsType> = (props) => {
-  
+const Dialogs = () => {
+  console.log('Dialogs')
   return (
     <div className={s.content}>
       <DialogsSectionContainer/>
@@ -17,4 +13,6 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
     </div>
   );
 };
+
+export default Dialogs; //require default export for lazy loading
 
