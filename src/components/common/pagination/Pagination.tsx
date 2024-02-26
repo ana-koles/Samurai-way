@@ -1,32 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import s from './Pagination.module.css'
 
 
 type Props = {
-  totalUsersCount: number
+  totalItemsCount: number
   pageCount: number
   currentPage: number
   setCurrentPage: (pageNumber: number) => void
+  portionSize?: number //кол-во номеров страниц, которые мы видим в погинации
 }
 
-export const Pagination = ({totalUsersCount, pageCount, currentPage, setCurrentPage}: Props) => {
+export const Pagination = ({totalItemsCount, pageCount, currentPage, setCurrentPage, portionSize = 10}: Props) => {
 
-  let totalPageCount = Math.ceil(totalUsersCount / pageCount);
-  const totalPageCountArr = [];
+  let totalPageCount = Math.ceil(totalItemsCount / pageCount); //150 item / 5 items per page = 30 pages
+  const pagesCountArr = [];
 
   for (let i = 1; i <= totalPageCount; i++) {
-    totalPageCountArr.push(i);
+    pagesCountArr.push(i);
+  }
+
+  let portionCount = Math.ceil(totalPageCount / portionSize); //30 pages / 10 items in the visible pagination line = 3 portions (left - center- right)
+  const [portionNumber, setPortionNumber] = useState(1); //portion number (we have 3 portions)
+  let leftPortionElement = (portionNumber - 1) * portionSize + 1; // (2 - 1) * 10 + 1 = 2nd portion starts with 11;
+  let rightPortionElement = portionSize * portionNumber; // 10 * 2 = 2nd portion ends with 20th element
+  console.log(portionNumber);
+
+  const goToPreviousPortion = () => {
+    setPortionNumber(portionNumber - 1)
+  }
+
+  const goToNextPortion = () => {
+    setPortionNumber(portionNumber + 1)
   }
 
   return (
     <>
-     {totalPageCountArr.map(page => {
-      return <span key={page + 156789}
-                    className={`${currentPage === page ? s.page_current : ''}`}
-                    onClick={(e) => setCurrentPage(page)}>
-              {page}
-            </span>
-    })}
+    {portionNumber > 1 && <button onClick={goToPreviousPortion}>Left</button>}
+
+    {pagesCountArr.filter(page => page >=leftPortionElement && page <=rightPortionElement)
+                  .map(page => {
+                    return <span key={page + 156789}
+                                  className={`${currentPage === page ? s.page_current : ''}`}
+                                  onClick={(e) => setCurrentPage(page)}>
+                            {page}
+                          </span>
+                  })
+
+    }
+    {portionNumber < portionCount && <button onClick={goToNextPortion}>Right</button> }
 
     </>
 

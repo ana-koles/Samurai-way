@@ -162,6 +162,6 @@ export const requestUsersTC = (pageCount: number, requestedPage: number ) => (di
     .then((data) => {
       dispatch(changeIsFetchedAC(false)); // убираем крутилку
       dispatch(setUsersAC(data.items));
-      dispatch(setTotalUsersCountAC(data.totalCount / 500));
+      dispatch(setTotalUsersCountAC(data.totalCount));
     });
 }
