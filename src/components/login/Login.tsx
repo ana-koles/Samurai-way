@@ -7,6 +7,8 @@ import { Input, createField } from '../common/formContolls/FormControls';
 import { minLengthCreator, required } from '../../utils/validators/validators';
 import { AppRootStateType } from '../../redux/redux-store';
 import { Redirect } from 'react-router-dom';
+import { Button } from '../button/Button';
+
 
 //тип данных полей формы
 export type LoginFormPropsType = {
@@ -27,7 +29,7 @@ type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType
 
 
 const LoginPage = (props: LoginPagePropsType) => {
-  
+
   const onSubmit = (data: LoginFormPropsType) => { //будут содержать данные из формы и вызыватся при отправке формы на сервер
     props.logIn(data.email, data.password, data.rememberMe)
     //dispatch(loginTC(data.email, data.password, data.rememberMe))
@@ -64,7 +66,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: Injec
 
         {props.error && <div className={s.errorWrapper} ><span className={s.error}>{props.error}</span></div>}
 
-        <button type='submit'>Submit</button>
+        <Button  name ={'Submit'}type='submit'/>
       </form>
     </div>
   );
