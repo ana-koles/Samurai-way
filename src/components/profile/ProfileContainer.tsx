@@ -30,7 +30,7 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OnPropsTy
 
 class ProfileComponent extends Component<ProfileContainerPropsType> {
 
-  componentDidMount(): void {
+  refreshProfile() {
     let userId = this.props.match.params.userId;
     if (userId) {
       this.props.setProfile(+userId);
@@ -44,7 +44,16 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
     }
   }
 
-  componentDidUpdate(): void {
+  componentDidMount(): void {
+    debugger;
+    this.refreshProfile()
+  }
+
+  componentDidUpdate(prevProps: ProfileContainerPropsType): void { //срабатывает каждый раз когда в компоненте меняется state или props
+    debugger
+    if (this.props.match.params.userId !== prevProps.match.params.userId) {
+      this.refreshProfile()
+    }
 
     if (!this.props.isAuth) {
       this.props.history.push('/login')

@@ -92,11 +92,11 @@ const AppContainer =  compose<React.ComponentType>(
 )(App);
 
 const MainApp = () => {
-  return <HashRouter basename={process.env.PUBLIC_URL}> {/* чтобы на gh-pages переключаться по страницам */}
+  return <BrowserRouter basename={process.env.PUBLIC_URL}> {/* чтобы на gh-pages переключаться по страницам */}
           <Provider store={store}>
             <AppContainer/>
           </Provider>,
-        </HashRouter>
+        </BrowserRouter>
 }
 
 export default MainApp
