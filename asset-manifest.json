@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/Social-network/static/css/main.0ad50547.css",
+    "main.js": "/Social-network/static/js/main.8f489a61.js",
+    "static/css/386.97742264.chunk.css": "/Social-network/static/css/386.97742264.chunk.css",
+    "static/js/386.1b8b8524.chunk.js": "/Social-network/static/js/386.1b8b8524.chunk.js",
+    "static/css/421.378f66f2.chunk.css": "/Social-network/static/css/421.378f66f2.chunk.css",
+    "static/js/421.d8d4f192.chunk.js": "/Social-network/static/js/421.d8d4f192.chunk.js",
+    "static/media/friend5.jpg": "/Social-network/static/media/friend5.34b0147df496ee97d2c2.jpg",
+    "static/media/friend4.jpg": "/Social-network/static/media/friend4.842e7e024f8500adaacc.jpg",
+    "static/media/friend1.jpg": "/Social-network/static/media/friend1.2b34604cc873c2ad01f5.jpg",
+    "static/media/Lato-Regular.eot": "/Social-network/static/media/Lato-Regular.2a9df1c2041dcde838a4.eot",
+    "static/media/Lato-Light.ttf": "/Social-network/static/media/Lato-Light.c7400fcad9e48ca9043f.ttf",
+    "static/media/Lato-Regular.ttf": "/Social-network/static/media/Lato-Regular.9d883d540ee2b4de8024.ttf",
+    "static/media/Lato-Bold.ttf": "/Social-network/static/media/Lato-Bold.636be8de934918e38ed9.ttf",
+    "static/media/Lato-Black.eot": "/Social-network/static/media/Lato-Black.b30d7df4cf7bbc3ad3cf.eot",
+    "static/media/Lato-Light.eot": "/Social-network/static/media/Lato-Light.c8228e51f30487e7ada8.eot",
+    "static/media/Lato-Thin.ttf": "/Social-network/static/media/Lato-Thin.5a60dde25d817751d590.ttf",
+    "static/media/Lato-Black.ttf": "/Social-network/static/media/Lato-Black.57dee8aface5572f9101.ttf",
+    "static/media/Lato-Hairline.eot": "/Social-network/static/media/Lato-Hairline.f9f4fe106b8b4849312f.eot",
+    "static/media/no_photo.jpg": "/Social-network/static/media/no_photo.7f8cd9076d92bdb25b65.jpg",
+    "static/media/cat-profile2.jpg": "/Social-network/static/media/cat-profile2.d5192b91ddfdd735c659.jpg",
+    "static/media/Lato-Regular.woff2": "/Social-network/static/media/Lato-Regular.39ac38d8a27bed2a16e4.woff2",
+    "static/media/Lato-Bold.woff2": "/Social-network/static/media/Lato-Bold.ea8a923ec6d3ea7cf7bc.woff2",
+    "static/media/Lato-Black.woff2": "/Social-network/static/media/Lato-Black.9280d87f151e453d884c.woff2",
+    "static/media/Lato-Light.woff2": "/Social-network/static/media/Lato-Light.7e323674c33b3939aba5.woff2",
+    "static/media/Lato-Hairline.woff2": "/Social-network/static/media/Lato-Hairline.4cf04805197605f0103e.woff2",
+    "static/media/heart.png": "/Social-network/static/media/heart.a13e3857c7c7f11756ac.png",
+    "static/media/logo.svg": "/Social-network/static/media/logo.229117459581c4288ba59151d8e52463.svg",
+    "index.html": "/Social-network/index.html",
+    "static/media/spinning-dots.svg": "/Social-network/static/media/spinning-dots.789907e232934c1be1b74774ed27a7db.svg",
+    "main.0ad50547.css.map": "/Social-network/static/css/main.0ad50547.css.map",
+    "main.8f489a61.js.map": "/Social-network/static/js/main.8f489a61.js.map",
+    "386.97742264.chunk.css.map": "/Social-network/static/css/386.97742264.chunk.css.map",
+    "386.1b8b8524.chunk.js.map": "/Social-network/static/js/386.1b8b8524.chunk.js.map",
+    "421.378f66f2.chunk.css.map": "/Social-network/static/css/421.378f66f2.chunk.css.map",
+    "421.d8d4f192.chunk.js.map": "/Social-network/static/js/421.d8d4f192.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0ad50547.css",
+    "static/js/main.8f489a61.js"
+  ]
+}

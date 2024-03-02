@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/386.97742264.chunk.css","mappings":"AAAA,gCACE,aACF","sources":["components/common/pagination/Pagination.module.css"],"sourcesContent":[".page_current {\r\n  color: #FDBA2B;\r\n}\r\n\r\n"],"names":[],"sourceRoot":""}
