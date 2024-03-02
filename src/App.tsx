@@ -4,7 +4,7 @@ import { NavBar } from './components/navBar/NavBar';
 import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
-import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, withRouter } from 'react-router-dom';
 import { ProfileContainer } from './components/profile/ProfileContainer';
 import { HeaderContainer } from './components/header/HeaderComponent';
 import { LoginPageContainer } from './components/login/Login';
@@ -92,11 +92,11 @@ const AppContainer =  compose<React.ComponentType>(
 )(App);
 
 const MainApp = () => {
-  return <BrowserRouter>
+  return <HashRouter basename={process.env.PUBLIC_URL}> {/* чтобы на gh-pages переключаться по страницам */}
           <Provider store={store}>
             <AppContainer/>
           </Provider>,
-        </BrowserRouter>
+        </HashRouter>
 }
 
 export default MainApp

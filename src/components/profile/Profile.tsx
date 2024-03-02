@@ -17,7 +17,6 @@ type ProfilePropsType = {
 
 
 export const Profile: React.FC<ProfilePropsType> = (props) => {
-  console.log('Profile')
 
   if (!props.profile ) {
     return (<Preloader/>)
