@@ -44,23 +44,55 @@ p {
   align-items: end;
 }
 
+.statusWrapper {
+  color: #242426;
+  margin-bottom: 5px;
+}
+
+.profilePhotoWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  position: relative;
+  top: 20px;
+}
+
+.photoCover {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  z-index: 9;
+}
+
+
 .photo {
   position: relative;
   z-index: 5;
 /*   background-image: url(../../assets/cat-profile2.jpg); */
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
+
   overflow: hidden;
-  width: 128px;
-  height: 128px;
+  width: 100%;
+  height: 100%;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 115%;
   margin-right: 25px;
 }
+
+
+.profilePhotoWrapper:hover .photoCover{
+  background-color: red;
+}
+
+
+.profilePhotoWrapper:hover img {
+  visibility: visible;
+}
+
+
 
 .photoBackground {
   background-image: url(../../assets/cat-profile2.jpg);
@@ -84,7 +116,33 @@ p {
   margin-top: 5px;
 }
 
-.statusWrapper {
-  color: #242426;
-  margin-bottom: 5px;
+
+
+input[type='file'] {
+  color: transparent;
 }
+
+.photoInput{
+  visibility: hidden;
+  margin-top: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-28%, -65%);
+  -webkit-transform: translate(-28%, -65%);
+  -moz-transform: translate(-28%, -65%);
+  -ms-transform: translate(-28%, -65%);
+  -o-transform: translate(-28%, -65%);
+}
+
+.profilePhotoWrapper:hover input {
+  visibility: visible;
+}
+
+

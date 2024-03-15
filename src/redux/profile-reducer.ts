@@ -26,7 +26,7 @@ type ContactsType = {
   mainLink: string | null
 };
 
-type PhotosType = {
+export type PhotosType = {
   small: string | null
   large: string | null
 };
@@ -38,18 +38,20 @@ export type UserProfileType = {
   fullName: string
   contacts: ContactsType
   photos: PhotosType
-  aboutMe?: string
+  aboutMe: string | null
 };
 
 const ADD_POST = 'ADD-POST' as const;
 const SET_PROFILE = 'SET_PROFILE'as const;
-const SET_STATUS = 'SET_STATUS' as const
+const SET_STATUS = 'SET_STATUS' as const;
+const SET_PROFILE_PHOTO = 'SET_PROFILE_PHOTO' as const
 
 //types
 type AddPostAT = ReturnType<typeof addPostAC>;
 type SetProfileAT = ReturnType<typeof setProfileAC>;
-type SetStatusAT = ReturnType<typeof setStatusAC>
-export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT;
+type SetStatusAT = ReturnType<typeof setStatusAC>;
+type SetpRrofilePhotoAT = ReturnType<typeof setProfilePhotoAC>
+export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT | SetpRrofilePhotoAT;
 
 
 
@@ -99,6 +101,20 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
     case SET_STATUS:
       return {...state, status: action.status};
 
+    case SET_PROFILE_PHOTO:{
+      debugger;
+      let copyState1 = {
+        ...state,
+        profile: state.profile? {
+          ...state.profile,
+          photos: {
+            ...state.profile?.photos,
+            ...action.photos
+          }
+        }: state.profile
+      };
+      return copyState1;
+}
     default:
       return state;
   }
@@ -107,7 +123,8 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
 //actions
 export const addPostAC = (name: string, newMessage: string) => ({type: ADD_POST, userName: name, newMessage} as const);
 export const setProfileAC = (user: UserProfileType) => ({type: SET_PROFILE, user})
-export const setStatusAC = (status: string) => ({type: SET_STATUS, status})
+export const setStatusAC = (status: string) => ({type: SET_STATUS, status});
+export const setProfilePhotoAC = (photoFile: PhotosType) => ({type: SET_PROFILE_PHOTO, photos: photoFile})
 
 
 //thunk
@@ -139,6 +156,19 @@ export const updateStatusTC = (status: string) => async(dispatch: Dispatch) => {
     }
   } catch (error: any) {
     console.log(error.message)
+  }
+}
+
+export const savePhotoTC = (photoFile: File) => async(dispatch: Dispatch) => {
+  try {
+    let res = await profileApi.savePhoto(photoFile);
+    if (res.data.resultCode === 0) {
+      debugger;
+      dispatch(setProfilePhotoAC(res.data.data.photos))
+    }
+
+  } catch (error) {
+
   }
 }
 

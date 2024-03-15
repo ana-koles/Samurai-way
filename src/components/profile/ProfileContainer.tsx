@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { AppRootStateType } from "../../redux/redux-store";
 import { Profile } from "./Profile";
-import { UserProfileType, setProfileTC, setStatusTC, updateStatusTC } from "../../redux/profile-reducer";
+import { UserProfileType, savePhotoTC, setProfileTC, setStatusTC, updateStatusTC } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import {  compose } from "redux";
 import {  Redirect, RouteComponentProps, withRouter } from "react-router-dom";
@@ -18,6 +18,7 @@ type MapDispatchToPropsType = {
   setProfile: (userId: number) => void
   setStatus: (userId: number) => void
   updateStatus: (status: string) => void
+  savePhoto: (photofile: any) => void
 }
 
 //типизация userID
@@ -45,12 +46,10 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
   }
 
   componentDidMount(): void {
-    debugger;
     this.refreshProfile()
   }
 
   componentDidUpdate(prevProps: ProfileContainerPropsType): void { //срабатывает каждый раз когда в компоненте меняется state или props
-    debugger
     if (this.props.match.params.userId !== prevProps.match.params.userId) {
       this.refreshProfile()
     }
@@ -71,6 +70,8 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
         status={this.props.status}
         profile={this.props.profile}
         updateStatus={this.props.updateStatus}
+        isOwner={!this.props.match.params.userId}
+        savePhoto={this.props.savePhoto}
       />
     )
   }
@@ -103,7 +104,11 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 //export const ProfileContainer = connect(mapStateToProps, {setProfile: setProfileTC})(ProfileComponentWithURLData)
 
 export const ProfileContainer = compose<React.ComponentType>( //говорим что передаем компоненту
-  connect(mapStateToProps, {setProfile: setProfileTC, setStatus: setStatusTC, updateStatus: updateStatusTC}),
+  connect(mapStateToProps, {
+    setProfile: setProfileTC,
+    setStatus: setStatusTC,
+    updateStatus: updateStatusTC,
+    savePhoto: savePhotoTC}),
   withRouter,
   //withAuthRedirect
 )(ProfileComponent)
