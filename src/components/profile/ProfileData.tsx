@@ -15,10 +15,11 @@ export const ProfileData = ({profile, isOwner, activateEditMode, ...restProps}: 
     {isOwner && <Button callback={activateEditMode} name={'Edit'}/>}
     </div>
     <p>About me: {profile.aboutMe}</p>
+    <p>Looking for a job: {profile.lookingForAJob}</p>
+    <p>My professional skills: {profile.lookingForAJobDescription}</p>
     {
     Object.keys(profile.contacts).map((key) => {
       let value = profile.contacts[key as keyof ContactsType ]
-
         return <Contact
             key={key}
             contactName={key}
@@ -26,10 +27,6 @@ export const ProfileData = ({profile, isOwner, activateEditMode, ...restProps}: 
         />
       })
     }
-    <p>Instagram: {profile.contacts.instagram}</p>
-    <p>Looking for a job: {profile.lookingForAJob}</p>
-    <p>GitHub: {profile.contacts.github}</p>
-    <p>My professional skills: {profile.lookingForAJobDescription}</p>
   </div>
   )
 }

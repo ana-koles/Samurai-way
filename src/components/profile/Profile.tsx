@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import s from './Profile.module.css'
 import { PostSectionContainer } from './postSection/PostSectionContainer';
-import { UserProfileType, UserUpdatedProfileType } from '../../redux/profile-reducer';
+import { ContactsType, UserProfileType, UserUpdatedProfileType } from '../../redux/profile-reducer';
 import { Preloader } from '../common/Preloader';
 import noPhoto from '../../assets/no_photo.jpg'
 import { ProfileStatusWithHooks } from './ProfileStatusWithHooks';
@@ -19,11 +19,9 @@ type ProfilePropsType = {
 
 type  ProfileFormField = {
   aboutMe: string | null
-  instagram: string | null
   lookingJob: boolean
-  github: string | null
   lookingForAJobDescription: string | null
-}
+} & ContactsType
 
 export const Profile = ({profile, status, updateStatus, isOwner, savePhoto, saveUpdatedData}: ProfilePropsType) => {
 
@@ -43,9 +41,9 @@ export const Profile = ({profile, status, updateStatus, isOwner, savePhoto, save
     const updatedProfileData = {
       userId: profile.userId,
       lookingForAJob: data.lookingJob ?? false,
-      lookingForAJobDescription: data.lookingForAJobDescription ?? null,
+      lookingForAJobDescription: data.lookingForAJobDescription ?? '',
       fullName: profile.fullName,
-      contacts: {...profile.contacts, github: data.github ?? null, instagram: data.instagram ?? null},
+      contacts: {...profile.contacts, ...data},
       aboutMe: data.aboutMe ?? null
     }
     saveUpdatedData(updatedProfileData)

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { UserType } from "./users-reducer"
-import { PhotosType, UserProfileType, UserUpdatedProfileType } from "./profile-reducer"
+import { UserProfileType, UserUpdatedProfileType } from "./profile-reducer"
 
 type UsersGetType = {
   items: UserType[]

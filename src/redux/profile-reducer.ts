@@ -47,15 +47,12 @@ const ADD_POST = 'ADD-POST' as const;
 const SET_PROFILE = 'SET_PROFILE'as const;
 const SET_STATUS = 'SET_STATUS' as const;
 const SET_PROFILE_PHOTO = 'SET_PROFILE_PHOTO' as const
-const UPDATE_PROFILE_DATA = 'UPDATE_PROFILE_DATA' as const
-
 //types
 type AddPostAT = ReturnType<typeof addPostAC>;
 type SetProfileAT = ReturnType<typeof setProfileAC>;
 type SetStatusAT = ReturnType<typeof setStatusAC>;
 type SetpRrofilePhotoAT = ReturnType<typeof setProfilePhotoAC>
-type UpdateUserDataAT = ReturnType<typeof updateProfileAC>
-export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT | SetpRrofilePhotoAT | UpdateUserDataAT;
+export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT | SetpRrofilePhotoAT;
 
 
 
@@ -119,16 +116,6 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
       return copyState1;
     }
 
-    case UPDATE_PROFILE_DATA: {
-      return {
-        ...state,
-        profile: {
-          ...action.userData,
-          photos: state.profile?.photos ?? {small: null, large: null}
-        }
-      }
-    }
-
     default:
       return state;
   }
@@ -139,8 +126,6 @@ export const addPostAC = (name: string, newMessage: string) => ({type: ADD_POST,
 export const setProfileAC = (user: UserProfileType) => ({type: SET_PROFILE, user})
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status});
 export const setProfilePhotoAC = (photoFile: PhotosType) => ({type: SET_PROFILE_PHOTO, photos: photoFile})
-export const updateProfileAC = (userData: UserUpdatedProfileType) => ({type: UPDATE_PROFILE_DATA, userData})
-
 
 //thunk
 export const setProfileTC = (userId: number) => async(dispatch: Dispatch) => {
