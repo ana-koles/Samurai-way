@@ -15,7 +15,7 @@ export type ProfilePageType = {
   status: string
 }
 
-type ContactsType = {
+export type ContactsType = {
   facebook: string | null
   website: string | null
   vk: string | null
@@ -41,17 +41,21 @@ export type UserProfileType = {
   aboutMe: string | null
 };
 
+export type UserUpdatedProfileType = Omit<UserProfileType, 'photos'>
+
 const ADD_POST = 'ADD-POST' as const;
 const SET_PROFILE = 'SET_PROFILE'as const;
 const SET_STATUS = 'SET_STATUS' as const;
 const SET_PROFILE_PHOTO = 'SET_PROFILE_PHOTO' as const
+const UPDATE_PROFILE_DATA = 'UPDATE_PROFILE_DATA' as const
 
 //types
 type AddPostAT = ReturnType<typeof addPostAC>;
 type SetProfileAT = ReturnType<typeof setProfileAC>;
 type SetStatusAT = ReturnType<typeof setStatusAC>;
 type SetpRrofilePhotoAT = ReturnType<typeof setProfilePhotoAC>
-export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT | SetpRrofilePhotoAT;
+type UpdateUserDataAT = ReturnType<typeof updateProfileAC>
+export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT | SetpRrofilePhotoAT | UpdateUserDataAT;
 
 
 
@@ -102,7 +106,6 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
       return {...state, status: action.status};
 
     case SET_PROFILE_PHOTO:{
-      debugger;
       let copyState1 = {
         ...state,
         profile: state.profile? {
@@ -114,7 +117,18 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
         }: state.profile
       };
       return copyState1;
-}
+    }
+
+    case UPDATE_PROFILE_DATA: {
+      return {
+        ...state,
+        profile: {
+          ...action.userData,
+          photos: state.profile?.photos ?? {small: null, large: null}
+        }
+      }
+    }
+
     default:
       return state;
   }
@@ -125,6 +139,7 @@ export const addPostAC = (name: string, newMessage: string) => ({type: ADD_POST,
 export const setProfileAC = (user: UserProfileType) => ({type: SET_PROFILE, user})
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status});
 export const setProfilePhotoAC = (photoFile: PhotosType) => ({type: SET_PROFILE_PHOTO, photos: photoFile})
+export const updateProfileAC = (userData: UserUpdatedProfileType) => ({type: UPDATE_PROFILE_DATA, userData})
 
 
 //thunk
@@ -163,12 +178,24 @@ export const savePhotoTC = (photoFile: File) => async(dispatch: Dispatch) => {
   try {
     let res = await profileApi.savePhoto(photoFile);
     if (res.data.resultCode === 0) {
-      debugger;
       dispatch(setProfilePhotoAC(res.data.data.photos))
     }
+  } catch (error: any) {
+    console.log(error.message)
+  }
+}
 
-  } catch (error) {
-
+export const updateProfileTC = (userData:UserUpdatedProfileType) => async(dispatch: Dispatch, getState: any) => {
+  const userId = getState().auth.userId
+  try {
+    let res = await profileApi.updateUserData(userData);
+    if (res.data.resultCode === 0) {
+      let res = await  profileApi.getProfileData(userId)
+      dispatch(setProfileAC(res.data))
+    }
+  }
+  catch (error: any) {
+    console.log(error.message)
   }
 }
 

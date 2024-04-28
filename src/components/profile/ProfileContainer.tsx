@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { AppRootStateType } from "../../redux/redux-store";
 import { Profile } from "./Profile";
-import { UserProfileType, savePhotoTC, setProfileTC, setStatusTC, updateStatusTC } from "../../redux/profile-reducer";
+import { UserProfileType, UserUpdatedProfileType, savePhotoTC, setProfileTC, setStatusTC, updateProfileTC, updateStatusTC } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import {  compose } from "redux";
 import {  Redirect, RouteComponentProps, withRouter } from "react-router-dom";
@@ -19,6 +19,7 @@ type MapDispatchToPropsType = {
   setStatus: (userId: number) => void
   updateStatus: (status: string) => void
   savePhoto: (photofile: any) => void
+  saveData: (data: UserUpdatedProfileType) => void
 }
 
 //типизация userID
@@ -72,6 +73,7 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
         updateStatus={this.props.updateStatus}
         isOwner={!this.props.match.params.userId}
         savePhoto={this.props.savePhoto}
+        saveUpdatedData={this.props.saveData}
       />
     )
   }
@@ -108,7 +110,9 @@ export const ProfileContainer = compose<React.ComponentType>( //говорим �
     setProfile: setProfileTC,
     setStatus: setStatusTC,
     updateStatus: updateStatusTC,
-    savePhoto: savePhotoTC}),
+    savePhoto: savePhotoTC,
+    saveData: updateProfileTC
+  }),
   withRouter,
   //withAuthRedirect
 )(ProfileComponent)

@@ -42,16 +42,17 @@ export const Input = (props: TextareaProps) => {
 
 export const createField = (props: CreateFieldProps)=> {
   return (
-  <div className={s.formField}>
-    <Field
-      className={s.formField}
-      type={props.type}
-      placeholder={props.placeholder}
-      name={props.name}
-      component={props.component}
-      validate={props.validators}
-      text={props.text}/>
-  </div>)
+    <div className={s.formField}>
+      <Field
+        className={s.formField}
+        type={props.type}
+        placeholder={props.placeholder}
+        name={props.name}
+        component={props.component}
+        validate={props.validators}
+        text={props.text}/>
+    </div>
+  )
 }
 
 type Validator = ((value:string) => string | undefined) | undefined
@@ -60,7 +61,7 @@ type Validators = Validator[] | undefined
 
 
 type CreateFieldProps = {
-  type: string,
+  type?: 'text' | 'checkbox' | 'password',
   placeholder?: string,
   name: string,
   component: React.ComponentType<CommonInputType>,

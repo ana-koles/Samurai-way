@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import s from './Profile.module.css'
 import { PostSectionContainer } from './postSection/PostSectionContainer';
-import { UserProfileType } from '../../redux/profile-reducer';
+import { UserProfileType, UserUpdatedProfileType } from '../../redux/profile-reducer';
 import { Preloader } from '../common/Preloader';
 import noPhoto from '../../assets/no_photo.jpg'
 import { ProfileStatusWithHooks } from './ProfileStatusWithHooks';
@@ -14,6 +14,7 @@ type ProfilePropsType = {
   updateStatus: (status: string) => void
   isOwner: boolean
   savePhoto: (file: File) => void
+  saveUpdatedData: (data: UserUpdatedProfileType) => void
 }
 
 type  ProfileFormField = {
@@ -21,9 +22,10 @@ type  ProfileFormField = {
   instagram: string | null
   lookingJob: boolean
   github: string | null
+  lookingForAJobDescription: string | null
 }
 
-export const Profile = ({profile, status, updateStatus, isOwner, savePhoto}: ProfilePropsType) => {
+export const Profile = ({profile, status, updateStatus, isOwner, savePhoto, saveUpdatedData}: ProfilePropsType) => {
 
   const [editMode, setEditMode] = useState<boolean>(false)
 
@@ -38,39 +40,48 @@ export const Profile = ({profile, status, updateStatus, isOwner, savePhoto}: Pro
   }
 
   const onSubmit = (data: ProfileFormField) => {
+    const updatedProfileData = {
+      userId: profile.userId,
+      lookingForAJob: data.lookingJob ?? false,
+      lookingForAJobDescription: data.lookingForAJobDescription ?? null,
+      fullName: profile.fullName,
+      contacts: {...profile.contacts, github: data.github ?? null, instagram: data.instagram ?? null},
+      aboutMe: data.aboutMe ?? null
+    }
+    saveUpdatedData(updatedProfileData)
+    setEditMode(false)
   }
 
   return (
     <div className={s.content}>
-        <div className={s.profile_wrapper}>
-          <div className ={s.content_wrapper}>
+      <div className={s.profile_wrapper}>
+        <div className ={s.content_wrapper}>
           <div className={s.profilePhotoWrapper}>
 
-          <div className={s.photoCover}>
-          {profile.photos.large !== null
-          ?
-          <img className={s.photo} src={profile.photos.large} alt="Profile" />
-          :
-          <img className={s.photo} src={noPhoto} alt="No Profile" />
-          }
-
-          </div>
+            <div className={s.photoCover}>
+              {profile.photos.large !== null
+              ?
+              <img className={s.photo} src={profile.photos.large} alt="Profile" />
+              :
+              <img className={s.photo} src={noPhoto} alt="No Profile" />
+              }
+            </div>
 
             {isOwner &&
               <input className={s.photoInput} type='file' name='Photo' id='photo' onChange={updateProfilePhotoHandler}/>
             }
-            </div>
-            <div className={s.info_wrapper}>
-              <h2>{profile.fullName}</h2>
-              <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+          </div>
 
-              {editMode ? <ProfileEditFormRedux onSubmit={onSubmit} profile={profile} isOwner={isOwner}/> : <ProfileData activateEditMode={() => setEditMode(true)} isOwner={isOwner} profile={profile}/> }
+          <div className={s.info_wrapper}>
+            <h2>{profile.fullName}</h2>
+            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
 
-            </div>
+            {editMode ? <ProfileEditFormRedux initialValues={profile} onSubmit={onSubmit} profile={profile} isOwner={isOwner}/> : <ProfileData activateEditMode={() => setEditMode(true)} isOwner={isOwner} profile={profile}/> }
           </div>
         </div>
+      </div>
 
-        <PostSectionContainer/>
+      <PostSectionContainer/>
     </div>
   );
 };

@@ -23,7 +23,6 @@ export type UsersType = {
   isFollowingInProgressUsersId: Array<number> // хранит id тех пользователей к-ые в процессе follow/unfollow
 }
 
-
 let usersInitialState: UsersType = {
   users: [/*
     {

@@ -82,17 +82,13 @@ p {
   margin-right: 25px;
 }
 
-
 .profilePhotoWrapper:hover .photoCover{
   background-color: red;
 }
 
-
 .profilePhotoWrapper:hover img {
   visibility: visible;
 }
-
-
 
 .photoBackground {
   background-image: url(../../assets/cat-profile2.jpg);
@@ -115,8 +111,6 @@ p {
 .info_wrapper p+p {
   margin-top: 5px;
 }
-
-
 
 input[type='file'] {
   color: transparent;
@@ -145,4 +139,8 @@ input[type='file'] {
   visibility: visible;
 }
 
+.profileForm {
+  position: absolute;
+  top: 50px;
+}
 

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { UserType } from "./users-reducer"
-import { PhotosType, UserProfileType } from "./profile-reducer"
+import { PhotosType, UserProfileType, UserUpdatedProfileType } from "./profile-reducer"
 
 type UsersGetType = {
   items: UserType[]
@@ -84,7 +84,6 @@ export const profileApi = {
   },
 
   savePhoto(file: File) {
-    debugger;
     let formData = new FormData();
     formData.append("image", file);
 
@@ -92,7 +91,11 @@ export const profileApi = {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    } )
+    })
+  },
+
+  updateUserData(data: UserUpdatedProfileType) {
+    return instance.put<ResponseType>('/profile', data)
   }
 
 }
