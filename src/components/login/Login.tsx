@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Login.module.css'
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { InjectedFormProps, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { loginTC } from '../../redux/auth-reducer';
 import { Input, createField } from '../common/formContolls/FormControls';
@@ -48,7 +48,7 @@ const LoginPage = (props: LoginPagePropsType) => {
 export const minLenght6 = minLengthCreator(6)
 
 //component for standard form
-const LoginForm: React.FC<InjectedFormProps<LoginFormPropsType>> = (props: InjectedFormProps<LoginFormPropsType>) => {
+const LoginForm = (props: InjectedFormProps<LoginFormPropsType>) => {
 
 
   return (

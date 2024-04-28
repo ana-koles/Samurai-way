@@ -24,7 +24,8 @@ let profileInitialState: ProfilePageType = {
     },
   ],
   profile: null,
-  status: ''
+  status: '',
+  updateStatusSuccessful: false
 }
 
 

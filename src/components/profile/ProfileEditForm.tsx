@@ -24,14 +24,15 @@ const ProfileEditForm = (props: InjectedFormProps<ProfileFormField, ProfileEditF
           <label>About me: {createField({placeholder: 'About me...', name: 'aboutMe', component: Textarea, validators: []})}</label>
           <label>Looking for a job: {createField({type: 'checkbox', name: 'lookingJob', component: Input, validators: []})}</label>
           <label>My professional skills: {createField({placeholder: 'My professional skills', name: 'lookingForAJobDescription', component: Textarea, validators: [] })}</label>
+
           {Object.keys(props.profile.contacts).map(key => {
             let name = key.charAt(0).toUpperCase() + key.slice(1);
-            console.log(name)
             return (
-              <label>{name}: {createField({type: 'text', name: key, component: Input, validators: []})}</label>
+              <label key={key}>{name}: {createField({type: 'text', name: 'contacts.' + key, component: Input, validators: []})}</label>
             )
           })}
         </div>
+        {props.error && <div className={s.errorWrapper} ><span className={s.error}>{props.error}</span></div>}
       <Button type={'submit'} name={'Save'}/>
   </form>
   )

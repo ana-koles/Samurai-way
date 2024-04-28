@@ -1,6 +1,7 @@
 import { Dispatch } from "redux"
 import { v1 } from "uuid"
 import { profileApi } from "./api"
+import { stopSubmit } from "redux-form"
 
 export type PostType = {
   id: string
@@ -13,6 +14,7 @@ export type ProfilePageType = {
   posts: PostType[]
   profile: UserProfileType | null
   status: string
+  updateStatusSuccessful: boolean
 }
 
 export type ContactsType = {
@@ -47,12 +49,14 @@ const ADD_POST = 'ADD-POST' as const;
 const SET_PROFILE = 'SET_PROFILE'as const;
 const SET_STATUS = 'SET_STATUS' as const;
 const SET_PROFILE_PHOTO = 'SET_PROFILE_PHOTO' as const
+const SET_UPDATE_STATUS_SUCCESSFUL = 'SET_UPDATE_STATUS_SUCCESSFUL' as const
 //types
 type AddPostAT = ReturnType<typeof addPostAC>;
 type SetProfileAT = ReturnType<typeof setProfileAC>;
 type SetStatusAT = ReturnType<typeof setStatusAC>;
 type SetpRrofilePhotoAT = ReturnType<typeof setProfilePhotoAC>
-export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT | SetpRrofilePhotoAT;
+type SetUpdateStatusSuccessfulAT = ReturnType<typeof setUpdateStatusSuccessfulAC>
+export type ProfileReducerActionType = AddPostAT | SetProfileAT | SetStatusAT | SetpRrofilePhotoAT | SetUpdateStatusSuccessfulAT;
 
 
 
@@ -79,7 +83,8 @@ let profileInitialState: ProfilePageType = {
     },
   ],
   profile: null,
-  status: ''
+  status: '',
+  updateStatusSuccessful: true
 }
 
 export const profileReducer = (state: ProfilePageType = profileInitialState , action: ProfileReducerActionType): ProfilePageType => {
@@ -116,6 +121,10 @@ export const profileReducer = (state: ProfilePageType = profileInitialState , ac
       return copyState1;
     }
 
+    case SET_UPDATE_STATUS_SUCCESSFUL: {
+      return {...state, updateStatusSuccessful: action.updateStatusSuccessful}
+    }
+
     default:
       return state;
   }
@@ -126,6 +135,7 @@ export const addPostAC = (name: string, newMessage: string) => ({type: ADD_POST,
 export const setProfileAC = (user: UserProfileType) => ({type: SET_PROFILE, user})
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status});
 export const setProfilePhotoAC = (photoFile: PhotosType) => ({type: SET_PROFILE_PHOTO, photos: photoFile})
+export const setUpdateStatusSuccessfulAC = (updateStatusSuccessful: boolean) => ({type: SET_UPDATE_STATUS_SUCCESSFUL, updateStatusSuccessful})
 
 //thunk
 export const setProfileTC = (userId: number) => async(dispatch: Dispatch) => {
@@ -171,16 +181,41 @@ export const savePhotoTC = (photoFile: File) => async(dispatch: Dispatch) => {
 }
 
 export const updateProfileTC = (userData:UserUpdatedProfileType) => async(dispatch: Dispatch, getState: any) => {
-  const userId = getState().auth.userId
+  const userId = getState().auth.userId;
   try {
     let res = await profileApi.updateUserData(userData);
     if (res.data.resultCode === 0) {
-      let res = await  profileApi.getProfileData(userId)
-      dispatch(setProfileAC(res.data))
+      let res = await profileApi.getProfileData(userId)
+      await dispatch(setUpdateStatusSuccessfulAC(true))
+      dispatch(setProfileAC(res.data));
+      return true
+    } else {
+      dispatch(setUpdateStatusSuccessfulAC(false))
+      let message = res.data.messages.length > 0 ? res.data.messages[0] : 'Common Error'
+    /*   let action = stopSubmit('profile', {_error: message});  *///экшен который предоставляет redux-form, чтобы обрабатывать ошибки.
+                                                          //указываем название формы и общую ошибку или название конкретного поля, для к-го обрабатываем ошибку
+      let start = message.indexOf('->');
+      let end = message.indexOf(')')
+      let field = message.slice(start + 2, end);
+      let fieldToDisplay = field.charAt(0).toLowerCase() + field.slice(1)
+      let errors: Error = {
+        contacts: {}
+      }
+      errors.contacts[fieldToDisplay] = message;
+      let action = stopSubmit('profile', errors);
+      dispatch(action);
+/*       throw new Error(message); */
     }
   }
   catch (error: any) {
     console.log(error.message)
+    throw error;
   }
 }
 
+
+type Error = {
+  contacts: {
+    [key: string]: string
+  }
+}

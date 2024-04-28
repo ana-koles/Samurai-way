@@ -14,7 +14,8 @@ type ProfilePropsType = {
   updateStatus: (status: string) => void
   isOwner: boolean
   savePhoto: (file: File) => void
-  saveUpdatedData: (data: UserUpdatedProfileType) => void
+  saveUpdatedData: (data: UserUpdatedProfileType) => Promise<void>
+  updateStatusSuccessful: boolean
 }
 
 type  ProfileFormField = {
@@ -23,8 +24,7 @@ type  ProfileFormField = {
   lookingForAJobDescription: string | null
 } & ContactsType
 
-export const Profile = ({profile, status, updateStatus, isOwner, savePhoto, saveUpdatedData}: ProfilePropsType) => {
-
+export const Profile = ({profile, status, updateStatus, isOwner, savePhoto, saveUpdatedData, updateStatusSuccessful}: ProfilePropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
 
   const updateProfilePhotoHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -37,17 +37,10 @@ export const Profile = ({profile, status, updateStatus, isOwner, savePhoto, save
     return (<Preloader/>)
   }
 
-  const onSubmit = (data: ProfileFormField) => {
-    const updatedProfileData = {
-      userId: profile.userId,
-      lookingForAJob: data.lookingJob ?? false,
-      lookingForAJobDescription: data.lookingForAJobDescription ?? '',
-      fullName: profile.fullName,
-      contacts: {...profile.contacts, ...data},
-      aboutMe: data.aboutMe ?? null
-    }
+  const onSubmit = async (data: ProfileFormField) => {
+    const updatedProfileData = {...profile, ...data};
     saveUpdatedData(updatedProfileData)
-    setEditMode(false)
+/*       setEditMode(false) */
   }
 
   return (

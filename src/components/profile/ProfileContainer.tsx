@@ -4,7 +4,7 @@ import { Profile } from "./Profile";
 import { UserProfileType, UserUpdatedProfileType, savePhotoTC, setProfileTC, setStatusTC, updateProfileTC, updateStatusTC } from "../../redux/profile-reducer";
 import { connect } from "react-redux";
 import {  compose } from "redux";
-import {  Redirect, RouteComponentProps, withRouter } from "react-router-dom";
+import {  RouteComponentProps, withRouter } from "react-router-dom";
 
 
 type MapStateToPropsType = {
@@ -12,6 +12,7 @@ type MapStateToPropsType = {
   status: string
   isAuth: boolean
   authorizedUserId: number | null
+  updateStatusSuccessful: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -19,7 +20,7 @@ type MapDispatchToPropsType = {
   setStatus: (userId: number) => void
   updateStatus: (status: string) => void
   savePhoto: (photofile: any) => void
-  saveData: (data: UserUpdatedProfileType) => void
+  saveData: (data: UserUpdatedProfileType) => Promise<void>
 }
 
 //типизация userID
@@ -74,6 +75,7 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
         isOwner={!this.props.match.params.userId}
         savePhoto={this.props.savePhoto}
         saveUpdatedData={this.props.saveData}
+        updateStatusSuccessful={this.props.updateStatusSuccessful}
       />
     )
   }
@@ -87,7 +89,8 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     isAuth: state.auth.isAuth,
-    authorizedUserId: state.auth.userId
+    authorizedUserId: state.auth.userId,
+    updateStatusSuccessful: state.profilePage.updateStatusSuccessful
   }
 }
 
