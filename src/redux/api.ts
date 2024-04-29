@@ -26,6 +26,10 @@ type ResponseType<T = {}> = {
   data: T
 }
 
+export type CatchaUrlType = {
+  url: string
+}
+
 /*   withCredentials: true используется для включения передачи куки (cookies) вместе с запросом.
 Это особенно важно, когда вы обращаетесь к серверу с использованием кросс-доменных запросов
 (CORS - Cross-Origin Resource Sharing).*/
@@ -97,7 +101,12 @@ export const profileApi = {
   updateUserData(data: UserUpdatedProfileType) {
     return instance.put<ResponseType>('/profile', data)
   }
+}
 
+export const securityAPI = {
+  getCatchaAPI() {
+    return instance.get<CatchaUrlType>(`security/get-captcha-url`)
+  }
 }
 
 

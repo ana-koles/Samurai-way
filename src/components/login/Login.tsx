@@ -9,8 +9,8 @@ import { AppRootStateType } from '../../redux/redux-store';
 import { Redirect } from 'react-router-dom';
 import { Button } from '../button/Button';
 
-
 //тип данных полей формы
+
 export type LoginFormPropsType = {
   email: string
   password: string
@@ -23,12 +23,15 @@ type MapDispatchToPropsType = {
 
 type MapStateToPropsType = {
   isAuth: boolean
+  captchaUrl: string | null
 }
 
 type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType
 
 
 const LoginPage = (props: LoginPagePropsType) => {
+  console.log(props.captchaUrl)
+  debugger
 
   const onSubmit = (data: LoginFormPropsType) => { //будут содержать данные из формы и вызыватся при отправке формы на сервер
     props.logIn(data.email, data.password, data.rememberMe)
@@ -40,16 +43,19 @@ const LoginPage = (props: LoginPagePropsType) => {
   }
 
   return (
-    <LoginReduxForm onSubmit={onSubmit}/> // обертка для формы
+     <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/> /* обертка для формы */
   )
 }
 
 
-export const minLenght6 = minLengthCreator(6)
+export const minLenght6 = minLengthCreator(6);
+
+type Captcha = { captchaUrl: string | null }
+
+//<CustomProps & InjectedFormProps<{}, CustomProps>>
 
 //component for standard form
-const LoginForm = (props: InjectedFormProps<LoginFormPropsType>) => {
-
+const LoginForm = (props: Captcha & InjectedFormProps<LoginFormPropsType, Captcha>) => {
 
   return (
     <div className={s.content}>
@@ -65,6 +71,7 @@ const LoginForm = (props: InjectedFormProps<LoginFormPropsType>) => {
        {/*  <div><Field type="checkbox" name='rememberMe' component={Input} />Remember me</div> */}
 
         {props.error && <div className={s.errorWrapper} ><span className={s.error}>{props.error}</span></div>}
+        {props.captchaUrl && <img className={s.captcha} src={props.captchaUrl} alt={'captcha'}/> }
 
         <Button  name ={'Submit'}type='submit'/>
       </form>
@@ -73,17 +80,16 @@ const LoginForm = (props: InjectedFormProps<LoginFormPropsType>) => {
 };
 
 
-
-
 //оборачиваем форму контейнерной компонентой (HOC)
-const LoginReduxForm = reduxForm<LoginFormPropsType>({
+const LoginReduxForm = reduxForm<LoginFormPropsType, Captcha>({
   form: 'login', //присваиваем уникальное название форме
 })(LoginForm)
 
 
 const MapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
-  isAuth: state.auth.isAuth
-}
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
+  }
 )
 
 //делаем контейнерную компоненту, чтобы loginPAge получит доступ к store
