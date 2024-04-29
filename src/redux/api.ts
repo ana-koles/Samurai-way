@@ -64,8 +64,8 @@ export const authApi = {
   getMeAuth() {
     return instance.get<ResponseType<UsersAuthDataType>>(`auth/me`)
   },
-  login(email: string, password: string, rememberMe: boolean = false ) {
-    return instance.post<ResponseType<{userId?: number}>>('auth/login', {email , password , rememberMe})
+  login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null ) {
+    return instance.post<ResponseType<{userId?: number}>>('auth/login', {email , password , rememberMe, captcha})
     .then(res => res.data)
   },
   logout() {

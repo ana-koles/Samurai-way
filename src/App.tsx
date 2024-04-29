@@ -4,7 +4,7 @@ import { NavBar } from './components/navBar/NavBar';
 import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
-import { BrowserRouter, HashRouter, Route, withRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Switch, withRouter } from 'react-router-dom';
 import { ProfileContainer } from './components/profile/ProfileContainer';
 import { HeaderContainer } from './components/header/HeaderComponent';
 import { LoginPageContainer } from './components/login/Login';
@@ -13,9 +13,12 @@ import { Provider, connect } from 'react-redux';
 import { setInitializeAppTC } from './redux/app-reducer';
 import { AppRootStateType, store } from './redux/redux-store';
 import { Preloader } from './components/common/Preloader';
+import { PageNotFount } from './components/404/PageNotFount';
 
 //lazy loading
 //import { UsersContainer } from './components/users/UsersContainer';
+//означает что  не загружает компоненту сразу полностью,т.е сборщик не собирает ее в большй бандл,
+//а когда понадобиться ее отрисовывать, я запрошу ее у сервера, запрошу ее js код. Чтобы первый загрузочный файл не был таким большим
 const UsersContainer = lazy(() => import('./components/users/UsersContainer'))
 
 //import { Dialogs } from './components/dialogs/Dialogs';
@@ -53,7 +56,9 @@ class App extends Component<AppPropsType> {
 
           {/* render если передаем тег и пропсы, component - если ссылку на компоненту */}
          {/*  Добавляем params для profile  */}
-          <Route path='/profile/:userId?' render={() => <ProfileContainer /* store={props.store} *//>}/>
+        {/* <Switch> switch используется если нам надо чтобы роут как толькь нашел нужный путь, дальше не шел.
+         При этом максимально уточненные указываем выше, а обобщенные указываем ниже */}
+         <Route path='/profile/:userId?' render={() => <ProfileContainer /* store={props.store} *//>}/>
           <Route path={'/messages'} render={() => {
             return <Suspense fallback={<Preloader />}>
                       <Dialogs/>
@@ -73,6 +78,10 @@ class App extends Component<AppPropsType> {
 
           <Route path='/login' component={LoginPageContainer}/>
           <Route exact path='/' render={() => <ProfileContainer/>}/>
+          <Route path='*' component={PageNotFount}/>
+{/*
+         </Switch> */}
+
         </div>
       </BrowserRouter>
 

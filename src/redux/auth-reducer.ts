@@ -32,7 +32,6 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
   switch(action.type) {
     case SET_AUTH_USER_DATA:
     case GET_CAPTCHA_URL:{
-      debugger
       return {...state, ...action.payload};
     }
 
@@ -59,7 +58,6 @@ export const getCatchaUrlSuccess = (captchaUrl: string) => {
 
 //thunk
 export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //get users authentification  data
-  debugger
   return authApi.getMeAuth() //чтобы подписаться на промис из этого диспача в app-reducer
     .then(response => {
       if (response.data.resultCode === 0) { //юзер залогинен
@@ -68,14 +66,11 @@ export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //get users aut
   }})
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => async(dispatch) => {
+export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunk => async(dispatch) => {
   try {
-    let data = await authApi.login(email, password, rememberMe)
+    let data = await authApi.login(email, password, rememberMe, captcha)
     if (data.resultCode === 0) { //authentification in the service is successed => get auth data
-      dispatch(getCatchaUrl())
-      //dispatch(getAuthUserDataTC()); //catcha is not required
-      debugger
-
+      dispatch(getAuthUserDataTC()); //catcha is not required
 
     } else {
       if (data.resultCode === 10) {

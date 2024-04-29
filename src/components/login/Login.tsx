@@ -15,10 +15,11 @@ export type LoginFormPropsType = {
   email: string
   password: string
   rememberMe: boolean | false
+  captcha: string | null
 }
 
 type MapDispatchToPropsType = {
-  logIn: (email: string, password: string, rememberMe: boolean ) => void
+  logIn: (email: string, password: string, rememberMe: boolean, captcha: string | null ) => void
 }
 
 type MapStateToPropsType = {
@@ -30,11 +31,9 @@ type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType
 
 
 const LoginPage = (props: LoginPagePropsType) => {
-  console.log(props.captchaUrl)
-  debugger
 
   const onSubmit = (data: LoginFormPropsType) => { //будут содержать данные из формы и вызыватся при отправке формы на сервер
-    props.logIn(data.email, data.password, data.rememberMe)
+    props.logIn(data.email, data.password, data.rememberMe, data.captcha)
     //dispatch(loginTC(data.email, data.password, data.rememberMe))
   }
 
@@ -71,7 +70,11 @@ const LoginForm = (props: Captcha & InjectedFormProps<LoginFormPropsType, Captch
        {/*  <div><Field type="checkbox" name='rememberMe' component={Input} />Remember me</div> */}
 
         {props.error && <div className={s.errorWrapper} ><span className={s.error}>{props.error}</span></div>}
-        {props.captchaUrl && <img className={s.captcha} src={props.captchaUrl} alt={'captcha'}/> }
+        {props.captchaUrl &&
+        <>
+          <img className={s.captcha} src={props.captchaUrl} alt={'captcha'}/>
+          {createField({type: 'text', placeholder: 'Symbols from image', name: 'captcha', component: Input, validators: [required]})}
+        </>  }
 
         <Button  name ={'Submit'}type='submit'/>
       </form>
