@@ -4,7 +4,7 @@ import { NavBar } from './components/navBar/NavBar';
 import { News } from './components/news/News';
 import { Music } from './components/music/Music';
 import { Settings } from './components/settingsPage/Settings';
-import { BrowserRouter, HashRouter, Route, Switch, withRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import { ProfileContainer } from './components/profile/ProfileContainer';
 import { HeaderContainer } from './components/header/HeaderComponent';
 import { LoginPageContainer } from './components/login/Login';
@@ -58,7 +58,7 @@ class App extends Component<AppPropsType> {
          {/*  Добавляем params для profile  */}
         {/* <Switch> switch используется если нам надо чтобы роут как толькь нашел нужный путь, дальше не шел.
          При этом максимально уточненные указываем выше, а обобщенные указываем ниже */}
-         <Route path='/profile/:userId?' render={() => <ProfileContainer /* store={props.store} *//>}/>
+         <Switch> <Route path='/profile/:userId?' render={() => <ProfileContainer /* store={props.store} *//>}/>
           <Route path={'/messages'} render={() => {
             return <Suspense fallback={<Preloader />}>
                       <Dialogs/>
@@ -77,14 +77,14 @@ class App extends Component<AppPropsType> {
           }}/>
 
           <Route path='/login' component={LoginPageContainer}/>
-          <Route exact path='/' render={() => <ProfileContainer/>}/>
-          <Route path='*' component={PageNotFount}/>
-{/*
-         </Switch> */}
+          <Route path='/profile' render={() => <ProfileContainer/>}/>
+          <Route exact path='/' render={() => <Redirect to='/profile'/>}/>
+          <Route path='*' render={() => <PageNotFount/>}/>
+      </Switch>
+
 
         </div>
       </BrowserRouter>
-
     );
 
   }
