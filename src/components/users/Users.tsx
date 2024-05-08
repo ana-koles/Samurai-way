@@ -13,8 +13,8 @@ type UsersPropsType = {
   isFetched: boolean
   isFollowingInProgressUsersId: Array<number>
   setCurrentPage: (pageNumber: number) => void
-  updateFollow: (userId: number) => void
-  toggleIsFollingInProgress: (userId: number, isFetched: boolean) => void
+  followUser: (userId: number) => void
+  unfollowUser: (userId: number) => void
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -27,9 +27,9 @@ export const Users = (props: UsersPropsType) => {
 
       {props.users.map(user => <User key={user.id}
                                       user={user}
-                                      toggleIsFollingInProgress={props.toggleIsFollingInProgress}
                                       isFollowingInProgressUsersId={props.isFollowingInProgressUsersId}
-                                      updateFollow={props.updateFollow}
+                                      followUser={props.followUser}
+                                      unfollowUser={props.unfollowUser}
                                     />)}
 
   </div>

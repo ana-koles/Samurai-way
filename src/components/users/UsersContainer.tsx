@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { AppRootStateType } from "../../redux/redux-store";
-import {setCurrentPageAC, updateFollowAC, UserType, toggleIsFollingInProgressAC, requestUsersTC } from "../../redux/users-reducer";
+import {setCurrentPageAC,  UserType, requestUsersTC, followUserTC, unfollowUserTC } from "../../redux/users-reducer";
 import { Component } from "react";
 import { Users } from "./Users";
 import { getCurrentPage, getIsFetched, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers } from "../../redux/users-selectors";
@@ -18,10 +18,10 @@ type MapStateToPropsType = {
 
 //типизация пропсов
 type MapDispatchToPropsType = {
-  updateFollow: (userId: number) => void //возможно надо будет исправить на string
   setCurrentPage: (currentPage: number) => void
-  toggleIsFollingInProgress: (userId: number, isFetched: boolean) => void
   getUsers: (pageCount: number, currentPage: number) => void
+  followUser: (userId: number) => void
+  unfollowUser: (userId: number) => void
 }
 
 export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsType;
@@ -55,11 +55,11 @@ class UsersComponent extends Component<UsersContainerPropsType>{
                   pageCount={this.props.pageCount}
                   currentPage={this.props.currentPage}
                   users={this.props.users}
-                  updateFollow={this.props.updateFollow}
                   setCurrentPage={this.setCurrentPage}
                   isFetched={this.props.isFetched}
-                  toggleIsFollingInProgress={this.props.toggleIsFollingInProgress}
                   isFollowingInProgressUsersId={this.props.isFollowingInProgressUsersId}
+                  followUser={this.props.followUser}
+                  unfollowUser={this.props.unfollowUser}
                   />
   }
 }
@@ -110,10 +110,10 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 export const UsersContainer = connect(mapStateToProps, {
   //Здесь автоматически connect к каждому значению свойства применяет dispatch,
   // создавая таким образом callback как в ф-ции mapDispatchToProps
-  updateFollow: updateFollowAC,
   setCurrentPage: setCurrentPageAC,
-  toggleIsFollingInProgress: toggleIsFollingInProgressAC,
-  getUsers: requestUsersTC
+  getUsers: requestUsersTC,
+  followUser: followUserTC,
+  unfollowUser: unfollowUserTC
 })(UsersComponent);
 
 export default UsersContainer; //обязательно default export доя lazy loading

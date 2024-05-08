@@ -165,3 +165,24 @@ export const requestUsersTC = (pageCount: number, requestedPage: number ) => asy
     console.log(error.message)
   }
 }
+
+export const followUserTC = (userId: number) => async (dispatch: Dispatch) => {
+  dispatch(toggleIsFollingInProgressAC(userId, true));
+
+  let data = await usersApi.followUser(userId)
+  if (data.resultCode === 0) {
+    dispatch(updateFollowAC(userId));
+  }
+  dispatch(toggleIsFollingInProgressAC(userId, false))
+}
+
+export const unfollowUserTC = (userId: number) => async (dispatch: Dispatch) => {
+  dispatch(toggleIsFollingInProgressAC(userId, true));
+
+  let data = await usersApi.unfollowUser(userId)
+  if (data.resultCode === 0) {
+    dispatch(updateFollowAC(userId));
+  }
+  dispatch(toggleIsFollingInProgressAC(userId, false))
+}
+
