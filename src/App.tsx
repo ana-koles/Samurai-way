@@ -37,8 +37,17 @@ type AppPropsType = MapDispatchToPropsType & MapStateToPropsType
 
 class App extends Component<AppPropsType> {
 
+  handleUncatchedErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
+    alert(promiseRejectionEvent)
+  }
+
   componentDidMount(): void {
     this.props.setInitializeApp()
+    window.addEventListener('unhandledrejection', this.handleUncatchedErrors)
+  }
+
+  componentWillUnmount(): void {
+    window.removeEventListener('unhandledrejection', this.handleUncatchedErrors)
   }
 
 

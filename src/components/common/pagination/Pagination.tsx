@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import s from './Pagination.module.css'
+import classNames from 'classnames';
 
+//использование classnames для конкотинация стилей
+
+{/* <div className={classNames(s.pagination, {
+  [s.block] : page > 5
+})}></div>
+
+<div className={classNames(s.pagination, s.block)}></div> */}
 
 type Props = {
   totalItemsCount: number

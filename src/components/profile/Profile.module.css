@@ -41,7 +41,7 @@ p {
   position: relative;
   bottom: 26px;
   margin-left: 15px;
-  align-items: end;
+/*   align-items: end; */
 }
 
 .statusWrapper {
