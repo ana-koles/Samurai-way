@@ -89,9 +89,7 @@ class App extends Component<AppPropsType> {
           <Route path='/profile' render={() => <ProfileContainer/>}/>
           <Route exact path='/' render={() => <Redirect to='/profile'/>}/>
           <Route path='*' render={() => <PageNotFount/>}/>
-      </Switch>
-
-
+        </Switch>
         </div>
       </BrowserRouter>
     );

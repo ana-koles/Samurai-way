@@ -10,7 +10,7 @@ export type UserType = {
     small: null | string,
     large: null | string
 },
-  status: null,
+  status: null | string,
   followed: boolean
 }
 
