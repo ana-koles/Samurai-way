@@ -2,7 +2,7 @@ import axios from "axios"
 import { UserType } from "./users-reducer"
 import { UserProfileType, UserUpdatedProfileType } from "./profile-reducer"
 
-type UsersGetType = {
+export type UsersGetType = {
   items: UserType[]
   totalCount: number
   error: null | string
