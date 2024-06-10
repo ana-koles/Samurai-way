@@ -22,12 +22,13 @@ describe('ProfileStatus component', ()=> {
     if (instance) {
       expect(instance.state.status).toBe('Test status')
     }
+
   })
 
   test('componet should contain span tag after mounting', () => {
     const component = create(<ProfileStatus status="Test status" updateStatus={updateStatusTC}/>);
     const root = component.root; //получаем корневой эл-т, к-ый содержит все дерево компонентов, которое рендерится внутри тестируемого компонента.
-    const span = root.findAllByType('span');
+    const span = root.findAllByType('span')
     expect(span).not.toBeNull();
     expect(span.length).toBe(1)
   })
