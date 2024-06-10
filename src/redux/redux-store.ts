@@ -1,11 +1,11 @@
 import thunkMidleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux';
-import { profileReducer } from './profile-reducer';
 import { dialogsReducer } from '../features/dialog/model/dialogs-reducer';
 import { usersReducer } from '../features/users/model/users-reducer';
 import { authReducer } from '../features/auth/model/auth-reducer';
 import {reducer as formReducer} from 'redux-form';
 import { appReducer } from './app-reducer';
+import { profileReducer } from '../features/profile/modal/profile-reducer';
 
 
 

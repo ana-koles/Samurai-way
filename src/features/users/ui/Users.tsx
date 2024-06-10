@@ -1,9 +1,9 @@
 import React from "react";
 import s from "./Users.module.css";
 import { UserType } from "../model/users-reducer";
-import { Preloader } from "../common/Preloader";
-import { Pagination } from "../common/pagination/Pagination";
-import { User } from "../user/User";
+import { Preloader } from "../../../components/common/preloader/Preloader";
+import { User } from "../user/ui/User";
+import { Pagination } from "../../../components/common/pagination/Pagination";
 
 type UsersPropsType = {
   totalUsersCount: number;

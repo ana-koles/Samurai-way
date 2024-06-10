@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import { AppThunk } from "../../../redux/redux-store";
 import { stopSubmit } from "redux-form";
-import { authApi } from "../api/authApi";
 import { securityAPI } from "../../../api/securityApi";
+import { authApi } from "../api/authApi";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
 const GET_CAPTCHA_URL = 'GET_CAPTCHA_URL';

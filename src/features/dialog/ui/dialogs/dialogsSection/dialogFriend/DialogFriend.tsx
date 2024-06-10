@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./DialogFriend.module.css";
-import photo4 from "../../../../assets/friend4.jpg";
-import { DialogItemType } from "../../../../features/dialog/model/dialogs-reducer";
+import photo4 from "../../../../../../assets/friend4.jpg";
+import { DialogItemType } from "../../../../model/dialogs-reducer";
 
 type DialogPropsType = {
   dialog: DialogItemType;

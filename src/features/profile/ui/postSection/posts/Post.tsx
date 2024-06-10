@@ -1,8 +1,8 @@
 import React from 'react';
 import s from './Post.module.css'
-import photo5 from '../../../../assets/friend5.jpg'
-import like from  '../../../../assets/icons/heart.png'
-import reply from '../../../../assets/icons/reply.png'
+import photo5 from '../../../../../assets/friend5.jpg'
+import like from  '../../../../../assets/icons/heart.png'
+import reply from '../../../../../assets/icons/reply.png'
 
 
 type PostPropsType = {

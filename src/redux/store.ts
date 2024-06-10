@@ -1,7 +1,6 @@
 import { v1 } from "uuid"
 import { dialogsReducer } from "../features/dialog/model/dialogs-reducer"
 import { messageContactsReducer } from "./message-contacts-reducer"
-import { profileReducer } from "./profile-reducer"
 
 
 export type CallSubscriberType = (state: StateType) => void
@@ -24,10 +23,6 @@ type DialogType = {
   [key: string]: DialogItemType[],
 }
 
-type DialogPageType = {
-  currentMessageText: string
-  dialogs: DialogType
-}
 
 type ActionType = any
 

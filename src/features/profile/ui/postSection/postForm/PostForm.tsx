@@ -1,9 +1,9 @@
 import React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import s from '../PostSection.module.css'
-import { Button } from '../../../button/Button';
-import { maxLenghtCreator, required } from '../../../../utils/validators/validators';
-import { Textarea } from '../../../common/formContolls/FormControls';
+import { Button } from '../../../../../components/button/Button';
+import { maxLenghtCreator, required } from '../../../../../utils/validators/validators';
+import { Textarea } from '../../../../../components/common/formContolls/FormControls';
 
 
 

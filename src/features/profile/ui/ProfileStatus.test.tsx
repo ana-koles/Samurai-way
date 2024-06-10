@@ -1,6 +1,6 @@
 import { ReactTestInstance, create } from "react-test-renderer"
+import { updateStatusTC } from "../modal/profile-reducer";
 import { ProfileStatus } from "./ProfileStatus";
-import { updateStatusTC } from "../../redux/profile-reducer";
 
 // Определение интерфейса для состояния компонента ProfileStatus
 interface ProfileStatusState {
@@ -70,7 +70,7 @@ describe('ProfileStatus component', ()=> {
     const mockcallback = jest.fn();
     const component = create(<ProfileStatus status="Test status" updateStatus={mockcallback}/>);
     const instance = component.getInstance() as TestInstanceWithState ;
-    
+
     if (instance) {
       instance.deactivateEditMode();
     };

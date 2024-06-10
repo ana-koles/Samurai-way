@@ -1,14 +1,10 @@
 import React, { Dispatch } from "react";
-import {
-  DialogItemType,
-  DialogReducerActionType,
-  addMessageToDialogAC,
-} from "../../../features/dialog/model/dialogs-reducer";
-import { DialogsSection } from "./DialogsSection";
 import { connect } from "react-redux";
-import { AppRootStateType } from "../../../redux/redux-store";
-import { withAuthRedirect } from "../../../hoc/withAuthRedirect";
 import { compose } from "redux";
+import { addMessageToDialogAC, DialogItemType, DialogReducerActionType } from "../../../model/dialogs-reducer";
+import { AppRootStateType } from "../../../../../redux/redux-store";
+import { withAuthRedirect } from "../../../../../hoc/withAuthRedirect";
+import { DialogsSection } from "./DialogsSection";
 
 type MapStateToPropsType = {
   dialog: DialogItemType[];

@@ -1,5 +1,6 @@
-import { UserProfileType, UserUpdatedProfileType } from "../redux/profile-reducer";
-import { BaseResponseType, instance } from "./api";
+
+import { BaseResponseType, instance } from "../../../api/api";
+import { UserProfileType, UserUpdatedProfileType } from "../modal/profile-reducer";
 
 export const profileApi = {
   getProfileData(userId: number) {

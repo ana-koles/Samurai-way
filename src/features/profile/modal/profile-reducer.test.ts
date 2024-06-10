@@ -1,5 +1,5 @@
 import { v1 } from "uuid"
-import { ProfilePageType, addPostAC, profileReducer } from "./profile-reducer"
+import { addPostAC, ProfilePageType, profileReducer } from "./profile-reducer";
 
 let profileInitialState: ProfilePageType = {
   posts: [

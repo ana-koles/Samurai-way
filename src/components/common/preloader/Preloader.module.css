@@ -1,0 +1,4 @@
+.loadingWrapper {
+  max-width: 20%;
+  grid-column: 3/4;
+}

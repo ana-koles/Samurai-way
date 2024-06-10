@@ -1,7 +1,8 @@
 import React from "react";
-import photo from "../../../../assets/cat-profile2.jpg";
+import photo from "../../../../../../assets/cat-profile2.jpg";
 import s from "./MyDialog.module.css";
-import { DialogItemType } from "../../../../features/dialog/model/dialogs-reducer";
+import { DialogItemType } from "../../../../model/dialogs-reducer";
+
 
 type DialogPropsType = {
   dialog: DialogItemType;

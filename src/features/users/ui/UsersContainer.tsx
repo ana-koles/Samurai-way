@@ -16,7 +16,7 @@ import {
   getPageCount,
   getTotalUsersCount,
   getUsers,
-} from "../../../redux/users-selectors";
+} from "../model/users-selectors";
 
 //типизация стейта
 type MapStateToPropsType = {

@@ -4,11 +4,6 @@
   grid-row: 2/3;
 }
 
-.loadingWrapper {
-  max-width: 20%;
-  grid-column: 3/4;
-}
-
 .header {
   color: white;
 }

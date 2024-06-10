@@ -1,10 +1,10 @@
 import React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import s from '../DialogsSection.module.css'
+import { maxLenghtCreator, required } from '../../../../../../utils/validators/validators';
+import { Textarea } from '../../../../../../components/common/formContolls/FormControls';
+import { Button } from '../../../../../../components/button/Button';
 
-import { Button } from '../../../button/Button';
-import { Textarea } from '../../../common/formContolls/FormControls';
-import { maxLenghtCreator, required } from '../../../../utils/validators/validators';
 
 export type DialogFormDataType = {
   currentMessageText: string

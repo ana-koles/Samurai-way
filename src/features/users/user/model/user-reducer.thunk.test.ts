@@ -1,6 +1,7 @@
-import { BaseResponseType } from "../api/api"
+
 import { changeIsFetchedAC, followUserTC, requestUsersTC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, toggleIsFollingInProgressAC, unfollowUserTC, updateFollowAC } from "../../model/users-reducer"
 import { usersApi, UsersGetType } from "../../api/usersApi";
+import { BaseResponseType } from "../../../../api/api";
 jest.mock( "./users-reducer") //замокали объект к-ый импортируется по этому пути
 
 const userApiMock = usersApi as jest.Mocked<typeof usersApi >;

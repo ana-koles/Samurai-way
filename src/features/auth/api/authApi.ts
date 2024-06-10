@@ -1,4 +1,5 @@
-import { BaseResponseType, instance } from "./api"
+import { BaseResponseType, instance } from "../../../api/api"
+
 
 type UsersAuthDataType = {
   id: number,

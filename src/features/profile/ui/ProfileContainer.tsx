@@ -1,74 +1,82 @@
 import { Component } from "react";
-import { AppRootStateType } from "../../redux/redux-store";
+import { AppRootStateType } from "../../../redux/redux-store";
 import { Profile } from "./Profile";
-import { UserProfileType, UserUpdatedProfileType, savePhotoTC, setProfileTC, setStatusTC, updateProfileTC, updateStatusTC } from "../../redux/profile-reducer";
+import {
+  UserProfileType,
+  UserUpdatedProfileType,
+  savePhotoTC,
+  setProfileTC,
+  setStatusTC,
+  updateProfileTC,
+  updateStatusTC,
+} from "../modal/profile-reducer";
 import { connect } from "react-redux";
-import {  compose } from "redux";
-import {  RouteComponentProps, withRouter } from "react-router-dom";
-
+import { compose } from "redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 type MapStateToPropsType = {
-  profile: UserProfileType | null
-  status: string
-  isAuth: boolean
-  authorizedUserId: number | null
-  updateStatusSuccessful: boolean
-}
+  profile: UserProfileType | null;
+  status: string;
+  isAuth: boolean;
+  authorizedUserId: number | null;
+  updateStatusSuccessful: boolean;
+};
 
 type MapDispatchToPropsType = {
-  setProfile: (userId: number) => void
-  setStatus: (userId: number) => void
-  updateStatus: (status: string) => void
-  savePhoto: (photofile: any) => void
-  saveData: (data: UserUpdatedProfileType) => Promise<void>
-}
+  setProfile: (userId: number) => void;
+  setStatus: (userId: number) => void;
+  updateStatus: (status: string) => void;
+  savePhoto: (photofile: any) => void;
+  saveData: (data: UserUpdatedProfileType) => Promise<void>;
+};
 
 //типизация userID
 type PathParamsType = {
-  userId: string,
-}
+  userId: string;
+};
 
 type OnPropsType = MapStateToPropsType & MapDispatchToPropsType;
-type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OnPropsType;
+type ProfileContainerPropsType = RouteComponentProps<PathParamsType> &
+  OnPropsType;
 
 class ProfileComponent extends Component<ProfileContainerPropsType> {
-
   refreshProfile() {
     let userId = this.props.match.params.userId;
     if (userId) {
       this.props.setProfile(+userId);
       this.props.setStatus(+userId);
     } else if (!userId && this.props.authorizedUserId) {
-        userId = this.props.authorizedUserId.toString();
-        this.props.setProfile(+userId);
-        this.props.setStatus(+userId);
+      userId = this.props.authorizedUserId.toString();
+      this.props.setProfile(+userId);
+      this.props.setStatus(+userId);
     } else {
-      this.props.history.push('/login') //системый редирект на логин, если нет id пользователя (т.е. когда мы вылогиниваемся)
+      this.props.history.push("/login"); //системый редирект на логин, если нет id пользователя (т.е. когда мы вылогиниваемся)
     }
   }
 
   componentDidMount(): void {
-    this.refreshProfile()
+    this.refreshProfile();
   }
 
-  componentDidUpdate(prevProps: ProfileContainerPropsType): void { //срабатывает каждый раз когда в компоненте меняется state или props
+  componentDidUpdate(prevProps: ProfileContainerPropsType): void {
+    //срабатывает каждый раз когда в компоненте меняется state или props
     if (this.props.match.params.userId !== prevProps.match.params.userId) {
-      this.refreshProfile()
+      this.refreshProfile();
     }
 
     if (!this.props.isAuth) {
-      this.props.history.push('/login')
+      this.props.history.push("/login");
     }
   }
 
   render() {
-
-/*     if (!this.props.isAuth) {
+    /*     if (!this.props.isAuth) {
       return <Redirect to="/login" />;
     }
  */
     return (
-      <Profile {...this.props}
+      <Profile
+        {...this.props}
         status={this.props.status}
         profile={this.props.profile}
         updateStatus={this.props.updateStatus}
@@ -77,7 +85,7 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
         saveUpdatedData={this.props.saveData}
         updateStatusSuccessful={this.props.updateStatusSuccessful}
       />
-    )
+    );
   }
 }
 
@@ -90,9 +98,9 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     status: state.profilePage.status,
     isAuth: state.auth.isAuth,
     authorizedUserId: state.auth.userId,
-    updateStatusSuccessful: state.profilePage.updateStatusSuccessful
-  }
-}
+    updateStatusSuccessful: state.profilePage.updateStatusSuccessful,
+  };
+};
 
 /* const mapDispatchToProps = (dispatch: Dispatch<ProfileReducerActionType>): MapDispatchToPropsType => {
     return {
@@ -114,8 +122,8 @@ export const ProfileContainer = compose<React.ComponentType>( //говорим �
     setStatus: setStatusTC,
     updateStatus: updateStatusTC,
     savePhoto: savePhotoTC,
-    saveData: updateProfileTC
+    saveData: updateProfileTC,
   }),
-  withRouter,
+  withRouter
   //withAuthRedirect
-)(ProfileComponent)
+)(ProfileComponent);

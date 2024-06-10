@@ -1,10 +1,13 @@
-import React from 'react';
-import s from './PostSection.module.css'
-import { PostType, ProfileReducerActionType, addPostAC } from '../../../redux/profile-reducer';
-import { PostSection } from './PostSection';
-import { connect } from 'react-redux';
-import { AppRootStateType } from '../../../redux/redux-store';
-import { Dispatch } from 'redux';
+import React from "react";
+import {
+  PostType,
+  ProfileReducerActionType,
+  addPostAC,
+} from "../../modal/profile-reducer";
+import { connect } from "react-redux";
+import { AppRootStateType } from "../../../../redux/redux-store";
+import { Dispatch } from "redux";
+import { PostSection } from "./PostSection";
 
 /* type PostSectionPropsType = {
   posts: PostType[]
@@ -40,27 +43,32 @@ import { Dispatch } from 'redux';
 }; */
 
 type MapStateToPropsType = {
-  posts: PostType[]
-}
+  posts: PostType[];
+};
 
 type MapDispatchToPropsType = {
-  addPost: (name: string, message: string) => void
-}
+  addPost: (name: string, message: string) => void;
+};
 
-export type PostSectionPropsType = MapStateToPropsType & MapDispatchToPropsType
+export type PostSectionPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     posts: state.profilePage.posts,
-  }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch: Dispatch<ProfileReducerActionType>): MapDispatchToPropsType => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<ProfileReducerActionType>
+): MapDispatchToPropsType => {
   return {
     addPost: (name: string, message: string) => {
-      dispatch(addPostAC(name, message))
+      dispatch(addPostAC(name, message));
     },
-  }
-}
+  };
+};
 
-export const PostSectionContainer = connect(mapStateToProps, mapDispatchToProps)(PostSection)
+export const PostSectionContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostSection);
