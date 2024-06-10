@@ -1,5 +1,5 @@
 import { Dispatch } from "redux"
-import { usersApi } from "./api"
+import { usersApi } from "../api/userApi"
 
 
 export type UserType = {

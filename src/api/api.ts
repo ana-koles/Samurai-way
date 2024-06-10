@@ -1,6 +1,6 @@
 import axios from "axios"
-import { UserType } from "./users-reducer"
-import { UserProfileType, UserUpdatedProfileType } from "./profile-reducer"
+import { UserType } from "../redux/users-reducer"
+import { UserProfileType, UserUpdatedProfileType } from "../redux/profile-reducer"
 
 export type UsersGetType = {
   items: UserType[]
@@ -20,13 +20,13 @@ export type LoginDataType = {
   rememberMe: boolean | null
 }
 
-export type ResponseType<T = {}> = {
+export type BaseResponseType<T = {}> = {
   resultCode: number
   messages: string[],
   data: T
 }
 
-export type CatchaUrlType = {
+export type CaptchaUrlType = {
   url: string
 }
 
@@ -34,7 +34,7 @@ export type CatchaUrlType = {
 Это особенно важно, когда вы обращаетесь к серверу с использованием кросс-доменных запросов
 (CORS - Cross-Origin Resource Sharing).*/
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.0',
   withCredentials: true,
                   headers: {
@@ -42,34 +42,16 @@ const instance = axios.create({
                   }
 })
 
-export const usersApi = {
-  getUsers(pageCount: number, currentPage: number) {
-    //возвращаем не response, а response.data
-    return instance.get<UsersGetType>(`users?count=${pageCount}&page=${currentPage}`)
-            .then(response => response.data)
-  },
-
-  unfollowUser(userId: number){
-    return instance.delete<ResponseType>(`follow/${userId}`)
-            .then(res => res.data)
-  },
-
-  followUser(userId: number) {
-    return instance.post<ResponseType>(`follow/${userId}`)
-              .then(res => res.data)
-  }
-}
-
 export const authApi = {
   getMeAuth() {
-    return instance.get<ResponseType<UsersAuthDataType>>(`auth/me`)
+    return instance.get<BaseResponseType<UsersAuthDataType>>(`auth/me`)
   },
   login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null ) {
-    return instance.post<ResponseType<{userId?: number}>>('auth/login', {email , password , rememberMe, captcha})
+    return instance.post<BaseResponseType<{userId?: number}>>('auth/login', {email , password , rememberMe, captcha})
     .then(res => res.data)
   },
   logout() {
-    return instance.delete<ResponseType>('auth/login')
+    return instance.delete<BaseResponseType>('auth/login')
   }
 }
 
@@ -84,14 +66,14 @@ export const profileApi = {
   },
 
   updateStatus(status: string) {
-    return instance.put<ResponseType>('/profile/status', {status: status} )
+    return instance.put<BaseResponseType>('/profile/status', {status: status} )
   },
 
   savePhoto(file: File) {
     let formData = new FormData();
     formData.append("image", file);
 
-    return instance.put<ResponseType<{photos: {small: string, large: string}}>>('/profile/photo', formData, {
+    return instance.put<BaseResponseType<{photos: {small: string, large: string}}>>('/profile/photo', formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -99,13 +81,13 @@ export const profileApi = {
   },
 
   updateUserData(data: UserUpdatedProfileType) {
-    return instance.put<ResponseType>('/profile', data)
+    return instance.put<BaseResponseType>('/profile', data)
   }
 }
 
 export const securityAPI = {
   getCatchaAPI() {
-    return instance.get<CatchaUrlType>(`security/get-captcha-url`)
+    return instance.get<CaptchaUrlType>(`security/get-captcha-url`)
   }
 }
 

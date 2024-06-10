@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { authApi, securityAPI } from "./api";
+import { authApi, securityAPI } from "../api/api";
 import { AppThunk } from "./redux-store";
 import { stopSubmit } from "redux-form";
 
@@ -60,7 +60,7 @@ export const getCatchaUrlSuccess = (captchaUrl: string) => {
 export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //get users authentification  data
   return authApi.getMeAuth() //чтобы подписаться на промис из этого диспача в app-reducer
     .then(response => {
-      if (response.data.resultCode === 0) { //юзер залогинен
+      if (response.data.resultCode === 0) { //user is login
         let {id, email, login} = response.data.data;
         dispatch(setAuthUserData(id, email, login, true));
   }})
@@ -70,7 +70,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean, ca
   try {
     let data = await authApi.login(email, password, rememberMe, captcha)
     if (data.resultCode === 0) { //authentification in the service is successed => get auth data
-      dispatch(getAuthUserDataTC()); //catcha is not required
+      dispatch(getAuthUserDataTC()); //captcha is not required
 
     } else {
       if (data.resultCode === 10) {
@@ -91,8 +91,7 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
   try {
     let response = await authApi.logout()
     if (response.data.resultCode === 0) {
-      dispatch(setAuthUserData(null, null, null, false)); //надо убить все куки
-    } else {
+      dispatch(setAuthUserData(null, null, null, false)); //need to 'kill' all cookies
       console.log(response)
     }
   } catch (error: any) { //error: Error
@@ -109,6 +108,4 @@ export const getCatchaUrl = () => async(dispatch: Dispatch) => {
   catch (error: any) {
     console.log(error)
   }
-
-
 }

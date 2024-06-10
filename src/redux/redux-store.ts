@@ -26,6 +26,9 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateTy
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AnyAction>;
 
 
+type PropertiesType<T> = T extends {[key: string]: infer U} ? U : never
+type InferActionType<T extends {[key: string]: (...args: any) => any}> = ReturnType<PropertiesType<T>>
+
 
 //@ts-ignore
 window.store = store;

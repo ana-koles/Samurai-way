@@ -1,6 +1,7 @@
 import { Dispatch, AnyAction } from "redux";
-import { ResponseType, usersApi, UsersGetType } from "./api"
+import { BaseResponseType, UsersGetType } from "../api/api"
 import { changeIsFetchedAC, followUserTC, requestUsersTC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, toggleIsFollingInProgressAC, unfollowUserTC, updateFollowAC } from "./users-reducer"
+import { usersApi } from "../api/userApi";
 jest.mock( "./users-reducer") //замокали объект к-ый импортируется по этому пути
 
 const userApiMock = usersApi as jest.Mocked<typeof usersApi >;
@@ -18,7 +19,7 @@ beforeEach(() => {
   userApiMock.getUsers.mockClear()
 })
 
-const result: ResponseType = {
+const result: BaseResponseType = {
   resultCode: 0,
   messages: [],
   data: {}
