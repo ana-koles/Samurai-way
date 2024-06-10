@@ -1,4 +1,4 @@
-import { updateFollowAC, usersReducer, UsersType } from "./users-reducer";
+import { updateFollowAC, usersReducer, UsersType } from "../../model/users-reducer";
 
 let initialState: UsersType;
 

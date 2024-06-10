@@ -1,44 +1,56 @@
 import { connect } from "react-redux";
-import { AppRootStateType } from "../../redux/redux-store";
-import {setCurrentPageAC,  UserType, requestUsersTC, followUserTC, unfollowUserTC } from "../../redux/users-reducer";
+import { AppRootStateType } from "../../../redux/redux-store";
+import {
+  setCurrentPageAC,
+  UserType,
+  requestUsersTC,
+  followUserTC,
+  unfollowUserTC,
+} from "../model/users-reducer";
 import { Component } from "react";
 import { Users } from "./Users";
-import { getCurrentPage, getIsFetched, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers } from "../../redux/users-selectors";
+import {
+  getCurrentPage,
+  getIsFetched,
+  getIsFollowingInProgress,
+  getPageCount,
+  getTotalUsersCount,
+  getUsers,
+} from "../../../redux/users-selectors";
 
 //типизация стейта
 type MapStateToPropsType = {
-  users: UserType[],
-  currentPage: number
-  totalUsersCount: number
-  pageCount: number
-  isFetched: boolean
-  isFollowingInProgressUsersId: Array<number>
-}
-
+  users: UserType[];
+  currentPage: number;
+  totalUsersCount: number;
+  pageCount: number;
+  isFetched: boolean;
+  isFollowingInProgressUsersId: Array<number>;
+};
 
 //типизация пропсов
 type MapDispatchToPropsType = {
-  setCurrentPage: (currentPage: number) => void
-  getUsers: (pageCount: number, currentPage: number) => void
-  followUser: (userId: number) => void
-  unfollowUser: (userId: number) => void
-}
+  setCurrentPage: (currentPage: number) => void;
+  getUsers: (pageCount: number, currentPage: number) => void;
+  followUser: (userId: number) => void;
+  unfollowUser: (userId: number) => void;
+};
 
-export type UsersContainerPropsType = MapDispatchToPropsType & MapStateToPropsType;
+export type UsersContainerPropsType = MapDispatchToPropsType &
+  MapStateToPropsType;
 
 /* Если вы не определяете конструктор в своем классе, React будет использовать конструктор из
 базового класса Component, который инициализирует состояние (this.state) и пропсы (this.props).
 Этот конструктор, в свою очередь, устанавливает this.props в значения, переданные компоненте в момент создания. */
 
-class UsersComponent extends Component<UsersContainerPropsType>{
-
-  constructor (props: UsersContainerPropsType) {
+class UsersComponent extends Component<UsersContainerPropsType> {
+  constructor(props: UsersContainerPropsType) {
     super(props);
   }
 
   componentDidMount(): void {
     //чтобы данные загружались сразу при загрузке страницы
-      this.props.getUsers(this.props.pageCount,this.props.currentPage);
+    this.props.getUsers(this.props.pageCount, this.props.currentPage);
   }
 
   setCurrentPage = (currentPageNumber: number) => {
@@ -46,21 +58,25 @@ class UsersComponent extends Component<UsersContainerPropsType>{
     //здесь в &page=${currentPageNumber}`) нужно именно указывать currentPageNumber
     // а не this.props.currentPAge, потому что к этому момоенту запрос не будет знать обновленное значение currentPage
 
-    this.props.getUsers(this.props.pageCount,currentPageNumber)
-  }
+    this.props.getUsers(this.props.pageCount, currentPageNumber);
+  };
 
-  render () { //обязательно наличие метода render(), чтобы вернуть JSX
+  render() {
+    //обязательно наличие метода render(), чтобы вернуть JSX
 
-    return <Users totalUsersCount={this.props.totalUsersCount}
-                  pageCount={this.props.pageCount}
-                  currentPage={this.props.currentPage}
-                  users={this.props.users}
-                  setCurrentPage={this.setCurrentPage}
-                  isFetched={this.props.isFetched}
-                  isFollowingInProgressUsersId={this.props.isFollowingInProgressUsersId}
-                  followUser={this.props.followUser}
-                  unfollowUser={this.props.unfollowUser}
-                  />
+    return (
+      <Users
+        totalUsersCount={this.props.totalUsersCount}
+        pageCount={this.props.pageCount}
+        currentPage={this.props.currentPage}
+        users={this.props.users}
+        setCurrentPage={this.setCurrentPage}
+        isFetched={this.props.isFetched}
+        isFollowingInProgressUsersId={this.props.isFollowingInProgressUsersId}
+        followUser={this.props.followUser}
+        unfollowUser={this.props.unfollowUser}
+      />
+    );
   }
 }
 
@@ -73,8 +89,8 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     pageCount: getPageCount(state),
     isFetched: getIsFetched(state),
     isFollowingInProgressUsersId: getIsFollowingInProgress(state),
-  }
-}
+  };
+};
 
 /* let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
@@ -113,7 +129,7 @@ export const UsersContainer = connect(mapStateToProps, {
   setCurrentPage: setCurrentPageAC,
   getUsers: requestUsersTC,
   followUser: followUserTC,
-  unfollowUser: unfollowUserTC
+  unfollowUser: unfollowUserTC,
 })(UsersComponent);
 
 export default UsersContainer; //обязательно default export доя lazy loading

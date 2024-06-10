@@ -1,5 +1,5 @@
-import { UserType } from "../redux/users-reducer"
-import { BaseResponseType, instance } from "./api"
+import { UserType } from "../model/users-reducer"
+import { BaseResponseType, instance } from "../../../api/api"
 
 export type UsersGetType = {
   items: UserType[]

@@ -1,5 +1,5 @@
 import { v1 } from "uuid"
-import { dialogsReducer } from "./dialogs-reducer"
+import { dialogsReducer } from "../features/dialog/model/dialogs-reducer"
 import { messageContactsReducer } from "./message-contacts-reducer"
 import { profileReducer } from "./profile-reducer"
 
@@ -126,7 +126,7 @@ let store = {
       ],
       currentMessageText: '',
       dialogs: {
-        [1]: [
+        1: [
           {
             id: v1(),
             name: 'Missis Marple',
@@ -158,7 +158,7 @@ let store = {
             message: `Need to rest`,
           },
         ],
-        [2]: [
+        2: [
           {
             id:  v1(),
             name: 'Luna',

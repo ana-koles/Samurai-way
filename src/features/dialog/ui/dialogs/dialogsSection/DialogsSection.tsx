@@ -1,10 +1,10 @@
 import React from 'react';
 import s from './DialogsSection.module.css'
-import { MyDialog } from './myDialog/MyDialog';
-import { DialogFriend } from './dialogFriend/DialogFriend';
-import { Button } from '../../button/Button';
+import { MyDialog } from '../../../../../components/dialogs/dialogsSection/myDialog/MyDialog';
+import { DialogFriend } from '../../../../../components/dialogs/dialogsSection/dialogFriend/DialogFriend';
+import { Button } from '../../../../../components/button/Button';
 import { DialogsSectionPropsType } from './DialogsSectionContainer';
-import { DialogFormDataType, DialogReduxForm } from './dialogForm/DialogForm';
+import { DialogFormDataType, DialogReduxForm } from '../../../../../components/dialogs/dialogsSection/dialogForm/DialogForm';
 
 
 export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {

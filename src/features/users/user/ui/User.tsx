@@ -1,29 +1,28 @@
 import React from "react";
 import s from "../User.module.css";
 import photo from "../../../assets/friend4.jpg";
-import { UserType } from "../../../redux/users-reducer";
+import { UserType } from "../model/users-reducer";
 import { NavLink } from "react-router-dom";
 
 type UserProps = {
   user: UserType;
-  isFollowingInProgressUsersId: Array<number>
-  followUser:  (userId: number) => void
-  unfollowUser: (userId: number) => void
+  isFollowingInProgressUsersId: Array<number>;
+  followUser: (userId: number) => void;
+  unfollowUser: (userId: number) => void;
 };
 
 export const User = ({
   user,
   isFollowingInProgressUsersId,
   unfollowUser,
-  followUser
+  followUser,
 }: UserProps) => {
-
   const followClickHandler = () => {
-    followUser(user.id)
+    followUser(user.id);
   };
 
   const unfollowClickHandler = () => {
-    unfollowUser(user.id)
+    unfollowUser(user.id);
   };
 
   return (

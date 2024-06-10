@@ -1,21 +1,29 @@
-import React, { Dispatch } from 'react';
-import { DialogItemType, DialogReducerActionType, addMessageToDialogAC } from '../../../redux/dialogs-reducer';
-import { DialogsSection } from './DialogsSection';
-import { connect } from 'react-redux';
-import { AppRootStateType } from '../../../redux/redux-store';
-import { withAuthRedirect } from '../../../hoc/withAuthRedirect';
-import { compose } from 'redux';
-
+import React, { Dispatch } from "react";
+import {
+  DialogItemType,
+  DialogReducerActionType,
+  addMessageToDialogAC,
+} from "../../../features/dialog/model/dialogs-reducer";
+import { DialogsSection } from "./DialogsSection";
+import { connect } from "react-redux";
+import { AppRootStateType } from "../../../redux/redux-store";
+import { withAuthRedirect } from "../../../hoc/withAuthRedirect";
+import { compose } from "redux";
 
 type MapStateToPropsType = {
-  dialog: DialogItemType[],
-}
+  dialog: DialogItemType[];
+};
 
 type MapDispatchToPropsType = {
-  addMessageToDialog: (userId: number, userName: string, newMessage: string) => void
-}
+  addMessageToDialog: (
+    userId: number,
+    userName: string,
+    newMessage: string
+  ) => void;
+};
 
-export type DialogsSectionPropsType = MapDispatchToPropsType & MapStateToPropsType;
+export type DialogsSectionPropsType = MapDispatchToPropsType &
+  MapStateToPropsType;
 
 //создаем контейнерную компоненту над DialogsSection (по факту возвращаем 2 контейнерные компоненты над DialogsSection)
 //const AuthRedirectComponent = withAuthRedirect(DialogsSection);
@@ -23,17 +31,18 @@ export type DialogsSectionPropsType = MapDispatchToPropsType & MapStateToPropsTy
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     dialog: state.dialogsPage.dialogs[1],
-  }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch: Dispatch<DialogReducerActionType>): MapDispatchToPropsType => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<DialogReducerActionType>
+): MapDispatchToPropsType => {
   return {
     addMessageToDialog: (userId, userName, newMessage) => {
-      dispatch(addMessageToDialogAC(userId, userName, newMessage))
+      dispatch(addMessageToDialogAC(userId, userName, newMessage));
     },
-  }
-}
-
+  };
+};
 
 //этот код вместо
 //const AuthRedirectComponent = withAuthRedirect(DialogsSection); и
@@ -42,7 +51,7 @@ const mapDispatchToProps = (dispatch: Dispatch<DialogReducerActionType>): MapDis
 // в последующую
 export const DialogsSectionContainer = compose<React.ComponentType>( //говорит реакту, что создаем комоненту
   connect(mapStateToProps, mapDispatchToProps),
-  withAuthRedirect  //защищаем от вхождения, если не залогинены в системе
-)(DialogsSection)
+  withAuthRedirect //защищаем от вхождения, если не залогинены в системе
+)(DialogsSection);
 
 //export const DialogsSectionContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)

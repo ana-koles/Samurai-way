@@ -1,5 +1,5 @@
 
-import { getAuthUserDataTC } from "./auth-reducer";
+import { getAuthUserDataTC } from "../features/auth/model/auth-reducer";
 import { AppThunk } from "./redux-store";
 
 const SET_INITIALIZED = 'SET_INITIALIZED';

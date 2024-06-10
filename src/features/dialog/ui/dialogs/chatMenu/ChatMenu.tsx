@@ -1,8 +1,8 @@
 import React from 'react';
 import s from './ChatMenu.module.css'
 import { ChatMenuItem } from './chatMenuItem/ChatMenuItem';
-import { ContactType } from '../../../redux/store';
-import { AppRootStateType } from '../../../redux/redux-store';
+import { ContactType } from '../../../../../redux/store';
+import { AppRootStateType } from '../../../../../redux/redux-store';
 import { connect } from 'react-redux';
 
 
