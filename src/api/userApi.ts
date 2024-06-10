@@ -1,4 +1,12 @@
-import { BaseResponseType, instance, UsersGetType } from "./api"
+import { UserType } from "../redux/users-reducer"
+import { BaseResponseType, instance } from "./api"
+
+export type UsersGetType = {
+  items: UserType[]
+  totalCount: number
+  error: null | string
+}
+
 
 export const usersApi = {
   getUsers(pageCount: number, currentPage: number) {

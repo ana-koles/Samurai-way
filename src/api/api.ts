@@ -1,34 +1,21 @@
 import axios from "axios"
 import { UserType } from "../redux/users-reducer"
-import { UserProfileType, UserUpdatedProfileType } from "../redux/profile-reducer"
 
-export type UsersGetType = {
-  items: UserType[]
-  totalCount: number
-  error: null | string
-}
 
-type UsersAuthDataType = {
-  id: number,
-  email: string,
-  login: string
-}
 
-export type LoginDataType = {
+/* export type LoginDataType = {
   email: string,
   password: string
   rememberMe: boolean | null
 }
-
+ */
 export type BaseResponseType<T = {}> = {
   resultCode: number
   messages: string[],
   data: T
 }
 
-export type CaptchaUrlType = {
-  url: string
-}
+
 
 /*   withCredentials: true используется для включения передачи куки (cookies) вместе с запросом.
 Это особенно важно, когда вы обращаетесь к серверу с использованием кросс-доменных запросов
@@ -41,7 +28,7 @@ export const instance = axios.create({
                     "API-KEY": "f8f6fe16-bb80-454f-8b60-979f91c82094"
                   }
 })
-
+/*
 export const authApi = {
   getMeAuth() {
     return instance.get<BaseResponseType<UsersAuthDataType>>(`auth/me`)
@@ -53,10 +40,10 @@ export const authApi = {
   logout() {
     return instance.delete<BaseResponseType>('auth/login')
   }
-}
+} */
 
 
-export const profileApi = {
+/* export const profileApi = {
   getProfileData(userId: number) {
     return instance.get<UserProfileType>('profile/' + userId);
   },
@@ -83,13 +70,13 @@ export const profileApi = {
   updateUserData(data: UserUpdatedProfileType) {
     return instance.put<BaseResponseType>('/profile', data)
   }
-}
+} */
 
-export const securityAPI = {
+/* export const securityAPI = {
   getCatchaAPI() {
     return instance.get<CaptchaUrlType>(`security/get-captcha-url`)
   }
 }
-
+ */
 
 

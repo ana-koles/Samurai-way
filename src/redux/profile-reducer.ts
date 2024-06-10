@@ -1,7 +1,7 @@
 import { Dispatch } from "redux"
 import { v1 } from "uuid"
-import { profileApi } from "../api/api"
 import { stopSubmit } from "redux-form"
+import { profileApi } from "../api/profileApi"
 
 export type PostType = {
   id: string
