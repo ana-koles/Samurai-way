@@ -62,17 +62,15 @@ export const Profile = ({
       <div className={s.profile_wrapper}>
         <div className={s.content_wrapper}>
           <div className={s.profilePhotoWrapper}>
-            <div className={s.photoCover}>
-              {profile.photos.large !== null ? (
-                <img
-                  className={s.photo}
-                  src={profile.photos.large}
-                  alt="Profile"
-                />
-              ) : (
-                <img className={s.photo} src={noPhoto} alt="No Profile" />
-              )}
-            </div>
+            {profile.photos.large !== null ? (
+              <img
+                className={s.photo}
+                src={profile.photos.large}
+                alt="Profile"
+              />
+            ) : (
+              <img className={s.photo} src={noPhoto} alt="No Profile" />
+            )}
 
             {isOwner && (
               <input
