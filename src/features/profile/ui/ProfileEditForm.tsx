@@ -25,9 +25,9 @@ const ProfileEditForm = (
 ) => {
   return (
     <form onSubmit={props.handleSubmit} className={s.profileForm}>
-      <div>
+      <div className={s.editFormDataWrapper}>
         <label>
-          About me:{" "}
+          <span>About me:{" "}</span>
           {createField({
             placeholder: "About me...",
             name: "aboutMe",
@@ -36,7 +36,7 @@ const ProfileEditForm = (
           })}
         </label>
         <label>
-          Looking for a job:{" "}
+          <span>Looking for a job:{" "}</span>
           {createField({
             type: "checkbox",
             name: "lookingJob",
@@ -45,7 +45,7 @@ const ProfileEditForm = (
           })}
         </label>
         <label>
-          My professional skills:{" "}
+          <span>My professional skills:{" "}</span>
           {createField({
             placeholder: "My professional skills",
             name: "lookingForAJobDescription",
@@ -58,7 +58,7 @@ const ProfileEditForm = (
           let name = key.charAt(0).toUpperCase() + key.slice(1);
           return (
             <label key={key}>
-              {name}:{" "}
+              <span>{name}:{" "}</span>
               {createField({
                 type: "text",
                 name: "contacts." + key,

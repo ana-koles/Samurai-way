@@ -65,10 +65,9 @@ a {
   grid-template-columns: 1fr minmax(auto, 200px) minmax(auto, 740px) 1fr;
   grid-template-rows: 45px 1fr;
   grid-gap: 10px;
-/*   background-color: #313131; */
   background-image: radial-gradient(107.97% 63.12% at 49.45% 50.88%, #1F4C47 0%, #121419 100%);
-  min-height: 100vh
-
+  min-height: 100vh;
+  padding-bottom: 20px;
 }
 
 p {

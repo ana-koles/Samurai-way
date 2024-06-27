@@ -134,9 +134,27 @@ input[type='file'] {
   margin-top: 15px;
 }
 .profileForm {
-  position: absolute;
-  top: 50px;
 }
+
+.editFormDataWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.editFormDataWrapper label {
+  margin: 0;
+  padding: 0;
+  max-height: 60px;
+  margin-bottom: 5px;
+}
+
+.editFormDataWrapper label span{
+  margin-bottom: 5px;
+  color: white;
+  font-size: 1rem;
+  display: inline-block;
+}
+
 
 .statusWrapper {
   color: #242426;
