@@ -17,9 +17,7 @@ const onClickHandler = () => {
 }
 
   return (
-
     <button className={s.button} type={props.type ? props.type : 'button'} onClick={onClickHandler}>{props.name}</button>
-
   );
 };
 

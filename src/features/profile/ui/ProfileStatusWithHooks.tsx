@@ -31,18 +31,14 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> =
 
   return (
     <div className={s.statusWrapper}>
-    {editMode
-    ?
-    <div>
+      {editMode
+      ?
       <input onChange={onStatusChange} autoFocus={true}
               onBlur={deactivateEditMode}
               type="text" value={status}/>
+      :
+      <span className={s.statusText} onDoubleClick={activateEditMode}>{status || 'Here should be my status'}</span>
+      }
     </div>
-    :
-    <div>
-      <span onDoubleClick={activateEditMode}>{status || 'Here should be my status'}</span>
-    </div>
-    }
-  </div>
   );
 };

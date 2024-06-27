@@ -8,7 +8,7 @@ p {
   color: white;
 }
 
-.profile_wrapper {
+.profileWrapper {
   background-color: #242426;
   border: 1px solid rgba(49, 49, 49, 0.49);
 /*   height: 185px; */
@@ -23,7 +23,7 @@ p {
 
 }
 
-.profile_wrapper::before {
+.profileWrapper::before {
   content: '';
   width: 100%;
   position: absolute;
@@ -36,17 +36,12 @@ p {
   z-index: 0;
 }
 
-.content_wrapper {
+.contentWrapper {
   display: flex;
   position: relative;
 /*   bottom: 26px; */
-  margin-left: 15px;
 /*   align-items: end; */
-}
-
-.statusWrapper {
-  color: #242426;
-  margin-bottom: 5px;
+  padding: 15px;
 }
 
 .profilePhotoWrapper {
@@ -61,6 +56,7 @@ p {
   border-radius: 50%;
   z-index: 9;
   top: 50px;
+  margin-right: 15px;
 }
 
 /* .photoCover {
@@ -85,7 +81,6 @@ p {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 115%;
-  margin-right: 25px;
 }
 
 .profilePhotoWrapper:hover .photoCover{
@@ -103,6 +98,7 @@ p {
 .info_wrapper {
   position: relative;
   z-index: 5;
+  max-width: 550px;
 }
 
 .info_wrapper h2 {
@@ -145,8 +141,22 @@ input[type='file'] {
   visibility: visible;
 }
 
+.profileDataWrapper > button {
+  margin-top: 15px;
+}
 .profileForm {
   position: absolute;
   top: 50px;
 }
 
+.statusWrapper {
+  color: #242426;
+  margin-bottom: 10px;
+  max-width: 100%;
+}
+
+.statusText {
+  display: inline-block;
+  max-width: inherit;
+  word-wrap: break-word;
+}

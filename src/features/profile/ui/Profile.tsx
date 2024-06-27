@@ -54,13 +54,13 @@ export const Profile = ({
   const onSubmit = async (data: ProfileFormField) => {
     const updatedProfileData = { ...profile, ...data };
     saveUpdatedData(updatedProfileData);
-    /*       setEditMode(false) */
+    setEditMode(false)
   };
 
   return (
     <div className={s.content}>
-      <div className={s.profile_wrapper}>
-        <div className={s.content_wrapper}>
+      <div className={s.profileWrapper}>
+        <div className={s.contentWrapper}>
           <div className={s.profilePhotoWrapper}>
             {profile.photos.large !== null ? (
               <img

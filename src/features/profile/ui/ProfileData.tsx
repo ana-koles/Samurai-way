@@ -1,5 +1,6 @@
 import { ContactsType, UserProfileType } from "../modal/profile-reducer";
 import { Button } from "../../../components/button/Button";
+import s from './Profile.module.css'
 
 type ProfileDataProps = {
   profile: UserProfileType;
@@ -11,13 +12,9 @@ export const ProfileData = ({
   profile,
   isOwner,
   activateEditMode,
-  ...restProps
 }: ProfileDataProps) => {
   return (
-    <div>
-      <div>
-        {isOwner && <Button callback={activateEditMode} name={"Edit"} />}
-      </div>
+    <div className={s.profileDataWrapper}>
       <p>About me: {profile.aboutMe}</p>
       <p>Looking for a job: {profile.lookingForAJob}</p>
       <p>My professional skills: {profile.lookingForAJobDescription}</p>
@@ -25,6 +22,7 @@ export const ProfileData = ({
         let value = profile.contacts[key as keyof ContactsType];
         return <Contact key={key} contactName={key} contactValue={value} />;
       })}
+      {isOwner && <Button callback={activateEditMode} name={"edit"} />}
     </div>
   );
 };
