@@ -26,14 +26,3 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
 }
-
-textarea {
-  resize: none;
-  height: 40px;
-  padding: 5px 5px 5px 10px;
-  border-radius: 10px;
-  width: 100%;
-  background-color: rgba(49, 49, 49, 0.59);
-  color: white;
-  border: 1px solid rgba(183, 229, 209, 0.05);
-}

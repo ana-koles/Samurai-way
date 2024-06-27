@@ -15,7 +15,7 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> =
     setStatus(props.status)
   }, [props.status])
 
-  const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onStatusChange = (e: ChangeEvent<HTMLTextAreaElement >) => {
     setStatus(e.currentTarget.value)
   }
 
@@ -33,9 +33,9 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> =
     <div className={s.statusWrapper}>
       {editMode
       ?
-      <input onChange={onStatusChange} autoFocus={true}
+      <textarea onChange={onStatusChange} autoFocus={true}
               onBlur={deactivateEditMode}
-              type="text" value={status}/>
+              value={status}/>
       :
       <span className={s.statusText} onDoubleClick={activateEditMode}>{status || 'Here should be my status'}</span>
       }

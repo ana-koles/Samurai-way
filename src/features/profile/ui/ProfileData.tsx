@@ -13,15 +13,20 @@ export const ProfileData = ({
   isOwner,
   activateEditMode,
 }: ProfileDataProps) => {
+
   return (
     <div className={s.profileDataWrapper}>
       <p>About me: {profile.aboutMe}</p>
       <p>Looking for a job: {profile.lookingForAJob}</p>
       <p>My professional skills: {profile.lookingForAJobDescription}</p>
+
       {Object.keys(profile.contacts).map((key) => {
         let value = profile.contacts[key as keyof ContactsType];
-        return <Contact key={key} contactName={key} contactValue={value} />;
+        if(value) {
+          return <Contact key={key} contactName={key} contactValue={value} />;
+        }
       })}
+
       {isOwner && <Button callback={activateEditMode} name={"edit"} />}
     </div>
   );

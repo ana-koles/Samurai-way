@@ -35,7 +35,6 @@ export const Profile = ({
   isOwner,
   savePhoto,
   saveUpdatedData,
-  updateStatusSuccessful,
 }: ProfilePropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false);
 

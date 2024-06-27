@@ -39,8 +39,6 @@ p {
 .contentWrapper {
   display: flex;
   position: relative;
-/*   bottom: 26px; */
-/*   align-items: end; */
   padding: 15px;
 }
 
@@ -55,26 +53,13 @@ p {
   height: 128px;
   border-radius: 50%;
   z-index: 9;
-  top: 50px;
-  margin-right: 15px;
+  margin: 15px 15px 0 0;
+
 }
-
-/* .photoCover {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  width: 128px;
-  height: 128px;
-  border-radius: 50%;
-  z-index: 9;
-} */
-
 
 .photo {
   position: relative;
   z-index: 5;
-/*   background-image: url(../../assets/cat-profile2.jpg); */
-
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -141,6 +126,10 @@ input[type='file'] {
   visibility: visible;
 }
 
+.profileDataWrapper p {
+  color: gold
+}
+
 .profileDataWrapper > button {
   margin-top: 15px;
 }
@@ -152,11 +141,26 @@ input[type='file'] {
 .statusWrapper {
   color: #242426;
   margin-bottom: 10px;
-  max-width: 100%;
+/*   width: 100%; */
+}
+
+.statusWrapper textarea {
+  border-radius:5px;
+  padding: 5px;
+  resize: none;
+  min-height: 45px;
+  min-width: 300px;
+  display: inline-block;
+  width: auto;
+
+  background-color: rgba(49, 49, 49, 0.59);
+  color: white;
+  border: 1px solid rgba(183, 229, 209, 0.05);
 }
 
 .statusText {
   display: inline-block;
   max-width: inherit;
   word-wrap: break-word;
+  color: white
 }
