@@ -18,8 +18,8 @@ export const maxLenghtCreator = (maxLength: number) => {
 
 export const minLengthCreator = (minLenght: number) => {
   return (value: string) => {
-    if (value && value.length < 6) {
-      return 'Password is too short. Min 6 symbols'
+    if (value && value.length < 4) {
+      return 'Password is too short. Min 4 symbols'
     } else {
       return undefined;
     }

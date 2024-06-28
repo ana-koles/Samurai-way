@@ -36,3 +36,10 @@ form {
   width: 200px;
   margin-bottom: 10px;
 }
+
+.commonLoginDataSection {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}

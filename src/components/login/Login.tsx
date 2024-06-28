@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./Login.module.css";
 import { InjectedFormProps, reduxForm } from "redux-form";
 import { connect } from "react-redux";
@@ -8,8 +7,6 @@ import { minLengthCreator, required } from "../../utils/validators/validators";
 import { AppRootStateType } from "../../redux/redux-store";
 import { Redirect } from "react-router-dom";
 import { Button } from "../button/Button";
-
-//тип данных полей формы
 
 export type LoginFormPropsType = {
   email: string;
@@ -36,11 +33,11 @@ type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType;
 
 const LoginPage = (props: LoginPagePropsType) => {
   const onSubmit = (data: LoginFormPropsType) => {
-     props.logIn(data.email, data.password, data.rememberMe, data.captcha);
+    props.logIn(data.email, data.password, data.rememberMe, data.captcha);
   };
 
   if (props.isAuth) {
-    return <Redirect to={"/profile"} />; //если мы залогинены, но перекидывать на профль
+    return <Redirect to={"/profile"} />;
   }
 
   return (
@@ -51,7 +48,7 @@ const LoginPage = (props: LoginPagePropsType) => {
   );
 };
 
-export const minLenght6 = minLengthCreator(6);
+export const minLenght4 = minLengthCreator(4);
 
 type Captcha = { captchaUrl: string | null };
 
@@ -62,8 +59,7 @@ const LoginForm = (
     <div className={s.content}>
       <h1>Login</h1>
       <form onSubmit={props.handleSubmit}>
-        {" "}
-             {createField({
+        {createField({
           type: "text",
           placeholder: "Email",
           name: "email",
@@ -75,7 +71,7 @@ const LoginForm = (
           placeholder: "Password",
           name: "password",
           component: Input,
-          validators: [required, minLenght6],
+          validators: [required, minLenght4],
         })}
         {createField({
           type: "checkbox",
@@ -100,6 +96,12 @@ const LoginForm = (
             })}
           </>
         )}
+        <div className={s.commonLoginDataSection}>
+          <p>or use common test account credentials:</p>
+          <p> Email: free@samuraijs.com</p>
+          <p>Password: free</p>
+        </div>
+
         <Button name={"Submit"} type="submit" />
       </form>
     </div>
