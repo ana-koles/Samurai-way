@@ -1,12 +1,12 @@
 export const required = (value: string) => {
-  if (value) { //если мы ввели какое-то значение, то поле валидное
+  if (value) {
     return undefined;
   } else {
-    return 'Field is required'; //если поле пустой - вернуть текст с ошибкой
+    return 'Field is required';
   }
 }
 
-export const maxLenghtCreator = (maxLength: number) => { //делаем обертку над валидатором длины строки
+export const maxLenghtCreator = (maxLength: number) => {
   return (value: string) => {
     if (value && value.length > maxLength) {
       return 'Text is too long'

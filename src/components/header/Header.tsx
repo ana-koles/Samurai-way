@@ -17,12 +17,10 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
 
       <div className={s.logo_wrapper}>
         <img src={logo} alt="logo" />
-        <h2>CATSBOOK</h2>
+        <h2>Connectify</h2>
       </div>
-
       {props.isAuth
       ?
-
       <ul className={s.icon_list}>
           <li><NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink></li>
           <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>

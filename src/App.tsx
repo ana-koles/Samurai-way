@@ -6,7 +6,6 @@ import { Music } from "./components/music/Music";
 import { Settings } from "./components/settingsPage/Settings";
 import {
   BrowserRouter,
-  HashRouter,
   Redirect,
   Route,
   Switch,
@@ -59,7 +58,7 @@ class App extends Component<AppPropsType> {
 
     return (
       <BrowserRouter>
-        <div className="app-wrapper">
+        <div className="appWrapper">
           <HeaderContainer />
           <NavBar />
           <Switch>
@@ -92,7 +91,7 @@ class App extends Component<AppPropsType> {
             />
             <Route path="/login" component={LoginPageContainer} />
             <Route path="/profile" render={() => <ProfileContainer />} />
-            <Route exact path="/" render={() => <Redirect to="/profile" />} />
+            <Route path="/" render={() => <Redirect to="/profile" />} />
             <Route path="*" render={() => <PageNotFount />} />
           </Switch>
         </div>
@@ -113,7 +112,6 @@ const AppContainer = compose<React.ComponentType>(
 const MainApp = () => {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      {" "}
       <Provider store={store}>
         <AppContainer />
       </Provider>

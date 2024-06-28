@@ -60,7 +60,7 @@ a {
   text-decoration: none;
 }
 
-.app-wrapper {
+.appWrapper {
   display: grid;
   grid-template-columns: 1fr minmax(auto, 200px) minmax(auto, 740px) 1fr;
   grid-template-rows: 45px 1fr;
