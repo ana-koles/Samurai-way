@@ -22,13 +22,7 @@ import { AppRootStateType, store } from "./redux/redux-store";
 import { Preloader } from "./components/common/preloader/Preloader";
 import { PageNotFount } from "./components/404/PageNotFount";
 
-//lazy loading
-//import { UsersContainer } from './components/users/UsersContainer';
-//означает что  не загружает компоненту сразу полностью,т.е сборщик не собирает ее в большй бандл,
-//а когда понадобиться ее отрисовывать, я запрошу ее у сервера, запрошу ее js код. Чтобы первый загрузочный файл не был таким большим
 const UsersContainer = lazy(() => import("./features/users/ui/UsersContainer"));
-
-//import { Dialogs } from './components/dialogs/Dialogs';
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
 
 type MapDispatchToPropsType = {
@@ -68,16 +62,10 @@ class App extends Component<AppPropsType> {
         <div className="app-wrapper">
           <HeaderContainer />
           <NavBar />
-
-          {/* render если передаем тег и пропсы, component - если ссылку на компоненту */}
-          {/*  Добавляем params для profile  */}
-          {/* <Switch> switch используется если нам надо чтобы роут как толькь нашел нужный путь, дальше не шел.
-         При этом максимально уточненные указываем выше, а обобщенные указываем ниже */}
           <Switch>
-            {" "}
             <Route
               path="/profile/:userId?"
-              render={() => <ProfileContainer /* store={props.store} */ />}
+              render={() => <ProfileContainer />}
             />
             <Route
               path={"/messages"}
@@ -119,14 +107,13 @@ const MapStateToProps = (state: AppRootStateType) => {
 
 const AppContainer = compose<React.ComponentType>(
   withRouter,
-  connect(MapStateToProps, { setInitializeApp: setInitializeAppTC }) //если не передаем MapStateToProps, то вмест них пишем Null
+  connect(MapStateToProps, { setInitializeApp: setInitializeAppTC })
 )(App);
 
 const MainApp = () => {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       {" "}
-      {/* чтобы на gh-pages переключаться по страницам */}
       <Provider store={store}>
         <AppContainer />
       </Provider>
