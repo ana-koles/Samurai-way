@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "paths": {
-      "react": [ "./node_modules/@types/react" ]
+      "react": [ "./node_modules/@types/react" ],
+      "@/*": ["./src/*"]
     },
     "lib": [
       "dom",

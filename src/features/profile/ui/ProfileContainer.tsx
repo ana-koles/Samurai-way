@@ -30,7 +30,6 @@ type MapDispatchToPropsType = {
   saveData: (data: UserUpdatedProfileType) => Promise<void>;
 };
 
-//типизация userID
 type PathParamsType = {
   userId: string;
 };
@@ -94,7 +93,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   };
 };
 
-export const ProfileContainer = compose<React.ComponentType>( 
+export const ProfileContainer = compose<React.ComponentType>(
   connect(mapStateToProps, {
     setProfile: setProfileTC,
     setStatus: setStatusTC,
