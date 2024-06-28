@@ -19,9 +19,7 @@ export const DialogsSection:React.FC<DialogsSectionPropsType> = (props) => {
         <div className ={s.title_wrapper}>
             <h2>Cat Talks</h2>
         </div>
-
         {props.dialog.map(d => d.name === 'Fluffy Gangster' ?  <MyDialog dialog={d} key={d.id}/> : <DialogFriend dialog={d} key={d.id}/>)}
-
         <DialogReduxForm onSubmit={addMessageToDialog}/>
     </div>
   );
