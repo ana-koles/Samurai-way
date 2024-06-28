@@ -36,14 +36,11 @@ userApiMock.unfollowUser.mockReturnValue(Promise.resolve(result))
 userApiMock.getUsers.mockReturnValue(Promise.resolve(getUsersResult))
 
 test('follow thunk should be successful', async () => {
-  const thunk = followUserTC(1) //TC возвращает санку
+  const thunk = followUserTC(1)
 
   await thunk(dispatchMock)
-  //вызывает созданную санку followUserTC и передает в нее dispatchMock в качестве аргумента.
-  // После этого санка будет запущена с фиктивной функцией dispatchMock вместо реального диспетчера Redux.
-  // Это позволяет проверить, какие действия (action) будут переданы в dispatch, когда санка выполняется.
   expect(dispatchMock).toHaveBeenCalledTimes(3);
-  expect(dispatchMock).toHaveBeenNthCalledWith(1, toggleIsFollingInProgressAC(1, true)) //указываем actions для каждого из 3х вызовов
+  expect(dispatchMock).toHaveBeenNthCalledWith(1, toggleIsFollingInProgressAC(1, true))
   expect(dispatchMock).toHaveBeenNthCalledWith(2, updateFollowAC(1))
   expect(dispatchMock).toHaveBeenNthCalledWith(3, toggleIsFollingInProgressAC(1, false))
 });
@@ -52,7 +49,7 @@ test('unfollow thunk should be successful', async () => {
   const thunk = unfollowUserTC(2);
   await thunk(dispatchMock)
   expect(dispatchMock).toHaveBeenCalledTimes(3);
-  expect(dispatchMock).toHaveBeenNthCalledWith(1, toggleIsFollingInProgressAC(2, true)) //указываем actions для каждого из 3х вызовов
+  expect(dispatchMock).toHaveBeenNthCalledWith(1, toggleIsFollingInProgressAC(2, true))
   expect(dispatchMock).toHaveBeenNthCalledWith(2, updateFollowAC(2))
   expect(dispatchMock).toHaveBeenNthCalledWith(3, toggleIsFollingInProgressAC(2, false))
 })

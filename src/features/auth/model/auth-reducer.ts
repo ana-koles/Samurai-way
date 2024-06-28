@@ -13,7 +13,7 @@ let initialState: InitialStateType = {
   email: null,
   login: null,
   isAuth: false,
-  captchaUrl: null // if null,  then catcha is not required
+  captchaUrl: null
 }
 
 type InitialStateType = {
@@ -58,8 +58,8 @@ export const getCatchaUrlSuccess = (captchaUrl: string) => {
 }
 
 //thunk
-export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //get users authentification  data
-  return authApi.getMeAuth() //чтобы подписаться на промис из этого диспача в app-reducer
+export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
+  return authApi.getMeAuth()
     .then(response => {
       if (response.data.resultCode === 0) { //user is login
         let {id, email, login} = response.data.data;
@@ -70,16 +70,15 @@ export const getAuthUserDataTC = () => (dispatch: Dispatch) => { //get users aut
 export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string | null): AppThunk => async(dispatch) => {
   try {
     let data = await authApi.login(email, password, rememberMe, captcha)
-    if (data.resultCode === 0) { //authentification in the service is successed => get auth data
-      dispatch(getAuthUserDataTC()); //captcha is not required
+    if (data.resultCode === 0) {
+      dispatch(getAuthUserDataTC());
 
     } else {
       if (data.resultCode === 10) {
         dispatch(getCatchaUrl())
       } else {
         let message = data.messages.length > 0 ? data.messages[0] : 'Common Error'
-        let action = stopSubmit('login', {_error: message}); //экшен который предоставляет redux-form, чтобы обрабатывать ошибки.
-                                                            //указываем название формы и общую ошибку или название конкретного поля, для к-го обрабатываем ошибку
+        let action = stopSubmit('login', {_error: message});
         dispatch(action);
       }
     }
@@ -92,10 +91,10 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
   try {
     let response = await authApi.logout()
     if (response.data.resultCode === 0) {
-      dispatch(setAuthUserData(null, null, null, false)); //need to 'kill' all cookies
+      dispatch(setAuthUserData(null, null, null, false));
       console.log(response)
     }
-  } catch (error: any) { //error: Error
+  } catch (error: any) { 
     console.log(error.message)
   }
 }

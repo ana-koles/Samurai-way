@@ -2,16 +2,14 @@ import { ReactTestInstance, create } from "react-test-renderer"
 import { updateStatusTC } from "../modal/profile-reducer";
 import { ProfileStatus } from "./ProfileStatus";
 
-// Определение интерфейса для состояния компонента ProfileStatus
 interface ProfileStatusState {
   status: string
   editMode: boolean
 }
 
-// Объединение интерфейса состояния с ReactTestInstance
 type TestInstanceWithState = ReactTestInstance & {
   state: ProfileStatusState;
-  deactivateEditMode: () => void; // добавление метода deactivateEditMode
+  deactivateEditMode: () => void;
 };
 
 describe('ProfileStatus component', ()=> {
@@ -27,7 +25,7 @@ describe('ProfileStatus component', ()=> {
 
   test('componet should contain span tag after mounting', () => {
     const component = create(<ProfileStatus status="Test status" updateStatus={updateStatusTC}/>);
-    const root = component.root; //получаем корневой эл-т, к-ый содержит все дерево компонентов, которое рендерится внутри тестируемого компонента.
+    const root = component.root;
     const span = root.findAllByType('span')
     expect(span).not.toBeNull();
     expect(span.length).toBe(1)
@@ -43,7 +41,7 @@ describe('ProfileStatus component', ()=> {
   test('component should not contain input tag after mounting', () => {
     const component = create(<ProfileStatus status="Test status" updateStatus={updateStatusTC}/>);
     const root = component.root;
-    const input = root.findAllByType('input'); //возвращает массив
+    const input = root.findAllByType('input');
     expect(input.length).toBe(0);
   })
 
@@ -51,18 +49,21 @@ describe('ProfileStatus component', ()=> {
     const component = create(<ProfileStatus status="Test status" updateStatus={updateStatusTC}/>);
     const root = component.root;
     expect(() => {
-      const input = root.findByType('input');//если не находит, выкидывает ошибку
+      const input = root.findByType('input');
     }).toThrow();
   })
 
   test('component should have input instead of span after doubleclicking on the span', ()=> {
     const component = create(<ProfileStatus status="Test status" updateStatus={updateStatusTC}/>);
     const root = component.root;
+    // eslint-disable-next-line testing-library/await-async-query
     let span = root.findByType('span');
     span.props.onDoubleClick();
+    // eslint-disable-next-line testing-library/await-async-query
     const input = root.findByType('input');
     expect(input.props.value).toBe('Test status');
     expect(() => {
+      // eslint-disable-next-line testing-library/await-async-query
       root.findByType('span');
     }).toThrow();
   })

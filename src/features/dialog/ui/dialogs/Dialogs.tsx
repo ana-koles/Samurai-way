@@ -14,5 +14,5 @@ const Dialogs = () => {
   );
 };
 
-export default Dialogs; //require default export for lazy loading
+export default Dialogs;
 

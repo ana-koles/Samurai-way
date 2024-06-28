@@ -9,7 +9,6 @@ let dialogsInitialState: DialogPageType = {
 beforeEach(() => {
   dialogsInitialState = {
     messageContacts: [
-      /* {id: 0, name:'Fluffy Gangster'}, */
       { id: 1, name: 'Missis Marple' },
       { id: 2, name: 'Luna' },
       { id: 3, name: 'Toby' },

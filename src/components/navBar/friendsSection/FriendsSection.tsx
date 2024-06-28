@@ -40,15 +40,7 @@ export const FriendsSection = () => {
   return (
     <div className={s.friends_wrapper}>
         <h2>Friends (100) </h2>
-
         {friends.map(f => <Friend key={f.id} {...f}/>)}
-
-        {/* <Friend/>
-        <Friend/>
-        <Friend/>
-        <Friend/>
-        <Friend/> */}
-
         <a>View all</a>
 
       </div>

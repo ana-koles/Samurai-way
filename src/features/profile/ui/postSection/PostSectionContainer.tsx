@@ -1,4 +1,3 @@
-import React from "react";
 import {
   PostType,
   ProfileReducerActionType,
@@ -9,38 +8,6 @@ import { AppRootStateType } from "../../../../redux/redux-store";
 import { Dispatch } from "redux";
 import { PostSection } from "./PostSection";
 
-/* type PostSectionPropsType = {
-  posts: PostType[]
-  currentText: string
-  dispatch: (action: ActionType) => void
-  user: UserType
-} */
-/* type PostSectionPropsType = {
-  store: any
-} */
-
-/* export const PostSectionContainer: React.FC<PostSectionPropsType> = (props) => {
-
-  let state = props.store.getState();
-
-  const addPost = (name: string) => {
-    props.store.dispatch(addPostAC(name))
-  }
-
-  const updateNewPostText = (text: string) => {
-    props.store.dispatch(updateNewPostTextAC(text))
-  }
-
-    return (
-
-    <PostSection
-            posts={state.profilePage.posts}
-            currentText={state.profilePage.currentText}
-            addPost={addPost}
-            updateNewPostText={updateNewPostText}
-      />
-  );
-}; */
 
 type MapStateToPropsType = {
   posts: PostType[];

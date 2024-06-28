@@ -36,9 +36,7 @@ type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType;
 
 const LoginPage = (props: LoginPagePropsType) => {
   const onSubmit = (data: LoginFormPropsType) => {
-    //будут содержать данные из формы и вызыватся при отправке формы на сервер
-    props.logIn(data.email, data.password, data.rememberMe, data.captcha);
-    //dispatch(loginTC(data.email, data.password, data.rememberMe))
+     props.logIn(data.email, data.password, data.rememberMe, data.captcha);
   };
 
   if (props.isAuth) {
@@ -49,7 +47,7 @@ const LoginPage = (props: LoginPagePropsType) => {
     <LoginReduxForm
       onSubmit={onSubmit}
       captchaUrl={props.captchaUrl}
-    /> /* обертка для формы */
+    />
   );
 };
 
@@ -57,9 +55,6 @@ export const minLenght6 = minLengthCreator(6);
 
 type Captcha = { captchaUrl: string | null };
 
-//<CustomProps & InjectedFormProps<{}, CustomProps>>
-
-//component for standard form
 const LoginForm = (
   props: Captcha & InjectedFormProps<LoginFormPropsType, Captcha>
 ) => {
@@ -68,8 +63,7 @@ const LoginForm = (
       <h1>Login</h1>
       <form onSubmit={props.handleSubmit}>
         {" "}
-        {/*  принимает вводные данные формы, вызовет ф-цию, к-ая пришла из пропсов - onSubmit  */}
-        {createField({
+             {createField({
           type: "text",
           placeholder: "Email",
           name: "email",
@@ -89,10 +83,6 @@ const LoginForm = (
           component: Input,
           text: "Remember me",
         })}
-        {/*  без использования ф-ции CreateFiel */}
-        {/* <div><Field type="text" placeholder='Email' name='email' component={Input} validate={[required]}/></div> */}
-        {/* <div><Field type="password" placeholder='Password' name='password' component={Input} validate={[required, minLenght6]}/></div> */}
-        {/*  <div><Field type="checkbox" name='rememberMe' component={Input} />Remember me</div> */}
         {props.error && (
           <div className={s.errorWrapper}>
             <span className={s.error}>{props.error}</span>
@@ -116,9 +106,9 @@ const LoginForm = (
   );
 };
 
-//оборачиваем форму контейнерной компонентой (HOC)
+
 const LoginReduxForm = reduxForm<LoginFormPropsType, Captcha>({
-  form: "login", //присваиваем уникальное название форме
+  form: "login",
 })(LoginForm);
 
 const MapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
@@ -126,13 +116,6 @@ const MapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
   captchaUrl: state.auth.captchaUrl,
 });
 
-//делаем контейнерную компоненту, чтобы loginPAge получит доступ к store
 export const LoginPageContainer = connect(MapStateToProps, { logIn: loginTC })(
   LoginPage
-); //есл нам не нужны MapStateToProps,  обозначаем их как null
-
-/* Здесь автоматически connect к каждому значению свойства применяет dispatch,
-создавая таким образом callback как в ф-ции mapDispatchToProps, т.е. как
-updateFollow: (userId: number) => {
-  dispatch(UpdateFollowAC(userId))
-},  станет props.updateFollow: (userId: number) */
+);

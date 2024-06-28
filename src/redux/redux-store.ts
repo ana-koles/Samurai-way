@@ -16,13 +16,12 @@ export let rootReducer = combineReducers({
   usersPage: usersReducer,
   auth: authReducer,
   app: appReducer,
-  form: formReducer //Обязательно название 'form', т.к. библиотека будет искать именно это название
-                    //это стейт, с к-ым работает redux-form
+  form: formReducer
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMidleware));
 export type AppRootStateType  = ReturnType<typeof rootReducer>;
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AnyAction>; //чтобы можно было в санке диспачить другие санки
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AnyAction>; 
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AnyAction>;
 
 

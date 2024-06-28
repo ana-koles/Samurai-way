@@ -18,7 +18,6 @@ import {
   getUsers,
 } from "../model/users-selectors";
 
-//типизация стейта
 type MapStateToPropsType = {
   users: UserType[];
   currentPage: number;
@@ -28,7 +27,6 @@ type MapStateToPropsType = {
   isFollowingInProgressUsersId: Array<number>;
 };
 
-//типизация пропсов
 type MapDispatchToPropsType = {
   setCurrentPage: (currentPage: number) => void;
   getUsers: (pageCount: number, currentPage: number) => void;
@@ -39,30 +37,22 @@ type MapDispatchToPropsType = {
 export type UsersContainerPropsType = MapDispatchToPropsType &
   MapStateToPropsType;
 
-/* Если вы не определяете конструктор в своем классе, React будет использовать конструктор из
-базового класса Component, который инициализирует состояние (this.state) и пропсы (this.props).
-Этот конструктор, в свою очередь, устанавливает this.props в значения, переданные компоненте в момент создания. */
-
 class UsersComponent extends Component<UsersContainerPropsType> {
   constructor(props: UsersContainerPropsType) {
     super(props);
   }
 
   componentDidMount(): void {
-    //чтобы данные загружались сразу при загрузке страницы
     this.props.getUsers(this.props.pageCount, this.props.currentPage);
   }
 
   setCurrentPage = (currentPageNumber: number) => {
     this.props.setCurrentPage(currentPageNumber);
-    //здесь в &page=${currentPageNumber}`) нужно именно указывать currentPageNumber
-    // а не this.props.currentPAge, потому что к этому момоенту запрос не будет знать обновленное значение currentPage
 
     this.props.getUsers(this.props.pageCount, currentPageNumber);
   };
 
   render() {
-    //обязательно наличие метода render(), чтобы вернуть JSX
 
     return (
       <Users

@@ -79,10 +79,10 @@ const ProfileEditForm = (
   );
 };
 
-//оборачиваем форму контейнерной компонентой (HOC)
+
 export const ProfileEditFormRedux = reduxForm<
   ProfileFormField,
   ProfileEditFormProps
 >({
-  form: "profile", //присваиваем уникальное название форме
+  form: "profile",
 })(ProfileEditForm);

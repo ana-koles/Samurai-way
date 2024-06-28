@@ -18,11 +18,10 @@ const PostForm: React.FC<InjectedFormProps<PostFormDataType>> = (props:InjectedF
 
   return (
     <div className={s.post_input}>
-      <form  onSubmit={props.handleSubmit}>{/* внутри handleSubmit будет preventDefault, сбор данных формы и вызов callback для передачи данных из формы */}
+      <form  onSubmit={props.handleSubmit}>
         <Field
                 type='text'
-                /* component='textarea' */
-                component={Textarea} //если применяем свою компоненту, то помещаем ее в {}
+                component={Textarea}
                 name='newPostMessage'
                 placeholder='Your text...'
                 validate={[required, maxLength30]}

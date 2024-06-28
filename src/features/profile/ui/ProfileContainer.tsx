@@ -50,7 +50,7 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
       this.props.setProfile(+userId);
       this.props.setStatus(+userId);
     } else {
-      this.props.history.push("/login"); //системый редирект на логин, если нет id пользователя (т.е. когда мы вылогиниваемся)
+      this.props.history.push("/login");
     }
   }
 
@@ -59,7 +59,6 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
   }
 
   componentDidUpdate(prevProps: ProfileContainerPropsType): void {
-    //срабатывает каждый раз когда в компоненте меняется state или props
     if (this.props.match.params.userId !== prevProps.match.params.userId) {
       this.refreshProfile();
     }
@@ -70,10 +69,6 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
   }
 
   render() {
-    /*     if (!this.props.isAuth) {
-      return <Redirect to="/login" />;
-    }
- */
     return (
       <Profile
         {...this.props}
@@ -89,9 +84,6 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
   }
 }
 
-//создаем контейнерную компоненту над ProfileComponent (по факту возвращаем 2 контейнерные компоненты над ProfileComponent)
-//const  AuthRedirectComponent = withAuthRedirect(ProfileComponent);
-
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     profile: state.profilePage.profile,
@@ -102,21 +94,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   };
 };
 
-/* const mapDispatchToProps = (dispatch: Dispatch<ProfileReducerActionType>): MapDispatchToPropsType => {
-    return {
-      setProfile: (userProfile: UserProfileType) => { //возможно надо удет исправить на string
-      dispatch(setProfileAC(userProfile))
-    }
-  }
-} */
-
-//тоже вернет новую компоненту, по факту тоже отрисуется ProfileComponent и закинутся данные из URL
-//const ProfileComponentWithURLData = withRouter(AuthRedirectComponent);
-
-//connect вернет новую компоненту, по факту отрисуется ProfileComponent и закинет данные из store
-//export const ProfileContainer = connect(mapStateToProps, {setProfile: setProfileTC})(ProfileComponentWithURLData)
-
-export const ProfileContainer = compose<React.ComponentType>( //говорим что передаем компоненту
+export const ProfileContainer = compose<React.ComponentType>( 
   connect(mapStateToProps, {
     setProfile: setProfileTC,
     setStatus: setStatusTC,
@@ -125,5 +103,4 @@ export const ProfileContainer = compose<React.ComponentType>( //говорим �
     saveData: updateProfileTC,
   }),
   withRouter
-  //withAuthRedirect
 )(ProfileComponent);

@@ -8,13 +8,9 @@ export const NavBar = () => {
     <nav className={s.navigation}>
       <div className={s.menu}>
         <h2 className={`${s.active} ${s.test}`}>Menu</h2>
-
         <Menu/>
-
       </div>
-
       <FriendsSection/>
-
     </nav>
   );
 };

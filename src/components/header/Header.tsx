@@ -37,6 +37,3 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
     </header>
   );
 };
-
-
-//{/* <li><NavLink to='/profile'><span>{props.login}</span><img src={photo} alt="photo" /></NavLink></li> */}

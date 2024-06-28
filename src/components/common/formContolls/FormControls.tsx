@@ -8,10 +8,10 @@ const FormControl = ({input, meta, children, ...restProps}: CommonInputType) => 
   return (
     <div className={s.formFieldWrapper}>
       <div className={meta.error && meta.touched ? s.error : ''}>
-        {children} {/* в качестве children придет textarea или Input */}
+        {children}
       </div>
       <div className={s.spanWrapper}>
-        {meta.error && meta.touched && <span>{meta.error}</span> } {/* показывать только если есть ошибка и поле было посещено */}
+        {meta.error && meta.touched && <span>{meta.error}</span> }
       </div>
     </div>
   );
@@ -34,7 +34,7 @@ export const Input = (props: TextareaProps) => {
       <div className={s.fieldContentWrapper}>
         <input {...input} {...restProps} className={restProps.type ==='checkbox' ? s.checkbox : '' }/>
         <span className={s.checkboxText}>{restProps.text}</span>
-      </div>{/*  таким образом мы передадим все, кроме meta */}
+      </div>
     </FormControl>
   );
 }
@@ -80,7 +80,7 @@ type  TextareaProps = {
     asyncValidating: boolean;
     autofilled: boolean;
     dirty: boolean;
-    error: string | undefined; // ошибку может и не быть, поэтому используем | undefined
+    error: string | undefined;
     form: string;
     invalid: boolean;
     pristine: boolean;

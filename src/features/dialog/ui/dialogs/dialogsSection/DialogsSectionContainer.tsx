@@ -21,8 +21,6 @@ type MapDispatchToPropsType = {
 export type DialogsSectionPropsType = MapDispatchToPropsType &
   MapStateToPropsType;
 
-//создаем контейнерную компоненту над DialogsSection (по факту возвращаем 2 контейнерные компоненты над DialogsSection)
-//const AuthRedirectComponent = withAuthRedirect(DialogsSection);
 
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
@@ -40,14 +38,8 @@ const mapDispatchToProps = (
   };
 };
 
-//этот код вместо
-//const AuthRedirectComponent = withAuthRedirect(DialogsSection); и
-//connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
-//compose - позволяет создавать последовательный вызов ф-ций с передачей результута вызово предыдщуей ф-ции
-// в последующую
-export const DialogsSectionContainer = compose<React.ComponentType>( //говорит реакту, что создаем комоненту
+export const DialogsSectionContainer = compose<React.ComponentType>(
   connect(mapStateToProps, mapDispatchToProps),
-  withAuthRedirect //защищаем от вхождения, если не залогинены в системе
+  withAuthRedirect
 )(DialogsSection);
 
-//export const DialogsSectionContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)

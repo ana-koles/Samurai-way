@@ -1,7 +1,6 @@
 type MessageContactsType = Array<{id: number, name: string}>
 
 let messagesContactsInitialState: MessageContactsType = [
-  /* {id: 0, name:'Fluffy Gangster'}, */
   { id: 1, name: 'Missis Marple' },
   { id: 2, name: 'Luna' },
   { id: 3, name: 'Toby' },

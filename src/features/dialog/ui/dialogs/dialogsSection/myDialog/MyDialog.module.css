@@ -1,7 +1,6 @@
 .dialog_content_wrapper {
   display: flex;
   justify-content: space-between;
-/*   background-color: rgba(49, 49, 49, 0.59); */
   margin-top: 10px;
   border-radius: 10px;
   -webkit-border-radius: 10px;
