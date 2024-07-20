@@ -45,6 +45,51 @@ export const Users = (props: UsersPropsType) => {
   );
 };
 
+type UserFormParams = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+};
+
+
+
+const validate = (values: UserFormParams) => {
+  const errors: UserFormParams = {}
+  if(!values.firstName) {
+    errors.firstName = 'Required'
+  } else {
+    if(values.firstName) {
+      if (values.firstName?.length < 2) {
+        errors.firstName = 'Must be 2 characters or more'
+      }
+      if (values.firstName?.length > 15) {
+        errors.firstName = 'Must be 15 characters or less'
+      }
+    }
+  }
+
+  if(!values.lastName) {
+    errors.lastName = 'Required'
+  } else {
+    if(values.lastName) {
+      if (values.lastName?.length < 2) {
+        errors.lastName = 'Must be 2 characters or more'
+      }
+      if (values.lastName?.length > 15) {
+        errors.lastName = 'Must be 15 character or less'
+      }
+    }
+  }
+
+  if(!values.email){
+    errors.email = 'Required'
+  } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address'
+  }
+
+  return errors
+}
+
 
 const SearchUsersForm = () => {
   const formik = useFormik({
@@ -53,6 +98,7 @@ const SearchUsersForm = () => {
       lastName: '',
       email: '',
     },
+    validate,
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
     },
@@ -67,6 +113,7 @@ const SearchUsersForm = () => {
         onChange={formik.handleChange}
         value={formik.values.firstName}
       />
+      {formik.errors.firstName && <div>{formik.errors.firstName}</div>}
 
       <label htmlFor="lastName">Last Name</label>
       <input
@@ -76,6 +123,7 @@ const SearchUsersForm = () => {
         onChange={formik.handleChange}
         value={formik.values.lastName}
       />
+      {formik.errors.lastName && <div>formik.errors.lastName</div>}
 
       <label htmlFor="email">Email Address</label>
       <input
@@ -85,6 +133,7 @@ const SearchUsersForm = () => {
         onChange={formik.handleChange}
         value={formik.values.email}
       />
+      {formik.errors.email && <div>{formik.errors.email}</div>}
 
       <button type="submit">Submit</button>
     </form>
