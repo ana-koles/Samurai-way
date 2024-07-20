@@ -55,7 +55,7 @@ test('unfollow thunk should be successful', async () => {
 })
 
 test('users should be received successfully', async() => {
-  const thunk = requestUsersTC(10, 2)
+  const thunk = requestUsersTC(10, 2, '')
   await thunk(dispatchMock)
   expect(dispatchMock).toHaveBeenCalledTimes(5);
   expect(dispatchMock).toHaveBeenNthCalledWith(1, changeIsFetchedAC(true))

@@ -6,6 +6,7 @@ import {
   requestUsersTC,
   followUserTC,
   unfollowUserTC,
+  UserSearchFilterType,
 } from "../model/users-reducer";
 import { Component } from "react";
 import { Users } from "./Users";
@@ -40,14 +41,17 @@ export type UsersContainerPropsType = MapDispatchToPropsType &
 class UsersComponent extends Component<UsersContainerPropsType> {
 
   componentDidMount(): void {
-    this.props.getUsers(this.props.pageCount, this.props.currentPage, this.props.term);
+    this.props.getUsers(this.props.pageCount, this.props.currentPage, '');
   }
 
   setCurrentPage = (currentPageNumber: number) => {
     this.props.setCurrentPage(currentPageNumber);
-
-    this.props.getUsers(this.props.pageCount, currentPageNumber, this.props.term);
+    this.props.getUsers(this.props.pageCount, currentPageNumber, '');
   };
+
+  changeUserSearchFilter = (filter: UserSearchFilterType) => {
+    this.props.getUsers(this.props.pageCount, this.props.currentPage, filter.term);
+  }
 
   render() {
 

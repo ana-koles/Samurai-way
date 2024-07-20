@@ -2,6 +2,7 @@ import { Dispatch } from "redux"
 import { usersApi } from "../api/usersApi"
 
 
+
 export type UserType = {
   name: string
   id: number
@@ -83,6 +84,8 @@ let usersInitialState: UsersType = {
   }
 }
 
+export type UserSearchFilterType = typeof usersInitialState.filter
+
 const UPDATE_FOLLOW = 'UPDATE-FOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
@@ -106,6 +109,7 @@ export type UsersPageActionType = UpdateFollowType
     | ChangeIsFetchedAT
     |ToggleIsFollowingInProgressAT
     | SetSearchUsersFilterAT
+
 
 
 export const usersReducer = (state: UsersType = usersInitialState , action: UsersPageActionType): UsersType => {

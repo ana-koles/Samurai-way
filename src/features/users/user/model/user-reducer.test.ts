@@ -53,7 +53,10 @@ beforeEach(() => {
     totalUsersCount: 0,
     pageCount: 10,
     isFetched: false,
-    isFollowingInProgressUsersId: []
+    isFollowingInProgressUsersId: [],
+    filter: {
+      term: ''
+    }
   }
 })
 
