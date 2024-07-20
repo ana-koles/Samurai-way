@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./Users.module.css";
-import { UserType } from "../model/users-reducer";
+import { UserSearchFilterType, UserType } from "../model/users-reducer";
 import { Preloader } from "../../../components/common/preloader/Preloader";
 import { User } from "../user/ui/User";
 import { Pagination } from "../../../components/common/pagination/Pagination";
@@ -16,7 +16,7 @@ type UsersPropsType = {
   setCurrentPage: (pageNumber: number) => void;
   followUser: (userId: number) => void;
   unfollowUser: (userId: number) => void;
-  getUsers: (pageCount: number, currentPage: number, term: string) => void;
+  changeUserSearchFilter: (term: UserSearchFilterType) => void
 };
 
 export const Users = (props: UsersPropsType) => {
@@ -24,7 +24,7 @@ export const Users = (props: UsersPropsType) => {
     <div className={s.content}>
       {props.isFetched ? <Preloader /> : ""}
 
-      <SearchUsersForm/>
+      <SearchUsersForm changeUserSearchFilter={props.changeUserSearchFilter}/>
 
       <Pagination
         totalItemsCount={props.totalUsersCount}

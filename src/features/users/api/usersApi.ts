@@ -9,9 +9,9 @@ export type UsersGetType = {
 
 
 export const usersApi = {
-  getUsers(pageCount: number, currentPage: number) {
-    //возвращаем не response, а response.data
-    return instance.get<UsersGetType>(`users?count=${pageCount}&page=${currentPage}`)
+  getUsers(pageCount: number, currentPage: number, term: string) {
+    console.log('usersApi', term);
+    return instance.get<UsersGetType>(`users?count=${pageCount}&page=${currentPage}&term=${term}`)
             .then(response => response.data)
   },
 

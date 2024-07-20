@@ -177,7 +177,7 @@ export const requestUsersTC = (pageCount: number, requestedPage: number, term: s
   try {
     dispatch(changeIsFetchedAC(true));
     dispatch(setCurrentPageAC(requestedPage));
-    let data = await usersApi.getUsers(pageCount, requestedPage)
+    let data = await usersApi.getUsers(pageCount, requestedPage, term)
     dispatch(changeIsFetchedAC(false));
     dispatch(setUsersAC(data.items));
     dispatch(setTotalUsersCountAC(data.totalCount));

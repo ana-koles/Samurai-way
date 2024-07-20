@@ -49,15 +49,15 @@ class UsersComponent extends Component<UsersContainerPropsType> {
     this.props.getUsers(this.props.pageCount, currentPageNumber, '');
   };
 
-  changeUserSearchFilter = (filter: UserSearchFilterType) => {
-    this.props.getUsers(this.props.pageCount, this.props.currentPage, filter.term);
+  changeUserSearchFilter = (term: UserSearchFilterType) => {
+    console.log('user', term.term);
+    this.props.getUsers(this.props.pageCount, this.props.currentPage, term.term);
   }
 
   render() {
 
     return (
       <Users
-        getUsers={this.props.getUsers}
         totalUsersCount={this.props.totalUsersCount}
         pageCount={this.props.pageCount}
         currentPage={this.props.currentPage}
@@ -67,6 +67,7 @@ class UsersComponent extends Component<UsersContainerPropsType> {
         isFollowingInProgressUsersId={this.props.isFollowingInProgressUsersId}
         followUser={this.props.followUser}
         unfollowUser={this.props.unfollowUser}
+        changeUserSearchFilter={this.changeUserSearchFilter}
       />
     );
   }
