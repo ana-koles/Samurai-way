@@ -4,7 +4,7 @@ import { UserType } from "../model/users-reducer";
 import { Preloader } from "../../../components/common/preloader/Preloader";
 import { User } from "../user/ui/User";
 import { Pagination } from "../../../components/common/pagination/Pagination";
-import { Formik, useFormik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 
 type UsersPropsType = {
   totalUsersCount: number;
@@ -45,97 +45,46 @@ export const Users = (props: UsersPropsType) => {
   );
 };
 
-type UserFormParams = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-};
 
+/////////////
+
+type UserFormParams = {
+  term?: string;
+  friend?: boolean;
+};
 
 
 const validate = (values: UserFormParams) => {
   const errors: UserFormParams = {}
-  if(!values.firstName) {
-    errors.firstName = 'Required'
-  } else {
-    if(values.firstName) {
-      if (values.firstName?.length < 2) {
-        errors.firstName = 'Must be 2 characters or more'
-      }
-      if (values.firstName?.length > 15) {
-        errors.firstName = 'Must be 15 characters or less'
-      }
-    }
+  if(!values.term) {
+    errors.term = 'Required'
   }
-
-  if(!values.lastName) {
-    errors.lastName = 'Required'
-  } else {
-    if(values.lastName) {
-      if (values.lastName?.length < 2) {
-        errors.lastName = 'Must be 2 characters or more'
-      }
-      if (values.lastName?.length > 15) {
-        errors.lastName = 'Must be 15 character or less'
-      }
-    }
-  }
-
-  if(!values.email){
-    errors.email = 'Required'
-  } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address'
-  }
-
   return errors
 }
 
-
-const SearchUsersForm = () => {
-  const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-    },
-    validate,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-  return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="firstName">First Name</label>
-      <input
-        id="firstName"
-        name="firstName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.firstName}
-      />
-      {formik.errors.firstName && <div>{formik.errors.firstName}</div>}
-
-      <label htmlFor="lastName">Last Name</label>
-      <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.lastName}
-      />
-      {formik.errors.lastName && <div>formik.errors.lastName</div>}
-
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        onChange={formik.handleChange}
-        value={formik.values.email}
-      />
-      {formik.errors.email && <div>{formik.errors.email}</div>}
-
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
+const SearchUsersForm = () => (
+  <div>
+    <h1>Any place in your app!</h1>
+    <Formik
+      initialValues={{ term: '', friend: false }}
+      validate={validate}
+      onSubmit={(values) => {
+        validate(values);
+    }}
+      validateOnChange={false}
+      validateOnBlur={false}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <Field type="text" name="term"/>
+          <ErrorMessage name="term" component="div" />
+          <Field type="checkbox" name="friend" />
+          <ErrorMessage name="friend" component="div" />
+          <button type="submit" disabled={isSubmitting}>
+            Submit
+          </button>
+        </Form>
+      )}
+    </Formik>
+  </div>
+);
