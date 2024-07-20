@@ -4,7 +4,7 @@ import { UserType } from "../model/users-reducer";
 import { Preloader } from "../../../components/common/preloader/Preloader";
 import { User } from "../user/ui/User";
 import { Pagination } from "../../../components/common/pagination/Pagination";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { SearchUsersForm } from "./SearchUsersForm";
 
 type UsersPropsType = {
   totalUsersCount: number;
@@ -44,47 +44,3 @@ export const Users = (props: UsersPropsType) => {
     </div>
   );
 };
-
-
-/////////////
-
-type UserFormParams = {
-  term?: string;
-  friend?: boolean;
-};
-
-
-const validate = (values: UserFormParams) => {
-  const errors: UserFormParams = {}
-  if(!values.term) {
-    errors.term = 'Required'
-  }
-  return errors
-}
-
-const SearchUsersForm = () => (
-  <div>
-    <h1>Any place in your app!</h1>
-    <Formik
-      initialValues={{ term: '', friend: false }}
-      validate={validate}
-      onSubmit={(values) => {
-        validate(values);
-    }}
-      validateOnChange={false}
-      validateOnBlur={false}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <Field type="text" name="term"/>
-          <ErrorMessage name="term" component="div" />
-          <Field type="checkbox" name="friend" />
-          <ErrorMessage name="friend" component="div" />
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-        </Form>
-      )}
-    </Formik>
-  </div>
-);

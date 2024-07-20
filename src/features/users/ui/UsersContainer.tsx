@@ -38,9 +38,6 @@ export type UsersContainerPropsType = MapDispatchToPropsType &
   MapStateToPropsType;
 
 class UsersComponent extends Component<UsersContainerPropsType> {
-  constructor(props: UsersContainerPropsType) {
-    super(props);
-  }
 
   componentDidMount(): void {
     this.props.getUsers(this.props.pageCount, this.props.currentPage);
