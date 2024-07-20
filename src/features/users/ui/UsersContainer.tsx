@@ -46,7 +46,7 @@ class UsersComponent extends Component<UsersContainerPropsType> {
   setCurrentPage = (currentPageNumber: number) => {
     this.props.setCurrentPage(currentPageNumber);
 
-    this.props.getUsers(this.props.pageCount, currentPageNumber);
+    this.props.getUsers(this.props.pageCount, currentPageNumber, this.props.term);
   };
 
   render() {

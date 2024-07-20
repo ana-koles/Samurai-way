@@ -20,7 +20,10 @@ export type UsersType = {
   totalUsersCount: number
   pageCount: number
   isFetched: boolean
-  isFollowingInProgressUsersId: Array<number> // хранит id тех пользователей к-ые в процессе follow/unfollow
+  isFollowingInProgressUsersId: Array<number>
+  filter: {
+    term: string
+  }
 }
 
 let usersInitialState: UsersType = {
@@ -74,7 +77,10 @@ let usersInitialState: UsersType = {
   totalUsersCount: 0,
   pageCount: 10,
   isFetched: false,
-  isFollowingInProgressUsersId: []
+  isFollowingInProgressUsersId: [],
+  filter: {
+    term: ''
+  }
 }
 
 const UPDATE_FOLLOW = 'UPDATE-FOLLOW';
@@ -83,6 +89,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const CHANGE_IS_FETCHED = 'CHANGE_IS_FETCHED';
 const TOGGLE_IS_FOLLOWING_IN_PROGRESS = 'TOGGLE_IS_FOLLOWING_IN_PROGRESS';
+const SET_SEARCH_USERS_FILTER = 'SET_SEARCH_USERS_FILTER'
 
 type UpdateFollowType = ReturnType<typeof updateFollowAC>;
 type SetUsersType = ReturnType<typeof setUsersAC>;
@@ -90,6 +97,7 @@ type SetCurrentPage = ReturnType<typeof setCurrentPageAC>;
 type SetTotalUsersCount = ReturnType<typeof setTotalUsersCountAC>;
 type ChangeIsFetchedAT = ReturnType<typeof changeIsFetchedAC>;
 type ToggleIsFollowingInProgressAT = ReturnType<typeof toggleIsFollingInProgressAC>;
+type SetSearchUsersFilterAT = ReturnType<typeof setUsersSearchFilterAC>;
 
 export type UsersPageActionType = UpdateFollowType
     | SetUsersType
@@ -97,6 +105,7 @@ export type UsersPageActionType = UpdateFollowType
     | SetTotalUsersCount
     | ChangeIsFetchedAT
     |ToggleIsFollowingInProgressAT
+    | SetSearchUsersFilterAT
 
 
 export const usersReducer = (state: UsersType = usersInitialState , action: UsersPageActionType): UsersType => {
@@ -117,11 +126,15 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
     case CHANGE_IS_FETCHED:
       return {...state, isFetched: action.isFetched};
 
+    case SET_SEARCH_USERS_FILTER:
+      return {...state, filter: {term: action.payload.filter}};
+
+
     case TOGGLE_IS_FOLLOWING_IN_PROGRESS:
       return {...state, isFollowingInProgressUsersId:
-          action.isFetched //если мы в процессе follow/unfollow, то добавить юзера в массив
+          action.isFetched
           ?  [...state.isFollowingInProgressUsersId, action.userId]
-          : state.isFollowingInProgressUsersId.filter(id => id !== action.userId) // если процесс закончился, юзера из массива убрать
+          : state.isFollowingInProgressUsersId.filter(id => id !== action.userId)
       }
 
       default:
@@ -130,7 +143,6 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
 }
 
 //actions
-//возможно userId надо будет исрпавить на string
 export const updateFollowAC = (userId: number) => ({type: UPDATE_FOLLOW, userId: userId} as const);
 
 export const setUsersAC = (users: UserType[]) => ({type: SET_USERS, users: users} as const);
@@ -151,17 +163,22 @@ export const toggleIsFollingInProgressAC = (userId: number, isFetched: boolean) 
   return {type: TOGGLE_IS_FOLLOWING_IN_PROGRESS, userId, isFetched} as const;
 }
 
+const setUsersSearchFilterAC = (term: string) => {
+  return {type: SET_SEARCH_USERS_FILTER, payload: {filter: term}} as const;
+}
+
 //thunk
 
-export const requestUsersTC = (pageCount: number, requestedPage: number ) => async(dispatch: Dispatch) => {
+export const requestUsersTC = (pageCount: number, requestedPage: number, term: string ) => async(dispatch: Dispatch) => {
   try {
-    dispatch(changeIsFetchedAC(true)); //запускаем крутилку
+    dispatch(changeIsFetchedAC(true));
     dispatch(setCurrentPageAC(requestedPage));
     let data = await usersApi.getUsers(pageCount, requestedPage)
-    dispatch(changeIsFetchedAC(false)); // убираем крутилку
+    dispatch(changeIsFetchedAC(false));
     dispatch(setUsersAC(data.items));
     dispatch(setTotalUsersCountAC(data.totalCount));
-  } catch (error: any) { //error: Error
+    dispatch(setUsersSearchFilterAC(term))
+  } catch (error: any) {
     console.log(error.message)
   }
 }
