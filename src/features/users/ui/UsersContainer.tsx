@@ -29,7 +29,7 @@ type MapStateToPropsType = {
 
 type MapDispatchToPropsType = {
   setCurrentPage: (currentPage: number) => void;
-  getUsers: (pageCount: number, currentPage: number) => void;
+  getUsers: (pageCount: number, currentPage: number, term: string) => void;
   followUser: (userId: number) => void;
   unfollowUser: (userId: number) => void;
 };
@@ -40,7 +40,7 @@ export type UsersContainerPropsType = MapDispatchToPropsType &
 class UsersComponent extends Component<UsersContainerPropsType> {
 
   componentDidMount(): void {
-    this.props.getUsers(this.props.pageCount, this.props.currentPage);
+    this.props.getUsers(this.props.pageCount, this.props.currentPage, this.props.term);
   }
 
   setCurrentPage = (currentPageNumber: number) => {
@@ -53,6 +53,7 @@ class UsersComponent extends Component<UsersContainerPropsType> {
 
     return (
       <Users
+        getUsers={this.props.getUsers}
         totalUsersCount={this.props.totalUsersCount}
         pageCount={this.props.pageCount}
         currentPage={this.props.currentPage}
@@ -67,7 +68,6 @@ class UsersComponent extends Component<UsersContainerPropsType> {
   }
 }
 
-//используем селекторы
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     users: getUsers(state),
@@ -79,53 +79,12 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   };
 };
 
-/* let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
-  return {
-    users: state.usersPage.users,
-    currentPage: state.usersPage.currentPage,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    pageCount: state.usersPage.pageCount,
-    isFetched: state.usersPage.isFetched,
-    isFollowingInProgress: state.usersPage.isFollowingInProgress,
-  }
-}
- */
-/* let mapDispatchToProps = (dispatch: Dispatch<UsersPageActionType>): MapDispatchToPropsType => {
-  return {
-    updateFollow: (userId: number) => { //возможно надо удет исправить на string
-      dispatch(UpdateFollowAC(userId))
-    },
-    setUsers: (users: UserType[]) => {
-      dispatch(SetUsersAC(users))
-    },
-    setCurrentPage: (currentPage: number) => {
-      dispatch(SetCurrentPageAC(currentPage))
-    },
-    setTotalUsersCount: (totalUsersCount: number) => {
-      dispatch(SetTotalUsersCountAC(totalUsersCount))
-    },
-    changeIsFetched: (isFetched: boolean) => {
-      dispatch(ChangeIsFetchedAC(isFetched));
-    }
-  }
-} */
 
 export const UsersContainer = connect(mapStateToProps, {
-  //Здесь автоматически connect к каждому значению свойства применяет dispatch,
-  // создавая таким образом callback как в ф-ции mapDispatchToProps
   setCurrentPage: setCurrentPageAC,
   getUsers: requestUsersTC,
   followUser: followUserTC,
   unfollowUser: unfollowUserTC,
 })(UsersComponent);
 
-export default UsersContainer; //обязательно default export доя lazy loading
-
-//еще более короткая версия - нужно будет скорректировать наименования action creators,
-//чтобы они соответствовали названиям свойств
-
-/* export const UsersContainer = connect(mapStateToProps, {
-  updateFollow,
-  setCurrentPage,
-  changeIsFetched,
-})(UsersComponent); */
+export default UsersContainer;

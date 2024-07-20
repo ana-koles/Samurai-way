@@ -16,6 +16,7 @@ type UsersPropsType = {
   setCurrentPage: (pageNumber: number) => void;
   followUser: (userId: number) => void;
   unfollowUser: (userId: number) => void;
+  getUsers: (pageCount: number, currentPage: number, term: string) => void;
 };
 
 export const Users = (props: UsersPropsType) => {
