@@ -28,7 +28,12 @@ const validate = (values: UserFormParams): UserFormErrors => {
 export const _SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsType) => {
   return (
     <Formik
-    initialValues={{ term: {term: ''}, friend: false }}
+    initialValues={
+      {
+        term: {
+          term: ''
+        },
+        friend: false }}
     validate={validate}
     onSubmit={(values) => {
 /*         validate(values); */
@@ -69,7 +74,11 @@ type UserFormErrors2 = {
 export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsType) =>{
   return (
     <Formik
-      initialValues={{term: ''}}
+      initialValues={
+        {
+          term: ''
+        }
+      }
 
       onSubmit={(values: UserFormParams2, { setSubmitting }) => {
         changeUserSearchFilter(values)
@@ -79,7 +88,6 @@ export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsTy
         <label htmlFor="term">term</label>
         <Field name="term" type="text" />
         <ErrorMessage name="term" />
-
         <button type="submit">Submit</button>
       </Form>
     </Formik>

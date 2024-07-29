@@ -21,7 +21,6 @@ export const appReducer = (state: InitialStateType = initialState, action: AppRe
     default:
       return state
   }
-
 }
 
 //action
