@@ -33,3 +33,7 @@ export const getIsFetched = (state: AppRootStateType) => {
 export const getIsFollowingInProgress = (state: AppRootStateType) => {
   return state.usersPage.isFollowingInProgressUsersId
 }
+
+export const getUsersFilter = (state: AppRootStateType) => {
+  return state.usersPage.filter
+}

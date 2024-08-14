@@ -7,6 +7,7 @@ import {
   followUserTC,
   unfollowUserTC,
   UserSearchFilterType,
+  UsersFilter,
 } from "../model/users-reducer";
 import { Component } from "react";
 import { Users } from "./Users";
@@ -17,6 +18,7 @@ import {
   getPageCount,
   getTotalUsersCount,
   getUsers,
+  getUsersFilter,
 } from "../model/users-selectors";
 
 type MapStateToPropsType = {
@@ -26,6 +28,7 @@ type MapStateToPropsType = {
   pageCount: number;
   isFetched: boolean;
   isFollowingInProgressUsersId: Array<number>;
+  filter: UsersFilter
 };
 
 type MapDispatchToPropsType = {
@@ -46,7 +49,7 @@ class UsersComponent extends Component<UsersContainerPropsType> {
 
   setCurrentPage = (currentPageNumber: number) => {
     this.props.setCurrentPage(currentPageNumber);
-    this.props.getUsers(this.props.pageCount, currentPageNumber, '');
+    this.props.getUsers(this.props.pageCount, currentPageNumber, this.props.filter.term);
   };
 
   changeUserSearchFilter = (filter: UserSearchFilterType) => {
@@ -80,6 +83,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     pageCount: getPageCount(state),
     isFetched: getIsFetched(state),
     isFollowingInProgressUsersId: getIsFollowingInProgress(state),
+    filter: getUsersFilter(state)
   };
 };
 

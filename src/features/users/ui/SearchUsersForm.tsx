@@ -21,8 +21,8 @@ export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsTy
   }
 
   const submit = (values: UserFormParams, { setSubmitting }: {setSubmitting: (isSubmitting: boolean) => void}) => {
-    setSubmitting(false)
     changeUserSearchFilter({term: values.term ?? ''})
+    setSubmitting(false) // todo: check how to disable submit button while there is a requst for users
   }
 
   return (

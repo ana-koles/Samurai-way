@@ -2,6 +2,9 @@ import { Dispatch } from "redux"
 import { usersApi } from "../api/usersApi"
 
 
+export type UsersFilter = {
+  term: string
+}
 
 export type UserType = {
   name: string
@@ -22,9 +25,7 @@ export type UsersType = {
   pageCount: number
   isFetched: boolean
   isFollowingInProgressUsersId: Array<number>
-  filter: {
-    term: string
-  }
+  filter: UsersFilter
 }
 
 let usersInitialState: UsersType = {
