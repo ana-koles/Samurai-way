@@ -10,15 +10,21 @@ type UserFormParams = {
   friend?: boolean
 };
 
-const validate = (values: UserFormParams): UserFormParams => {
-  const errors: UserFormParams = {};
-  if(!values.term) {
-    errors.term = 'Required';
-  }
-  return errors
-}
-
 export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsType) =>{
+
+  const validate = (values: UserFormParams): UserFormParams => {
+    const errors: UserFormParams = {};
+    if(!values.term) {
+      errors.term = 'Required';
+    }
+    return errors
+  }
+
+  const submit = (values: UserFormParams, { setSubmitting }: {setSubmitting: (isSubmitting: boolean) => void}) => {
+    setSubmitting(false)
+    changeUserSearchFilter({term: values.term ?? ''})
+  }
+
   return (
     <Formik
       initialValues = {
@@ -28,17 +34,17 @@ export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsTy
         }
       }
       validate={validate}
-
-      onSubmit={(values: UserFormParams, { setSubmitting }: {setSubmitting: (isSubmitting: boolean) => void}) => {
-        setSubmitting(false);
-        changeUserSearchFilter({term: values.term ?? ''})
-      }}
+      onSubmit={submit}
     >
-      <Form>
-        <Field name="term" type="text" />
-        <ErrorMessage name="term" />
-        <button type="submit">Submit</button>
-      </Form>
+      {({ isSubmitting }) => (
+        <Form>
+          <Field type="term" name="term" />
+          <ErrorMessage name="term" component="div" />
+          <button type="submit" disabled={isSubmitting}>
+            Submit
+          </button>
+        </Form>
+      )}
     </Formik>
   );
 };
