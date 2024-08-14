@@ -1,49 +1,29 @@
 import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
 import { UserSearchFilterType } from "../model/users-reducer";
 
-type UserFormParams = {
-  term: UserSearchFilterType;
-  friend?: boolean;
-};
-
-type UserFormErrors = {
-  term?: {
-    term?: string;
-  };
-  friend?: boolean;
-};
-
 type SearchUsersFormPropsType = {
   changeUserSearchFilter: (filter: UserSearchFilterType) => void;
 };
 
-const validate = (values: UserFormParams): UserFormErrors => {
-  const errors: UserFormErrors = {term: {term: ''}, friend: false};
-  if(!values.term.term) {
-    errors.term = { term: 'Required' };
-  }
-  return errors
-}
 
-export const _SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsType) => {
+/* export const _SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsType) => {
   return (
     <Formik
-    initialValues={
-      {
-        term: {
-          term: ''
-        },
-        friend: false }}
-    validate={validate}
-    onSubmit={(values) => {
+      initialValues={
+        {
+          term: '',
+          friend: false }
+      }
+      validate={validate}
+      onSubmit={(values) => {
 /*         validate(values); */
-      console.log(values)
-      changeUserSearchFilter(values.term)
+/*         console.log(values)
+        changeUserSearchFilter(values.term)
+      }}
+      validateOnChange={false}
+      validateOnBlur={false}
+    >
 
-  }}
-    validateOnChange={false}
-    validateOnBlur={false}
-  >
     {({ isSubmitting }) => (
       <Form>
         <Field type="text" name="term.term"/>
@@ -55,32 +35,38 @@ export const _SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsT
         </button>
       </Form>
     )}
-  </Formik>
+  </Formik> */
 
-  )
+/*   )  */
 
-}
+/* } */
 
 /////////////////
-type UserFormParams2 = {
+type UserFormParams = {
   term: string;
+  friend: boolean
 };
 
-type UserFormErrors2 = {
-  term?: string
-};
-
+const validate = (values: UserFormParams): UserFormParams => {
+  const errors: UserFormParams = {term: '', friend: false};
+  if(!values.term) {
+    errors.term = 'Required';
+  }
+  return errors
+}
 
 export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsType) =>{
   return (
     <Formik
-      initialValues={
+      initialValues = {
         {
-          term: ''
+          term: '',
+          friend: false
         }
       }
+      validate={validate}
 
-      onSubmit={(values: UserFormParams2, { setSubmitting }) => {
+      onSubmit={(values: UserFormParams, { setSubmitting }) => {
         changeUserSearchFilter(values)
       }}
     >
