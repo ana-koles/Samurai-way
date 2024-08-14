@@ -55,7 +55,8 @@ beforeEach(() => {
     isFetched: false,
     isFollowingInProgressUsersId: [],
     filter: {
-      term: ''
+      term: '',
+      friend: null
     }
   }
 })

@@ -21,7 +21,7 @@ export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsTy
   }
 
   const submit = (values: UserFormParams, { setSubmitting }: {setSubmitting: (isSubmitting: boolean) => void}) => {
-    changeUserSearchFilter({term: values.term ?? ''})
+    changeUserSearchFilter({term: values.term ?? '', friend: values.friend ?? null})
     setSubmitting(false) // todo: check how to disable submit button while there is a requst for users
   }
 
@@ -38,8 +38,20 @@ export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsTy
     >
       {({ isSubmitting }) => (
         <Form>
-          <Field type="term" name="term" />
-          <ErrorMessage name="term" component="div" />
+          <div>
+            <Field
+              as="select"
+              id="friend"
+              name="friend"
+            >
+              <option>Select users</option>
+              <option value="all">All users</option>
+              <option value="friends">Followed</option>
+              <option value="notFriends">Unfollowed</option>
+            </Field>
+
+          </div>
+          <Field name="term" />
           <button type="submit" disabled={isSubmitting}>
             Submit
           </button>

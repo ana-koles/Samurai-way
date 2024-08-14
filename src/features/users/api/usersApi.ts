@@ -9,9 +9,9 @@ export type UsersGetType = {
 
 
 export const usersApi = {
-  getUsers(pageCount: number, currentPage: number, term: string) {
-    return instance.get<UsersGetType>(`users?count=${pageCount}&page=${currentPage}&term=${term}`)
-            .then(response => response.data)
+  getUsers(pageCount: number, currentPage: number, term: string, friend: boolean | null) {
+    return instance.get<UsersGetType>(`users?count=${pageCount}&page=${currentPage}&term=${term}` + (friend === null ? '' : `&friend=${friend}`))
+              .then(response => response.data);
   },
 
   unfollowUser(userId: number){

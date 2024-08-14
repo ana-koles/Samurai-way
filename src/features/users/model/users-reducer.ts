@@ -4,6 +4,7 @@ import { usersApi } from "../api/usersApi"
 
 export type UsersFilter = {
   term: string
+  friend: boolean | null
 }
 
 export type UserType = {
@@ -82,6 +83,7 @@ let usersInitialState: UsersType = {
   isFollowingInProgressUsersId: [],
   filter: {
     term: '',
+    friend: null
   }
 }
 
@@ -108,10 +110,8 @@ export type UsersPageActionType = UpdateFollowType
     | SetCurrentPage
     | SetTotalUsersCount
     | ChangeIsFetchedAT
-    |ToggleIsFollowingInProgressAT
+    | ToggleIsFollowingInProgressAT
     | SetSearchUsersFilterAT
-
-
 
 export const usersReducer = (state: UsersType = usersInitialState , action: UsersPageActionType): UsersType => {
 
@@ -132,8 +132,7 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
       return {...state, isFetched: action.isFetched};
 
     case SET_SEARCH_USERS_FILTER:
-      return {...state, filter: {term: action.payload.filter}};
-
+      return {...state, filter: {...action.payload.filter}};
 
     case TOGGLE_IS_FOLLOWING_IN_PROGRESS:
       return {...state, isFollowingInProgressUsersId:
@@ -168,21 +167,22 @@ export const toggleIsFollingInProgressAC = (userId: number, isFetched: boolean) 
   return {type: TOGGLE_IS_FOLLOWING_IN_PROGRESS, userId, isFetched} as const;
 }
 
-const setUsersSearchFilterAC = (term: string) => {
-  return {type: SET_SEARCH_USERS_FILTER, payload: {filter: term}} as const;
+const setUsersSearchFilterAC = ({term, friend}: UsersFilter) => {
+  return {type: SET_SEARCH_USERS_FILTER, payload: {filter: {term: term,  friend: friend}}} as const;
 }
+
 
 //thunk
 
-export const requestUsersTC = (pageCount: number, requestedPage: number, term: string ) => async(dispatch: Dispatch) => {
+export const requestUsersTC = (pageCount: number, requestedPage: number, term: string, friend: boolean | null = null) => async(dispatch: Dispatch) => {
   try {
     dispatch(changeIsFetchedAC(true));
     dispatch(setCurrentPageAC(requestedPage));
-    let data = await usersApi.getUsers(pageCount, requestedPage, term)
+    let data = await usersApi.getUsers(pageCount, requestedPage, term, friend)
     dispatch(changeIsFetchedAC(false));
     dispatch(setUsersAC(data.items));
     dispatch(setTotalUsersCountAC(data.totalCount));
-    dispatch(setUsersSearchFilterAC(term))
+    dispatch(setUsersSearchFilterAC({term: term, friend: friend}))
   } catch (error: any) {
     console.log(error.message)
   }
