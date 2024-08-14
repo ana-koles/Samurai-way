@@ -132,7 +132,7 @@ export const usersReducer = (state: UsersType = usersInitialState , action: User
       return {...state, isFetched: action.isFetched};
 
     case SET_SEARCH_USERS_FILTER:
-      return {...state, filter: {...action.payload.filter}};
+      return {...state, filter: {...action.payload}};
 
     case TOGGLE_IS_FOLLOWING_IN_PROGRESS:
       return {...state, isFollowingInProgressUsersId:
@@ -167,8 +167,8 @@ export const toggleIsFollingInProgressAC = (userId: number, isFetched: boolean) 
   return {type: TOGGLE_IS_FOLLOWING_IN_PROGRESS, userId, isFetched} as const;
 }
 
-const setUsersSearchFilterAC = ({term, friend}: UsersFilter) => {
-  return {type: SET_SEARCH_USERS_FILTER, payload: {filter: {term: term,  friend: friend}}} as const;
+const setUsersSearchFilterAC = (filter: UsersFilter) => {
+  return {type: SET_SEARCH_USERS_FILTER, payload: filter} as const;
 }
 
 
