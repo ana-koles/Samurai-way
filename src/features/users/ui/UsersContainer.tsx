@@ -49,9 +49,8 @@ class UsersComponent extends Component<UsersContainerPropsType> {
     this.props.getUsers(this.props.pageCount, currentPageNumber, '');
   };
 
-  changeUserSearchFilter = (term: UserSearchFilterType) => {
-    console.log('user', term.term);
-    this.props.getUsers(this.props.pageCount, this.props.currentPage, term.term);
+  changeUserSearchFilter = (filter: UserSearchFilterType) => {
+    this.props.getUsers(this.props.pageCount, this.props.currentPage, filter.term);
   }
 
   render() {

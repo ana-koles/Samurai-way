@@ -43,12 +43,12 @@ type SearchUsersFormPropsType = {
 
 /////////////////
 type UserFormParams = {
-  term: string;
-  friend: boolean
+  term?: string;
+  friend?: boolean
 };
 
 const validate = (values: UserFormParams): UserFormParams => {
-  const errors: UserFormParams = {term: '', friend: false};
+  const errors: UserFormParams = {};
   if(!values.term) {
     errors.term = 'Required';
   }
@@ -67,11 +67,14 @@ export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsTy
       validate={validate}
 
       onSubmit={(values: UserFormParams, { setSubmitting }) => {
-        changeUserSearchFilter(values)
+        setTimeout(() => {
+          setSubmitting(false);
+          changeUserSearchFilter({term: values.term ?? ''})
+        }, 400);
+
       }}
     >
       <Form>
-        <label htmlFor="term">term</label>
         <Field name="term" type="text" />
         <ErrorMessage name="term" />
         <button type="submit">Submit</button>

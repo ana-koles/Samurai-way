@@ -80,7 +80,7 @@ let usersInitialState: UsersType = {
   isFetched: false,
   isFollowingInProgressUsersId: [],
   filter: {
-    term: ''
+    term: '',
   }
 }
 
