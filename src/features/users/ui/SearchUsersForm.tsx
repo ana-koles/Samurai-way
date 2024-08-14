@@ -66,12 +66,9 @@ export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsTy
       }
       validate={validate}
 
-      onSubmit={(values: UserFormParams, { setSubmitting }) => {
-        setTimeout(() => {
-          setSubmitting(false);
-          changeUserSearchFilter({term: values.term ?? ''})
-        }, 400);
-
+      onSubmit={(values: UserFormParams, { setSubmitting }: {setSubmitting: (isSubmitting: boolean) => void}) => {
+        setSubmitting(false);
+        changeUserSearchFilter({term: values.term ?? ''})
       }}
     >
       <Form>
