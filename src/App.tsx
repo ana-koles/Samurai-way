@@ -13,15 +13,15 @@ import {
 } from "react-router-dom";
 import { ProfileContainer } from "./features/profile/ui/ProfileContainer";
 import { HeaderContainer } from "./components/header/HeaderComponent";
-import { LoginPageContainer } from "./components/login/Login";
 import { compose } from "redux";
 import { Provider, connect } from "react-redux";
 import { setInitializeAppTC } from "./redux/app-reducer";
 import { AppRootStateType, store } from "./redux/redux-store";
 import { Preloader } from "./components/common/preloader/Preloader";
 import { PageNotFount } from "./components/404/PageNotFount";
+import { LoginPage } from "./components/login/Login";
 
-const UsersContainer = lazy(() => import("./features/users/ui/UsersContainer"));
+const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
 
 type MapDispatchToPropsType = {
@@ -89,7 +89,7 @@ class App extends Component<AppPropsType> {
                 );
               }}
             />
-            <Route path="/login" component={LoginPageContainer} />
+            <Route path="/login" component={LoginPage} />
             <Route path="/profile" render={() => <ProfileContainer />} />
             <Route path="/" render={() => <Redirect to="/profile" />} />
             <Route path="*" render={() => <PageNotFount />} />

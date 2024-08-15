@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import s from "./Users.module.css";
 import { followUserTC, requestUsersTC, setCurrentPageAC, unfollowUserTC, UsersFilter } from "../model/users-reducer";
-import { Preloader } from "../../../components/common/preloader/Preloader";
 import { User } from "../user/ui/User";
 import { Pagination } from "../../../components/common/pagination/Pagination";
 import { SearchUsersForm } from "./SearchUsersForm";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentPage, getIsFetched, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers, getUsersFilter } from "../model/users-selectors";
+import { getCurrentPage, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers, getUsersFilter } from "../model/users-selectors";
 
 type UsersPropsType = {
 };
@@ -16,7 +15,6 @@ export const Users = (props: UsersPropsType) => {
   const pageCount = useSelector(getPageCount)
   const currentPage = useSelector(getCurrentPage)
   const users = useSelector(getUsers)
-  const isFetched = useSelector(getIsFetched)
   const isFollowingInProgressUsersId = useSelector(getIsFollowingInProgress)
   const filter = useSelector(getUsersFilter)
   const dispatch = useDispatch()

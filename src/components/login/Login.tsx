@@ -1,12 +1,13 @@
 import s from "./Login.module.css";
 import { InjectedFormProps, reduxForm } from "redux-form";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { loginTC } from "../../features/auth/model/auth-reducer";
 import { Input, createField } from "../common/formContolls/FormControls";
 import { minLengthCreator, required } from "../../utils/validators/validators";
 import { AppRootStateType } from "../../redux/redux-store";
 import { Redirect } from "react-router-dom";
 import { Button } from "../button/Button";
+import { LoginReduxForm } from "./loginForm/LoginForm";
 
 export type LoginFormPropsType = {
   email: string;
@@ -15,7 +16,7 @@ export type LoginFormPropsType = {
   captcha: string | null;
 };
 
-type MapDispatchToPropsType = {
+/* type MapDispatchToPropsType = {
   logIn: (
     email: string,
     password: string,
@@ -27,10 +28,35 @@ type MapDispatchToPropsType = {
 type MapStateToPropsType = {
   isAuth: boolean;
   captchaUrl: string | null;
-};
+}; */
 
-type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType;
+/* type LoginPagePropsType = MapDispatchToPropsType & MapStateToPropsType; */
 
+type LoginPageProps = {
+
+}
+
+export const LoginPage = () => {
+  const captchaUrl = useSelector((state: AppRootStateType) => state.auth.captchaUrl)
+  const isAuth = useSelector((state: AppRootStateType) => state.auth.isAuth)
+  const dispatch = useDispatch()
+
+  const onSubmit = (data: LoginFormPropsType) => {
+    dispatch(loginTC(data.email, data.password, data.rememberMe, data.captcha));
+  };
+
+  if (isAuth) {
+    return <Redirect to={"/profile"} />;
+  }
+
+  return (
+    <LoginReduxForm
+      onSubmit={onSubmit}
+      captchaUrl={captchaUrl}
+    />
+  );
+}
+/*
 const LoginPage = (props: LoginPagePropsType) => {
   const onSubmit = (data: LoginFormPropsType) => {
     props.logIn(data.email, data.password, data.rememberMe, data.captcha);
@@ -120,4 +146,4 @@ const MapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
 
 export const LoginPageContainer = connect(MapStateToProps, { logIn: loginTC })(
   LoginPage
-);
+); */
