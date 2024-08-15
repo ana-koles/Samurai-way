@@ -1,18 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import s from "./Users.module.css";
-import { UserSearchFilterType, UserType } from "../model/users-reducer";
+import { followUserTC, requestUsersTC, setCurrentPageAC, unfollowUserTC, UsersFilter } from "../model/users-reducer";
 import { Preloader } from "../../../components/common/preloader/Preloader";
 import { User } from "../user/ui/User";
 import { Pagination } from "../../../components/common/pagination/Pagination";
 import { SearchUsersForm } from "./SearchUsersForm";
-import { useSelector } from "react-redux";
-import { getCurrentPage, getIsFetched, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers } from "../model/users-selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentPage, getIsFetched, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers, getUsersFilter } from "../model/users-selectors";
 
 type UsersPropsType = {
-  setCurrentPage: (pageNumber: number) => void;
-  followUser: (userId: number) => void;
-  unfollowUser: (userId: number) => void;
-  changeUserSearchFilter: (filter: UserSearchFilterType) => void
 };
 
 export const Users = (props: UsersPropsType) => {
@@ -22,18 +18,41 @@ export const Users = (props: UsersPropsType) => {
   const users = useSelector(getUsers)
   const isFetched = useSelector(getIsFetched)
   const isFollowingInProgressUsersId = useSelector(getIsFollowingInProgress)
+  const filter = useSelector(getUsersFilter)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(requestUsersTC(pageCount, currentPage, filter))
+  }, [])
+
+  const setCurrentPage = (currentPageNumber: number) => {
+    dispatch(setCurrentPageAC(currentPageNumber));
+    dispatch(requestUsersTC(pageCount, currentPageNumber, filter))
+  };
+
+  const followUser = (userId: number) => {
+    dispatch(followUserTC(userId))
+  }
+
+  const unfollowUser = (userId: number) => {
+    dispatch(unfollowUserTC(userId))
+  }
+
+  const changeUserSearchFilter = (filter: UsersFilter) => {
+    dispatch(requestUsersTC(pageCount, 1, filter));
+  }
 
   return (
     <div className={s.content}>
-      {isFetched ? <Preloader /> : ""}
+{/*       {isFetched && <Preloader />} */}
 
-      <SearchUsersForm changeUserSearchFilter={props.changeUserSearchFilter}/>
+      <SearchUsersForm changeUserSearchFilter={changeUserSearchFilter}/>
 
       <Pagination
         totalItemsCount={totalUsersCount}
         pageCount={pageCount}
         currentPage={currentPage}
-        setCurrentPage={props.setCurrentPage}
+        setCurrentPage={setCurrentPage}
       />
 
       {users.map((user) => (
@@ -41,8 +60,8 @@ export const Users = (props: UsersPropsType) => {
           key={user.id}
           user={user}
           isFollowingInProgressUsersId={isFollowingInProgressUsersId}
-          followUser={props.followUser}
-          unfollowUser={props.unfollowUser}
+          followUser={followUser}
+          unfollowUser={unfollowUser}
         />
       ))}
     </div>

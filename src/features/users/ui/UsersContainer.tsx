@@ -1,97 +1,22 @@
-import { connect } from "react-redux";
-import { AppRootStateType } from "../../../redux/redux-store";
-import {
-  setCurrentPageAC,
-  UserType,
-  requestUsersTC,
-  followUserTC,
-  unfollowUserTC,
-  UsersFilter,
-} from "../model/users-reducer";
-import { Component } from "react";
+import { useSelector } from "react-redux";
 import { Users } from "./Users";
-import {
-  getCurrentPage,
-  getIsFetched,
-  getIsFollowingInProgress,
-  getPageCount,
-  getTotalUsersCount,
-  getUsers,
-  getUsersFilter,
-} from "../model/users-selectors";
+import s from "./Users.module.css";
+import { getIsFetched } from "../model/users-selectors";
+import { Preloader } from "../../../components/common/preloader/Preloader";
 
-type MapStateToPropsType = {
-  users: UserType[];
-  currentPage: number;
-  totalUsersCount: number;
-  pageCount: number;
-  isFetched: boolean;
-  isFollowingInProgressUsersId: Array<number>;
-  filter: UsersFilter
-};
-
-type MapDispatchToPropsType = {
-  setCurrentPage: (currentPage: number) => void;
-  getUsers: (pageCount: number, currentPage: number,  filter: UsersFilter) => void;
-  followUser: (userId: number) => void;
-  unfollowUser: (userId: number) => void;
-};
-
-export type UsersContainerPropsType = MapDispatchToPropsType &
-  MapStateToPropsType;
-
-class UsersComponent extends Component<UsersContainerPropsType> {
-
-  componentDidMount(): void {
-    this.props.getUsers(this.props.pageCount, this.props.currentPage, this.props.filter);
-  }
-
-  setCurrentPage = (currentPageNumber: number) => {
-    this.props.setCurrentPage(currentPageNumber);
-    this.props.getUsers(this.props.pageCount, currentPageNumber, this.props.filter);
-  };
-
-  changeUserSearchFilter = (filter: UsersFilter) => {
-    this.props.getUsers(this.props.pageCount, 1, filter);
-  }
-
-  render() {
-
-    return (
-      <Users
-/*         totalUsersCount={this.props.totalUsersCount} */
-/*         pageCount={this.props.pageCount} */
-/*         currentPage={this.props.currentPage} */
-/*         users={this.props.users} */
-        setCurrentPage={this.setCurrentPage}
-/*         isFetched={this.props.isFetched} */
-/*         isFollowingInProgressUsersId={this.props.isFollowingInProgressUsersId} */
-        followUser={this.props.followUser}
-        unfollowUser={this.props.unfollowUser}
-        changeUserSearchFilter={this.changeUserSearchFilter}
-      />
-    );
-  }
+type UsersPageProps = {
 }
 
-const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
-  return {
-    users: getUsers(state),
-    currentPage: getCurrentPage(state),
-    totalUsersCount: getTotalUsersCount(state),
-    pageCount: getPageCount(state),
-    isFetched: getIsFetched(state),
-    isFollowingInProgressUsersId: getIsFollowingInProgress(state),
-    filter: getUsersFilter(state)
-  };
-};
 
+const UsersPage = (props: UsersPageProps) => {
+  const isFetched = useSelector(getIsFetched)
 
-export const UsersContainer = connect(mapStateToProps, {
-  setCurrentPage: setCurrentPageAC,
-  getUsers: requestUsersTC,
-  followUser: followUserTC,
-  unfollowUser: unfollowUserTC,
-})(UsersComponent);
+  return (
+    <div className={s.content}>
+      {isFetched ? <Preloader /> : ''}
+      <Users/>
+    </div>
+  );
+}
 
-export default UsersContainer;
+export default UsersPage
