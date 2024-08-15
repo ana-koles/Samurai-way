@@ -6,7 +6,6 @@ import {
   requestUsersTC,
   followUserTC,
   unfollowUserTC,
-  UserSearchFilterType,
   UsersFilter,
 } from "../model/users-reducer";
 import { Component } from "react";
@@ -33,7 +32,7 @@ type MapStateToPropsType = {
 
 type MapDispatchToPropsType = {
   setCurrentPage: (currentPage: number) => void;
-  getUsers: (pageCount: number, currentPage: number, term: string, friend: boolean | null) => void;
+  getUsers: (pageCount: number, currentPage: number,  filter: UsersFilter) => void;
   followUser: (userId: number) => void;
   unfollowUser: (userId: number) => void;
 };
@@ -44,29 +43,29 @@ export type UsersContainerPropsType = MapDispatchToPropsType &
 class UsersComponent extends Component<UsersContainerPropsType> {
 
   componentDidMount(): void {
-    this.props.getUsers(this.props.pageCount, this.props.currentPage, '', null);
+    this.props.getUsers(this.props.pageCount, this.props.currentPage, this.props.filter);
   }
 
   setCurrentPage = (currentPageNumber: number) => {
     this.props.setCurrentPage(currentPageNumber);
-    this.props.getUsers(this.props.pageCount, currentPageNumber, this.props.filter.term, this.props.filter.friend);
+    this.props.getUsers(this.props.pageCount, currentPageNumber, this.props.filter);
   };
 
-  changeUserSearchFilter = (filter: UserSearchFilterType) => {
-    this.props.getUsers(this.props.pageCount, 1, filter.term, filter.friend);
+  changeUserSearchFilter = (filter: UsersFilter) => {
+    this.props.getUsers(this.props.pageCount, 1, filter);
   }
 
   render() {
 
     return (
       <Users
-        totalUsersCount={this.props.totalUsersCount}
-        pageCount={this.props.pageCount}
-        currentPage={this.props.currentPage}
-        users={this.props.users}
+/*         totalUsersCount={this.props.totalUsersCount} */
+/*         pageCount={this.props.pageCount} */
+/*         currentPage={this.props.currentPage} */
+/*         users={this.props.users} */
         setCurrentPage={this.setCurrentPage}
-        isFetched={this.props.isFetched}
-        isFollowingInProgressUsersId={this.props.isFollowingInProgressUsersId}
+/*         isFetched={this.props.isFetched} */
+/*         isFollowingInProgressUsersId={this.props.isFollowingInProgressUsersId} */
         followUser={this.props.followUser}
         unfollowUser={this.props.unfollowUser}
         changeUserSearchFilter={this.changeUserSearchFilter}

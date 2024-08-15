@@ -174,15 +174,15 @@ const setUsersSearchFilterAC = (filter: UsersFilter) => {
 
 //thunk
 
-export const requestUsersTC = (pageCount: number, requestedPage: number, term: string, friend: boolean | null = null) => async(dispatch: Dispatch) => {
+export const requestUsersTC = (pageCount: number, requestedPage: number, filter: UsersFilter) => async(dispatch: Dispatch) => {
   try {
     dispatch(changeIsFetchedAC(true));
     dispatch(setCurrentPageAC(requestedPage));
-    let data = await usersApi.getUsers(pageCount, requestedPage, term, friend)
+    let data = await usersApi.getUsers(pageCount, requestedPage, filter.term, filter.friend)
     dispatch(changeIsFetchedAC(false));
     dispatch(setUsersAC(data.items));
     dispatch(setTotalUsersCountAC(data.totalCount));
-    dispatch(setUsersSearchFilterAC({term: term, friend: friend}))
+    dispatch(setUsersSearchFilterAC(filter))
   } catch (error: any) {
     console.log(error.message)
   }

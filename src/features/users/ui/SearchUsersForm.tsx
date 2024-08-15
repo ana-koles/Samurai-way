@@ -1,53 +1,54 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { UserSearchFilterType } from "../model/users-reducer";
+import { Field, Form, Formik } from "formik";
+import { UserSearchFilterType, UsersFilter } from "../model/users-reducer";
 
 type SearchUsersFormPropsType = {
   changeUserSearchFilter: (filter: UserSearchFilterType) => void;
 };
 
 type UserFormParams = {
-  term?: string;
-  friend?: boolean
+  term: string;
+  friend: 'null' | 'true' | 'fales'
 };
 
 export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsType) =>{
 
-  const validate = (values: UserFormParams): UserFormParams => {
-    const errors: UserFormParams = {};
-    if(!values.term) {
-      errors.term = 'Required';
-    }
-    return errors
-  }
-
   const submit = (values: UserFormParams, { setSubmitting }: {setSubmitting: (isSubmitting: boolean) => void}) => {
-    changeUserSearchFilter({term: values.term ?? '', friend: values.friend ?? null})
+    const filterValues: UsersFilter = {
+      term: values.term,
+      friend: values.friend === 'null' ? null : values.friend === 'true' ? true : false
+    }
+    changeUserSearchFilter(filterValues)
     setSubmitting(false) // todo: check how to disable submit button while there is a requst for users
   }
+
 
   return (
     <Formik
       initialValues = {
         {
           term: '',
-          friend: false
+          friend: 'null'
         }
       }
-      validate={validate}
+/*       validate={validate} */
       onSubmit={submit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, setFieldValue, values, handleSubmit  }) => (
         <Form>
           <div>
             <Field
               as="select"
               id="friend"
               name="friend"
+              onChange={(e:React.ChangeEvent<HTMLSelectElement>) => {
+                setFieldValue('friend', e.target.value);
+                handleSubmit()
+              }}
             >
               <option>Select users</option>
-              <option value="all">All users</option>
-              <option value="friends">Followed</option>
-              <option value="notFriends">Unfollowed</option>
+              <option value="null">All users</option>
+              <option value="true">Followed</option>
+              <option value="false">Unfollowed</option>
             </Field>
 
           </div>

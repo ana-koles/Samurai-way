@@ -5,7 +5,7 @@ const getUsersSelector = (state: AppRootStateType) => {
   return state.usersPage.users
 };
 
-// если у нас несколько зависимостей
+// when there is a few dependencies
 // const getUsers = createSelector(getUsersSelect, isFetched, (users, isFetched) => {
   //return users.filter(u => u.lenght > 1)
 //})
