@@ -1,9 +1,9 @@
-import { minLengthCreator, required } from "@/utils/validators/validators";
+import { minLengthCreator, required } from "../../../utils/validators/validators";
 import { InjectedFormProps, reduxForm } from "redux-form";
 import { LoginFormPropsType } from "../Login";
-import { createField, Input } from "@/components/common/formContolls/FormControls";
+import { createField, Input } from "../../../components/common/formContolls/FormControls";
 import s from '../Login.module.css'
-import { Button } from "@/components/button/Button";
+import { Button } from "../../../components/button/Button";
 
 export const minLenght4 = minLengthCreator(4);
 
