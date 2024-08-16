@@ -8,20 +8,20 @@ const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
 const GET_CAPTCHA_URL = 'GET_CAPTCHA_URL';
 
 
-let initialState: InitialStateType = {
-  userId: null,
-  email: null,
-  login: null,
-  isAuth: false,
-  captchaUrl: null
-}
-
 type InitialStateType = {
   userId: null | number,
   email: null | string,
   login: null | string,
   isAuth: boolean;
   captchaUrl: null | string;
+}
+
+let initialState: InitialStateType = {
+  userId: null,
+  email: null,
+  login: null,
+  isAuth: false,
+  captchaUrl: null
 }
 
 type SetAuthUserDataAT = ReturnType<typeof setAuthUserData>;
@@ -94,7 +94,7 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
       dispatch(setAuthUserData(null, null, null, false));
       console.log(response)
     }
-  } catch (error: any) { 
+  } catch (error: any) {
     console.log(error.message)
   }
 }

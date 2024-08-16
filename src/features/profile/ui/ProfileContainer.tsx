@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useEffect } from "react";
 import { AppRootStateType } from "../../../redux/redux-store";
 import { Profile } from "./Profile";
 import {
@@ -10,9 +10,10 @@ import {
   updateProfileTC,
   updateStatusTC,
 } from "../modal/profile-reducer";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { compose } from "redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, useHistory, useParams, withRouter } from "react-router-dom";
+import { getAuthorizedUserId } from "../../auth/model/auth-selectors";
 
 type MapStateToPropsType = {
   profile: UserProfileType | null;
@@ -38,7 +39,47 @@ type OnPropsType = MapStateToPropsType & MapDispatchToPropsType;
 type ProfileContainerPropsType = RouteComponentProps<PathParamsType> &
   OnPropsType;
 
-class ProfileComponent extends Component<ProfileContainerPropsType> {
+/////////////////////
+type ProfileComponentType = {
+
+}
+
+
+export const ProfileComponent = (props: ProfileComponentType ) => {
+
+  const dispatch = useDispatch()
+  const authorizedUserId = useSelector(getAuthorizedUserId)
+  const params = useParams<{userId: undefined | string}>()
+  let userId = params.userId
+  let history = useHistory();
+
+  useEffect(() => {
+    const refreshProfile = () => {
+      if (userId) {
+        dispatch(setProfileTC(+userId))
+        dispatch(setStatusTC(+userId))
+      } else if (!userId && authorizedUserId) {
+        userId = authorizedUserId.toString();
+        dispatch(setProfileTC(+userId))
+        dispatch(setStatusTC(+userId))
+      } else {
+        history.push("/login");
+      }
+    }
+    refreshProfile()
+  }, [userId])
+
+    return (
+      <Profile
+        {...props}
+        /* isOwner={!this.props.match.params.userId} */
+        isOwner={!userId}
+      />
+    );
+
+}
+
+class ProfileComponent2 extends Component<ProfileContainerPropsType> {
   refreshProfile() {
     let userId = this.props.match.params.userId;
     if (userId) {
@@ -71,14 +112,14 @@ class ProfileComponent extends Component<ProfileContainerPropsType> {
     return (
       <Profile
         {...this.props}
-        status={this.props.status}
-        profile={this.props.profile}
-        updateStatus={this.props.updateStatus}
+/*         status={this.props.status} */
+/*         profile={this.props.profile} */
+/*         updateStatus={this.props.updateStatus} */
         isOwner={!this.props.match.params.userId}
-        savePhoto={this.props.savePhoto}
-        saveUpdatedData={this.props.saveData}
-        updateStatusSuccessful={this.props.updateStatusSuccessful}
-      />
+/*         savePhoto={this.props.savePhoto} */
+/*         saveUpdatedData={this.props.saveData} */
+/*         updateStatusSuccessful={this.props.updateStatusSuccessful}
+ */      />
     );
   }
 }
