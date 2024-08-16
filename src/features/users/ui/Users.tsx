@@ -37,18 +37,13 @@ export const Users = (props: UsersPropsType) => {
 
   useEffect(() => {
     const search = new URLSearchParams(location.search)
-    let page = search.get('page')
-    let term = search.get('term')
     let friendFromURL = search.get('friend')
     let friend = friendFromURL === null ? null : friendFromURL === 'true' ? true : friendFromURL === 'false' ? false : filter.friend
 
+    let page = search.get('page') ? Number(search.get('page')) : currentPage
+    let term = search.get('term') ?? filter.term
 
-    if (page === null) {
-      page = currentPage.toString()
-    }
-
-    /* dispatch(requestUsersTC(pageCount, currentPage, filter)) */
-    dispatch(requestUsersTC(pageCount, +page , {term: term ?? filter.term, friend: friend}))
+    dispatch(requestUsersTC(pageCount, page , {term, friend: friend}))
   }, [])
 
   const setCurrentPage = (currentPageNumber: number) => {
