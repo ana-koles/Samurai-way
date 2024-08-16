@@ -1,4 +1,4 @@
-import { Component, useEffect } from "react";
+import { Component, useEffect, useRef } from "react";
 import { AppRootStateType } from "../../../redux/redux-store";
 import { Profile } from "./Profile";
 import {
@@ -13,7 +13,7 @@ import {
 import { connect, useDispatch, useSelector } from "react-redux";
 import { compose } from "redux";
 import { RouteComponentProps, useHistory, useParams, withRouter } from "react-router-dom";
-import { getAuthorizedUserId } from "../../auth/model/auth-selectors";
+import { getAuthorizedUserId, getIsAuth } from "../../auth/model/auth-selectors";
 
 type MapStateToPropsType = {
   profile: UserProfileType | null;
@@ -46,25 +46,40 @@ type ProfileComponentType = {
 
 
 export const ProfileComponent = (props: ProfileComponentType ) => {
-
+  debugger
   const dispatch = useDispatch()
   const authorizedUserId = useSelector(getAuthorizedUserId)
   const params = useParams<{userId: undefined | string}>()
   let userId = params.userId
-  let history = useHistory();
+  let history = useHistory()
+  let prevUserIdRef = useRef<string>()
+  let prevUserId = prevUserIdRef.current
+  const isAuth = useSelector(getIsAuth)
+
+  const refreshProfile = () => {
+    if (userId) {
+      dispatch(setProfileTC(+userId))
+      dispatch(setStatusTC(+userId))
+    } else if (!userId && authorizedUserId) {
+      userId = authorizedUserId.toString();
+      dispatch(setProfileTC(+userId))
+      dispatch(setStatusTC(+userId))
+    } else if  (!isAuth){
+      history.push("/login");
+    }
+  }
 
   useEffect(() => {
-    const refreshProfile = () => {
-      if (userId) {
-        dispatch(setProfileTC(+userId))
-        dispatch(setStatusTC(+userId))
-      } else if (!userId && authorizedUserId) {
-        userId = authorizedUserId.toString();
-        dispatch(setProfileTC(+userId))
-        dispatch(setStatusTC(+userId))
-      } else {
-        history.push("/login");
-      }
+    refreshProfile()
+  }, [])
+
+  useEffect(() => {
+    if (userId !== prevUserId) {
+      refreshProfile();
+    }
+
+    if (!isAuth) {
+      history.push("/login");
     }
     refreshProfile()
   }, [userId])

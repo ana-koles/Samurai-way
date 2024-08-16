@@ -40,10 +40,10 @@ export const SearchUsersForm = ({changeUserSearchFilter}: SearchUsersFormPropsTy
               as="select"
               id="friend"
               name="friend"
-              onChange={(e:React.ChangeEvent<HTMLSelectElement>) => {
+/*               onChange={(e:React.ChangeEvent<HTMLSelectElement>) => {
                 setFieldValue('friend', e.target.value);
                 handleSubmit()
-              }}
+              }} */
             >
               <option>Select users</option>
               <option value="null">All users</option>

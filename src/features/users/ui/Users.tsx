@@ -6,6 +6,7 @@ import { Pagination } from "../../../components/common/pagination/Pagination";
 import { SearchUsersForm } from "./SearchUsersForm";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentPage, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers, getUsersFilter } from "../model/users-selectors";
+import { useHistory } from "react-router-dom";
 
 type UsersPropsType = {
 };
@@ -18,6 +19,18 @@ export const Users = (props: UsersPropsType) => {
   const isFollowingInProgressUsersId = useSelector(getIsFollowingInProgress)
   const filter = useSelector(getUsersFilter)
   const dispatch = useDispatch()
+  const history = useHistory()
+
+  useEffect(() => {
+    const searcParams = new URLSearchParams()
+    searcParams.set('term', `${filter.term}`)
+    searcParams.set('friend', `${filter.friend}`)
+    history.push({
+      pathname: '/users',
+      search: searcParams.toString()
+    })
+
+  }, [filter])
 
   useEffect(() => {
     dispatch(requestUsersTC(pageCount, currentPage, filter))
