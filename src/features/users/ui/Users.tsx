@@ -6,7 +6,7 @@ import { Pagination } from "../../../components/common/pagination/Pagination";
 import { SearchUsersForm } from "./SearchUsersForm";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentPage, getIsFollowingInProgress, getPageCount, getTotalUsersCount, getUsers, getUsersFilter } from "../model/users-selectors";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 type UsersPropsType = {
 };
@@ -20,20 +20,35 @@ export const Users = (props: UsersPropsType) => {
   const filter = useSelector(getUsersFilter)
   const dispatch = useDispatch()
   const history = useHistory()
+  const location = useLocation()
+
 
   useEffect(() => {
     const searcParams = new URLSearchParams()
     searcParams.set('term', `${filter.term}`)
     searcParams.set('friend', `${filter.friend}`)
+    searcParams.set('page', `${currentPage}`)
     history.push({
       pathname: '/users',
       search: searcParams.toString()
     })
 
-  }, [filter])
+  }, [filter, currentPage])
 
   useEffect(() => {
-    dispatch(requestUsersTC(pageCount, currentPage, filter))
+    const search = new URLSearchParams(location.search)
+    let page = search.get('page')
+    let term = search.get('term')
+    let friendFromURL = search.get('friend')
+    let friend = friendFromURL === null ? null : friendFromURL === 'true' ? true : friendFromURL === 'false' ? false : filter.friend
+
+
+    if (page === null) {
+      page = currentPage.toString()
+    }
+
+    /* dispatch(requestUsersTC(pageCount, currentPage, filter)) */
+    dispatch(requestUsersTC(pageCount, +page , {term: term ?? filter.term, friend: friend}))
   }, [])
 
   const setCurrentPage = (currentPageNumber: number) => {
