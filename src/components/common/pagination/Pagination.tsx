@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import s from './Pagination.module.css'
 type Props = {
   totalItemsCount: number
@@ -8,8 +8,9 @@ type Props = {
   portionSize?: number
 }
 
-export const Pagination = ({totalItemsCount, pageCount, currentPage, setCurrentPage, portionSize = 10}: Props) => {
+export const Pagination = memo(({totalItemsCount, pageCount, currentPage, setCurrentPage, portionSize = 10}: Props) => {
 
+  console.log('pagination')
   let totalPageCount = Math.ceil(totalItemsCount / pageCount);
   const pagesCountArr = [];
 
@@ -49,5 +50,5 @@ export const Pagination = ({totalItemsCount, pageCount, currentPage, setCurrentP
     </>
 
   );
-};
+});
 

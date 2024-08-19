@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import s from "./Users.module.css";
 import { followUserTC, requestUsersTC, setCurrentPageAC, unfollowUserTC, UsersFilter } from "../model/users-reducer";
 import { User } from "../user/ui/User";
@@ -12,6 +12,7 @@ type UsersPropsType = {
 };
 
 export const Users = (props: UsersPropsType) => {
+  console.log('Users component')
   const totalUsersCount = useSelector(getTotalUsersCount)
   const pageCount = useSelector(getPageCount)
   const currentPage = useSelector(getCurrentPage)
@@ -22,34 +23,44 @@ export const Users = (props: UsersPropsType) => {
   const history = useHistory()
   const location = useLocation()
 
-
   useEffect(() => {
-    const searcParams = new URLSearchParams()
-    searcParams.set('term', `${filter.term}`)
-    searcParams.set('friend', `${filter.friend}`)
-    searcParams.set('page', `${currentPage}`)
-    history.push({
-      pathname: '/users',
-      search: searcParams.toString()
-    })
-
-  }, [filter, currentPage])
-
-  useEffect(() => {
+    console.log('first useEffect')
     const search = new URLSearchParams(location.search)
-    let friendFromURL = search.get('friend')
-    let friend = friendFromURL === null ? null : friendFromURL === 'true' ? true : friendFromURL === 'false' ? false : filter.friend
+    let friendParam = search.get('friend')
+    let actualFriendParam = friendParam === 'all' ? null : friendParam === 'true' ? true : friendParam === 'false' ? false : filter.friend
 
-    let page = search.get('page') ? Number(search.get('page')) : currentPage
-    let term = search.get('term') ?? filter.term
+    let pageParam = search.get('page') ? Number(search.get('page')) : currentPage
+    let termParam = search.get('term')
 
-    dispatch(requestUsersTC(pageCount, page , {term, friend: friend}))
+    if (termParam === null) {
+      termParam = filter.term
+    }
+
+    dispatch(requestUsersTC(pageCount, pageParam , {term: termParam, friend: actualFriendParam}))
   }, [])
 
-  const setCurrentPage = (currentPageNumber: number) => {
+  useEffect(() => {
+    console.log('second useEffect')
+    const searchParams = new URLSearchParams()
+    if(!!filter.term) searchParams.set('term', `${filter.term}`)
+/*     searchParams.set('term', `${filter.term}`) */
+    if(filter.friend === null) {
+      searchParams.set('friend', `all`)
+    } else {
+      searchParams.set('friend', `${filter.friend}`)
+    }
+/*     searchParams.set('friend', `${filter.friend}`) */
+    searchParams.set('page', `${currentPage}`)
+    history.push({
+      pathname: '/users',
+      search: searchParams.toString()
+    })
+  }, [filter, currentPage, history])
+
+  const setCurrentPage = useCallback((currentPageNumber: number) => {
     dispatch(setCurrentPageAC(currentPageNumber));
     dispatch(requestUsersTC(pageCount, currentPageNumber, filter))
-  };
+  }, [pageCount, filter, dispatch]);
 
   const followUser = (userId: number) => {
     dispatch(followUserTC(userId))
@@ -59,14 +70,12 @@ export const Users = (props: UsersPropsType) => {
     dispatch(unfollowUserTC(userId))
   }
 
-  const changeUserSearchFilter = (filter: UsersFilter) => {
+  const changeUserSearchFilter = useCallback((filter: UsersFilter) => {
     dispatch(requestUsersTC(pageCount, 1, filter));
-  }
+  }, [pageCount, dispatch])
 
   return (
     <div className={s.content}>
-{/*       {isFetched && <Preloader />} */}
-
       <SearchUsersForm changeUserSearchFilter={changeUserSearchFilter}/>
 
       <Pagination
