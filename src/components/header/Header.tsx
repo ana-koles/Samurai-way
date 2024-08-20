@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsAuth, selectLogin } from './header-selectors';
 import { logoutTC } from '../../features/auth/model/auth-reducer';
-import { Button } from 'antd';
+import { Button, Flex } from 'antd';
 
 
 type HeaderPropsType = {}
@@ -28,13 +28,13 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
       </div>
       {isAuth
       ?
-      <ul className={s.icon_list}>
-          <li><NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink></li>
-          <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>
-        {/*   <li className={s.loginName}>{login}<Button callback={logOut} name={'logout'}/></li> */}
-          <li className={s.loginName}>{login}</li>
-          <li><Button onClick={logOut}>logout</Button></li>
-      </ul>
+
+      <Flex gap='middle'  align='center' justify='flex-end'>
+        <NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink>
+        <NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink>
+        <span className={s.loginName}>{login}</span>
+        <Button onClick={logOut}>logout</Button>
+      </Flex>
 
       :
       <ul className={s.icon_list}>
@@ -44,3 +44,11 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
     </header>
   );
 };
+
+
+/*       <ul className={s.icon_list}>
+          <li><NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink></li>
+          <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li> */
+/*           <li className={s.loginName}>{login}</li>
+          <li><Button onClick={logOut}>logout</Button></li>
+      </ul> */

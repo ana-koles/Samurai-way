@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import photo from "../../../../../../assets/cat-profile2.jpg";
 import s from "./MyDialog.module.css";
 import { DialogItemType } from "../../../../model/dialogs-reducer";
+import Paragraph from "antd/es/typography/Paragraph";
 
 
 type DialogPropsType = {

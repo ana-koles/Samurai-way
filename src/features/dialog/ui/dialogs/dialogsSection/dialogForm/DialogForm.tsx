@@ -2,7 +2,8 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import s from '../DialogsSection.module.css'
 import { maxLenghtCreator, required } from '../../../../../../utils/validators/validators';
 import { Textarea } from '../../../../../../components/common/formContolls/FormControls';
-import { Button } from '../../../../../../components/button/Button';
+import { Button } from 'antd';
+import Paragraph from 'antd/es/typography/Paragraph';
 
 
 export type DialogFormDataType = {
@@ -23,7 +24,8 @@ const DialogForm = (props:InjectedFormProps<DialogFormDataType> ) => {
           name='currentMessageText'
           type='text'
         />
-        <Button type='submit' name='post'/>
+  {/*       <Button type='submit' name='post'/> */}
+        <Button type='primary' htmlType='submit'>post</Button>
       </form>
     </div>
   );
