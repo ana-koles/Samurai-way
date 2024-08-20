@@ -32,7 +32,8 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
           <li><NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink></li>
           <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>
         {/*   <li className={s.loginName}>{login}<Button callback={logOut} name={'logout'}/></li> */}
-          <li className={s.loginName}>{login}<Button onClick={logOut} name={'logout'}>logout</Button></li>
+          <li className={s.loginName}>{login}</li>
+          <li><Button onClick={logOut}>logout</Button></li>
       </ul>
 
       :
