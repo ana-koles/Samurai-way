@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Profile } from "./Profile";
 import {
   setProfileTC,
@@ -23,7 +23,7 @@ export const ProfileContainer = (props: ProfileComponentType ) => {
   let prevUserId = prevUserIdRef.current
   const isAuth = useSelector(getIsAuth)
 
-  const refreshProfile = () => {
+  const refreshProfile = useCallback(() => {
     if (userId) {
       dispatch(setProfileTC(+userId))
       dispatch(setStatusTC(+userId))
@@ -34,7 +34,7 @@ export const ProfileContainer = (props: ProfileComponentType ) => {
     } else if  (!isAuth){
       history.push("/login");
     }
-  }
+  }, [userId])
 
   useEffect(() => {
     refreshProfile()
@@ -49,7 +49,7 @@ export const ProfileContainer = (props: ProfileComponentType ) => {
       history.push("/login");
     }
     refreshProfile()
-  }, [userId])
+  }, [userId, isAuth, prevUserId, refreshProfile])
 
     return (
       <Profile
