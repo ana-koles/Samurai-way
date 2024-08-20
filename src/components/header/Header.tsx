@@ -5,7 +5,9 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsAuth, selectLogin } from './header-selectors';
 import { logoutTC } from '../../features/auth/model/auth-reducer';
-import { Button, Flex } from 'antd';
+import { Avatar, Button, Flex } from 'antd';
+import { getProfile } from '../../features/profile/modal/profile-selectors';
+import noPhoto from '../../assets/no_photo.jpg'
 
 
 type HeaderPropsType = {}
@@ -14,6 +16,7 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
 
   const login = useSelector(selectLogin)
   const isAuth = useSelector(selectIsAuth)
+  const profile = useSelector(getProfile)
   const dispatch = useDispatch()
   const logOut = () => {
     dispatch(logoutTC())
@@ -32,7 +35,8 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
       <Flex gap='middle'  align='center' justify='flex-end'>
         <NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink>
         <NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink>
-        <span className={s.loginName}>{login}</span>
+{/*         <span className={s.loginName}>{login}</span> */}
+        <Avatar src={<img src={profile?.photos.small ?? noPhoto} alt='avatar' />} />
         <Button onClick={logOut}>logout</Button>
       </Flex>
 

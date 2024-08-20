@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfile, getStatus } from "../modal/profile-selectors";
 
 type ProfilePropsType = {
-
   isOwner: boolean;
 };
 
@@ -26,9 +25,7 @@ type ProfileFormField = {
   lookingForAJobDescription: string | null;
 } & ContactsType;
 
-export const Profile = ({
-  isOwner,
-}: ProfilePropsType) => {
+export const Profile = ({isOwner}: ProfilePropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const dispatch = useDispatch()
@@ -39,9 +36,7 @@ export const Profile = ({
     dispatch(updateStatusTC(status))
   }
 
-  const updateProfilePhotoHandler: React.ChangeEventHandler<
-    HTMLInputElement
-  > = (e) => {
+  const updateProfilePhotoHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files && e.target.files.length) {
       dispatch(savePhotoTC(e.target.files[0]))
     }
@@ -69,7 +64,7 @@ export const Profile = ({
                 alt="Profile"
               />
             ) : (
-              <img className={s.photo} src={noPhoto} alt="No Profile" />
+              <img className={s.photo} src={noPhoto} alt="No" />
             )}
 
             {isOwner && (
