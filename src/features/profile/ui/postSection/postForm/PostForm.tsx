@@ -3,6 +3,7 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import s from '../PostSection.module.css'
 import { maxLenghtCreator, required } from '../../../../../utils/validators/validators';
 import { Textarea } from '../../../../../components/common/formContolls/FormControls';
+import { Button } from 'antd';
 
 
 
@@ -26,7 +27,7 @@ const PostForm: React.FC<InjectedFormProps<PostFormDataType>> = (props:InjectedF
                 validate={[required, maxLength30]}
         />
       {/* <Button type='submit' name='post'/> */}
-      <Button type='submit' name='post'/>
+      <Button type={'primary'} htmlType="submit" name='post'>post</Button>
     </form>
 
     </div>
