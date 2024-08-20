@@ -29,7 +29,7 @@ export const ProfileData = ({
       })}
 
       {/* {isOwner && <Button callback={activateEditMode} name={"edit"} />} */}
-      {isOwner && <Button onClick={activateEditMode} className={sButton['button-antd']} type="primary">Edit</Button>}
+      {isOwner && <Button onClick={activateEditMode} className={sButton['button-antd']} type="primary">edit</Button>}
     </div>
   );
 };

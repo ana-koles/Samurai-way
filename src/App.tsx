@@ -69,6 +69,10 @@ class App extends Component<AppPropsType> {
             controlHeight: 25,
             paddingInline: 15,
             borderRadius: 5,
+            defaultBg: 'transparent',
+            defaultColor: '#ffffff',
+            defaultHoverBorderColor: '#ffffff',
+            defaultHoverColor: '#151920'
           },
         },
         } }>

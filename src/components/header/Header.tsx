@@ -2,10 +2,10 @@ import React from 'react';
 import logo from '../../assets/logo.svg';
 import s from './Header.module.css'
 import { NavLink } from 'react-router-dom';
-import { Button } from '../button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsAuth, selectLogin } from './header-selectors';
 import { logoutTC } from '../../features/auth/model/auth-reducer';
+import { Button } from 'antd';
 
 
 type HeaderPropsType = {}
@@ -31,7 +31,8 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
       <ul className={s.icon_list}>
           <li><NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink></li>
           <li><NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink></li>
-          <li className={s.loginName}>{login}<Button callback={logOut} name={'logout'}/></li>
+        {/*   <li className={s.loginName}>{login}<Button callback={logOut} name={'logout'}/></li> */}
+          <li className={s.loginName}>{login}<Button onClick={logOut} name={'logout'}>logout</Button></li>
       </ul>
 
       :
