@@ -19,8 +19,6 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
     dispatch(logoutTC())
   }
 
-
-
   return (
     <header className={s.header}>
 

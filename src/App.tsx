@@ -20,6 +20,7 @@ import { Preloader } from "./components/common/preloader/Preloader";
 import { PageNotFount } from "./components/404/PageNotFount";
 import { LoginPage } from "./components/login/Login";
 import { Header } from "./components/header/Header";
+import { ConfigProvider } from 'antd';
 
 const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
@@ -57,45 +58,48 @@ class App extends Component<AppPropsType> {
     }
 
     return (
-      <BrowserRouter>
-        <div className="appWrapper">
-          <Header />
-          <NavBar />
-          <Switch>
-            <Route
-              path="/profile/:userId?"
-              render={() => <ProfileContainer />}
-            />
-            <Route
-              path={"/messages"}
-              render={() => {
-                return (
-                  <Suspense fallback={<Preloader />}>
-                    <Dialogs />
-                  </Suspense>
-                );
-              }}
-            />
-            <Route path="/news" component={News} />
-            <Route path="/music" component={Music} />
-            <Route path="/settings" component={Settings} />
-            <Route
-              path="/users"
-              render={() => {
-                return (
-                  <Suspense fallback={<Preloader />}>
-                    <UsersContainer />
-                  </Suspense>
-                );
-              }}
-            />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/profile" render={() => <ProfileContainer />} />
-            <Route path="/" render={() => <Redirect to="/profile" />} />
-            <Route path="*" render={() => <PageNotFount />} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <ConfigProvider theme={{token: {colorPrimary: '#00b96b', borderRadius: 2, colorBgContainer: '#f6ffed',},}}>
+        <BrowserRouter>
+          <div className="appWrapper">
+            <Header />
+            <NavBar />
+            <Switch>
+              <Route
+                path="/profile/:userId?"
+                render={() => <ProfileContainer />}
+              />
+              <Route
+                path={"/messages"}
+                render={() => {
+                  return (
+                    <Suspense fallback={<Preloader />}>
+                      <Dialogs />
+                    </Suspense>
+                  );
+                }}
+              />
+              <Route path="/news" component={News} />
+              <Route path="/music" component={Music} />
+              <Route path="/settings" component={Settings} />
+              <Route
+                path="/users"
+                render={() => {
+                  return (
+                    <Suspense fallback={<Preloader />}>
+                      <UsersContainer />
+                    </Suspense>
+                  );
+                }}
+              />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/profile" render={() => <ProfileContainer />} />
+              <Route path="/" render={() => <Redirect to="/profile" />} />
+              <Route path="*" render={() => <PageNotFount />} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+    </ConfigProvider>
+
     );
   }
 }
