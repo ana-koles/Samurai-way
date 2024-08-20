@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
-import ChatMenu from './chatMenu/ChatMenu';
-import { DialogsSectionContainer } from './dialogsSection/DialogsSectionContainer';
+import ChatMenu from './chatMenu/ChatMenu'
+import { DialogsSection } from './dialogsSection/DialogsSection';
 
 
 const Dialogs = () => {
-  console.log('Dialogs')
+
   return (
     <div className={s.content}>
-      <DialogsSectionContainer/>
+      <DialogsSection/>
       <ChatMenu  />
     </div>
   );

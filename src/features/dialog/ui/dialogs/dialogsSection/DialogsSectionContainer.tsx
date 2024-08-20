@@ -38,7 +38,7 @@ const mapDispatchToProps = (
   };
 };
 
-export const DialogsSectionContainer = compose<React.ComponentType>(
+const DialogsSectionContainer = compose<React.ComponentType>(
   connect(mapStateToProps, mapDispatchToProps),
   withAuthRedirect
 )(DialogsSection);
