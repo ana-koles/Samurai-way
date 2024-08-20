@@ -58,7 +58,17 @@ class App extends Component<AppPropsType> {
     }
 
     return (
-      <ConfigProvider theme={{token: {colorPrimary: '#00b96b', borderRadius: 2, colorBgContainer: '#f6ffed',},}}>
+      <ConfigProvider theme={
+        {token: {colorPrimary: '#00b96b', borderRadius: 2, colorBgContainer: '#f6ffed',},
+        components: {
+          Button: {
+            colorPrimary: '#ffffff',
+/*             borderRadius: 8,
+            paddingInline: 20,
+            fontSize: 16, */
+          },
+        },
+        } }>
         <BrowserRouter>
           <div className="appWrapper">
             <Header />
