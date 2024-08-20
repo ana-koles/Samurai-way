@@ -16,7 +16,6 @@ type UserFormParams = {
 };
 
 export const SearchUsersForm = memo(({changeUserSearchFilter}: SearchUsersFormPropsType) => {
-  console.log('form')
   const currentFilterValues = useSelector(getUsersFilter)
 
   const submit = (values: UserFormParams, { setSubmitting }: {setSubmitting: (isSubmitting: boolean) => void}) => {

@@ -12,7 +12,6 @@ type UsersPropsType = {
 };
 
 export const Users = (props: UsersPropsType) => {
-  console.log('Users component')
   const totalUsersCount = useSelector(getTotalUsersCount)
   const pageCount = useSelector(getPageCount)
   const currentPage = useSelector(getCurrentPage)
@@ -24,7 +23,6 @@ export const Users = (props: UsersPropsType) => {
   const location = useLocation()
 
   useEffect(() => {
-    console.log('first useEffect')
     const search = new URLSearchParams(location.search)
     let friendParam = search.get('friend')
     let actualFriendParam = friendParam === 'all' ? null : friendParam === 'true' ? true : friendParam === 'false' ? false : filter.friend
@@ -40,16 +38,14 @@ export const Users = (props: UsersPropsType) => {
   }, [])
 
   useEffect(() => {
-    console.log('second useEffect')
     const searchParams = new URLSearchParams()
     if(!!filter.term) searchParams.set('term', `${filter.term}`)
-/*     searchParams.set('term', `${filter.term}`) */
+
     if(filter.friend === null) {
       searchParams.set('friend', `all`)
     } else {
       searchParams.set('friend', `${filter.friend}`)
     }
-/*     searchParams.set('friend', `${filter.friend}`) */
     searchParams.set('page', `${currentPage}`)
     history.push({
       pathname: '/users',

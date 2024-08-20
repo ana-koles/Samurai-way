@@ -9,8 +9,6 @@ type Props = {
 }
 
 export const Pagination = memo(({totalItemsCount, pageCount, currentPage, setCurrentPage, portionSize = 10}: Props) => {
-
-  console.log('pagination')
   let totalPageCount = Math.ceil(totalItemsCount / pageCount);
   const pagesCountArr = [];
 

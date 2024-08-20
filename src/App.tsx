@@ -12,7 +12,6 @@ import {
   withRouter,
 } from "react-router-dom";
 import { ProfileContainer } from "./features/profile/ui/ProfileContainer";
-import { HeaderContainer } from "./components/header/HeaderComponent";
 import { compose } from "redux";
 import { Provider, connect } from "react-redux";
 import { setInitializeAppTC } from "./redux/app-reducer";
@@ -20,6 +19,7 @@ import { AppRootStateType, store } from "./redux/redux-store";
 import { Preloader } from "./components/common/preloader/Preloader";
 import { PageNotFount } from "./components/404/PageNotFount";
 import { LoginPage } from "./components/login/Login";
+import { Header } from "./components/header/Header";
 
 const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
@@ -59,7 +59,7 @@ class App extends Component<AppPropsType> {
     return (
       <BrowserRouter>
         <div className="appWrapper">
-          <HeaderContainer />
+          <Header />
           <NavBar />
           <Switch>
             <Route
