@@ -6,7 +6,7 @@
   margin: 5px 0;
 }
 
-span {
+.spanWrapper span, .fieldContentWrapper span {
   color:rgb(227, 85, 85);
   font-size: 14px;
 }

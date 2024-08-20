@@ -59,13 +59,16 @@ class App extends Component<AppPropsType> {
 
     return (
       <ConfigProvider theme={
-        {token: {colorPrimary: '#00b96b', borderRadius: 2, colorBgContainer: '#f6ffed',},
+        {token: {},
         components: {
           Button: {
             colorPrimary: '#ffffff',
-/*             borderRadius: 8,
-            paddingInline: 20,
-            fontSize: 16, */
+            colorPrimaryHover: '#FCBF30',
+            colorPrimaryActive: '#FCBF30',
+            primaryColor: '#151920',
+            controlHeight: 25,
+            paddingInline: 15,
+            borderRadius: 5,
           },
         },
         } }>

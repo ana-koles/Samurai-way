@@ -8,3 +8,10 @@
 .button:hover {
   background-color: #FCBF30;
 }
+
+.ant-btn {
+  color: '#151920';
+  padding: 0px 10px 0px;
+  border-radius: 5px;
+}
+

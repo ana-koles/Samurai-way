@@ -1,6 +1,7 @@
+import { Button } from "antd";
 import { ContactsType, UserProfileType } from "../modal/profile-reducer";
-import { Button } from "../../../components/button/Button";
 import s from './Profile.module.css'
+import sButton from '../../../components/button/Button.module.css'
 
 type ProfileDataProps = {
   profile: UserProfileType;
@@ -27,7 +28,8 @@ export const ProfileData = ({
         }
       })}
 
-      {isOwner && <Button callback={activateEditMode} name={"edit"} />}
+      {/* {isOwner && <Button callback={activateEditMode} name={"edit"} />} */}
+      {isOwner && <Button onClick={activateEditMode} className={sButton['button-antd']} type="primary">Edit</Button>}
     </div>
   );
 };

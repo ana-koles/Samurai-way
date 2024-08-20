@@ -16,13 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfile, getStatus } from "../modal/profile-selectors";
 
 type ProfilePropsType = {
-/*   profile: UserProfileType | null; */
-/*   status: string; */
-/*   updateStatus: (status: string) => void; */
+
   isOwner: boolean;
-/*   savePhoto: (file: File) => void; */
-/*   saveUpdatedData: (data: UserUpdatedProfileType) => Promise<void>; */
-/*   updateStatusSuccessful: boolean; */
 };
 
 type ProfileFormField = {
@@ -32,16 +27,10 @@ type ProfileFormField = {
 } & ContactsType;
 
 export const Profile = ({
-/*   profile, */
-/*   status, */
-/*   updateStatus, */
   isOwner,
-/*   savePhoto, */
-/*   saveUpdatedData, */
 }: ProfilePropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  ////////////////////////////
   const dispatch = useDispatch()
   const status = useSelector(getStatus)
   const profile = useSelector(getProfile)
@@ -49,14 +38,12 @@ export const Profile = ({
   const updateStatus = () => {
     dispatch(updateStatusTC(status))
   }
-  /////////////////////
 
   const updateProfilePhotoHandler: React.ChangeEventHandler<
     HTMLInputElement
   > = (e) => {
     if (e.target.files && e.target.files.length) {
       dispatch(savePhotoTC(e.target.files[0]))
-/*       savePhoto(e.target.files[0]); */
     }
   };
 
@@ -67,7 +54,6 @@ export const Profile = ({
   const onSubmit = async (data: ProfileFormField) => {
     const updatedProfileData = { ...profile, ...data };
     dispatch(updateProfileTC(updatedProfileData))
-/*     saveUpdatedData(updatedProfileData); */
     setEditMode(false)
   };
 
