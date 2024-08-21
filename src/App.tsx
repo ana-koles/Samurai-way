@@ -23,6 +23,7 @@ import { Header } from "./components/header/Header";
 import { Breadcrumb, ConfigProvider } from 'antd';
 import { menuItems } from "./utils/validators/menuItems";
 import { BreadcrumbComponent } from "./components/breadCrumb/BreadCrumb";
+import { ChatPage } from "./pages/ChatPage";
 
 const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
@@ -114,6 +115,7 @@ class App extends Component<AppPropsType> {
               />
               <Route path="/login" component={LoginPage} />
               <Route path="/profile" render={() => <ProfileContainer />} />
+              <Route path='/chat' component={ChatPage}></Route>
               <Route path="/" render={() => <Redirect to="/profile" />} />
               <Route path="*" render={() => <PageNotFount />} />
             </Switch>
