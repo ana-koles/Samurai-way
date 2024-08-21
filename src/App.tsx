@@ -21,6 +21,7 @@ import { PageNotFount } from "./components/404/PageNotFount";
 import { LoginPage } from "./components/login/Login";
 import { Header } from "./components/header/Header";
 import { ConfigProvider } from "antd";
+import { withSuspense } from "./hoc/withSuspense";
 
 const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
@@ -34,8 +35,12 @@ type MapStateToPropsType = {
   isInitialized: boolean;
 };
 
-
 type AppPropsType = MapDispatchToPropsType & MapStateToPropsType;
+
+const SuspendedChatPage = withSuspense(ChatPage)
+const SuspendedDialogsPage = withSuspense(Dialogs)
+const SuspendedUsersPage = withSuspense(UsersContainer)
+
 
 class App extends Component<AppPropsType> {
   handleUncatchedErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
@@ -88,40 +93,15 @@ class App extends Component<AppPropsType> {
                 path="/profile/:userId?"
                 render={() => <ProfileContainer />}
               />
-              <Route
-                path={"/messages"}
-                render={() => {
-                  return (
-                    <Suspense fallback={<Preloader />}>
-                      <Dialogs />
-                    </Suspense>
-                  );
-                }}
-              />
+              <Route path={"/messages"} component={SuspendedDialogsPage}/>
               <Route path="/news" component={News} />
               <Route path="/music" component={Music} />
               <Route path="/settings" component={Settings} />
-              <Route
-                path="/users"
-                render={() => {
-                  return (
-                    <Suspense fallback={<Preloader />}>
-                      <UsersContainer />
-                    </Suspense>
-                  );
-                }}
+              <Route path="/users" component={SuspendedUsersPage}
               />
               <Route path="/login" component={LoginPage} />
               <Route path="/profile" render={() => <ProfileContainer />} />
-              <Route
-                path="/chat"
-                render={() => {
-                  return (
-                    <Suspense fallback={<Preloader />}>
-                      <ChatPage />
-                    </Suspense>
-                  );
-                }}
+              <Route path="/chat" component={SuspendedChatPage}
               />
               <Route path="/" render={() => <Redirect to="/profile" />} />
               <Route path="*" render={() => <PageNotFount />} />
