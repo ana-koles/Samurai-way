@@ -25,7 +25,7 @@ import { withSuspense } from "./hoc/withSuspense";
 
 const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
-const ChatPage = lazy(() => import("./pages/ChatPage"))
+const ChatPage = lazy(() => import("./pages/chatPage/ChatPage"))
 
 type MapDispatchToPropsType = {
   setInitializeApp: () => void;
