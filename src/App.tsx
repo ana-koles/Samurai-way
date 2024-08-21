@@ -20,13 +20,11 @@ import { Preloader } from "./components/common/preloader/Preloader";
 import { PageNotFount } from "./components/404/PageNotFount";
 import { LoginPage } from "./components/login/Login";
 import { Header } from "./components/header/Header";
-import { Breadcrumb, ConfigProvider } from 'antd';
-import { menuItems } from "./utils/validators/menuItems";
-import { BreadcrumbComponent } from "./components/breadCrumb/BreadCrumb";
-import { ChatPage } from "./pages/ChatPage";
+import { ConfigProvider } from "antd";
 
 const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
+const ChatPage = lazy(() => import("./pages/ChatPage"))
 
 type MapDispatchToPropsType = {
   setInitializeApp: () => void;
@@ -115,7 +113,16 @@ class App extends Component<AppPropsType> {
               />
               <Route path="/login" component={LoginPage} />
               <Route path="/profile" render={() => <ProfileContainer />} />
-              <Route path='/chat' component={ChatPage}></Route>
+              <Route
+                path="/chat"
+                render={() => {
+                  return (
+                    <Suspense fallback={<Preloader />}>
+                      <ChatPage />
+                    </Suspense>
+                  );
+                }}
+              />
               <Route path="/" render={() => <Redirect to="/profile" />} />
               <Route path="*" render={() => <PageNotFount />} />
             </Switch>
