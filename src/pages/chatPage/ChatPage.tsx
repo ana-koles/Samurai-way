@@ -5,16 +5,26 @@ const ChatPage = () => {
   return (
     <div className={s.content}>
       <Chat/>
-      <AddChatMessageForm/>
     </div>
   )
 }
 
 const Chat = () => {
-  const messages = [1, 2, 3, 4]
+  return (
+    <>
+      <Messages/>
+      <AddChatMessageForm/>
+    </>
+  )
+}
+
+const Messages = () => {
+  const messages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12, 13, 14, 15]
 
   return (
-    <div>{messages.map((message, index) => <Message key={index} />)}</div>
+    <div style={{height: '400px', overflowY: 'auto'}}>
+      {messages.map((message, index) => <Message key={index}/>)}
+    </div>
   )
 }
 
@@ -28,7 +38,7 @@ const Message = () => {
   return (
     <div style={{marginBottom: '20px'}}>
       <img src={message.avatar} alt={'avatar'} style={{height: '30px', width: '30px'}}/>
-      <h4>{message.author}</h4>
+      <span>{message.author}</span>
       <p>{message.text}</p>
     </div>
   )
