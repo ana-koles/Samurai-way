@@ -20,7 +20,9 @@ import { Preloader } from "./components/common/preloader/Preloader";
 import { PageNotFount } from "./components/404/PageNotFount";
 import { LoginPage } from "./components/login/Login";
 import { Header } from "./components/header/Header";
-import { ConfigProvider } from 'antd';
+import { Breadcrumb, ConfigProvider } from 'antd';
+import { menuItems } from "./utils/validators/menuItems";
+import { BreadcrumbComponent } from "./components/breadCrumb/BreadCrumb";
 
 const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
@@ -32,6 +34,7 @@ type MapDispatchToPropsType = {
 type MapStateToPropsType = {
   isInitialized: boolean;
 };
+
 
 type AppPropsType = MapDispatchToPropsType & MapStateToPropsType;
 
@@ -51,6 +54,7 @@ class App extends Component<AppPropsType> {
       this.handleUncatchedErrors
     );
   }
+
 
   render(): React.ReactNode {
     if (!this.props.isInitialized) {

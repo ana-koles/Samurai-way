@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsAuth, selectLogin } from './header-selectors';
 import { logoutTC } from '../../features/auth/model/auth-reducer';
-import { Avatar, Button, Flex } from 'antd';
+import { Avatar, Button, Flex, Tooltip } from 'antd';
 import { getProfile } from '../../features/profile/modal/profile-selectors';
 import noPhoto from '../../assets/no_photo.jpg'
 
@@ -36,7 +36,9 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
         <NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink>
         <NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink>
 {/*         <span className={s.loginName}>{login}</span> */}
-        <Avatar src={<img src={profile?.photos.small ?? noPhoto} alt='avatar' />} />
+        <Tooltip title={profile?.fullName} >
+          <Avatar src={<img src={profile?.photos.small ?? noPhoto} alt='avatar' />} />
+        </Tooltip>
         <Button onClick={logOut}>logout</Button>
       </Flex>
 

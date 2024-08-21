@@ -41,7 +41,6 @@ export const Pagination = memo(({totalItemsCount, pageCount, currentPage, setCur
                             {page}
                           </span>
                   })
-
     }
     {portionNumber < portionCount && <button onClick={goToNextPortion}>Next</button> }
 
