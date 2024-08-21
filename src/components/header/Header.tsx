@@ -3,11 +3,12 @@ import logo from '../../assets/logo.svg';
 import s from './Header.module.css'
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsAuth, selectLogin } from './header-selectors';
 import { logoutTC } from '../../features/auth/model/auth-reducer';
 import { Avatar, Button, Flex, Tooltip } from 'antd';
 import { getProfile } from '../../features/profile/modal/profile-selectors';
 import noPhoto from '../../assets/no_photo.jpg'
+/* import { selectIsAuth, selectLogin } from '@/features/auth/model/auth-selectors'; */
+import { selectIsAuth, selectLogin } from '../../features/auth/model/auth-selectors';
 
 
 type HeaderPropsType = {}
@@ -22,6 +23,7 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
     dispatch(logoutTC())
   }
 
+  console.log(profile)
   return (
     <header className={s.header}>
 
@@ -35,10 +37,10 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
       <Flex gap='middle'  align='center' justify='flex-end'>
         <NavLink activeClassName={s.activeLink} to='/messages'>Chat</NavLink>
         <NavLink activeClassName={s.activeLink} to='/settings'>Settings</NavLink>
-{/*         <span className={s.loginName}>{login}</span> */}
-        <Tooltip title={profile?.fullName} >
+        <span className={s.loginName}>{login}</span>
+{/*         <Tooltip title={profile?.fullName} >
           <Avatar src={<img src={profile?.photos.small ?? noPhoto} alt='avatar' />} />
-        </Tooltip>
+        </Tooltip> */}
         <Button onClick={logOut}>logout</Button>
       </Flex>
 

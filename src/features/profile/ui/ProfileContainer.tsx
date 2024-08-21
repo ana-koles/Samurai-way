@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Profile } from "./Profile";
 import {
   setProfileTC,
   setStatusTC,
 } from "../modal/profile-reducer";
 import { useHistory, useParams } from "react-router-dom";
-import { getAuthorizedUserId, getIsAuth } from "../../auth/model/auth-selectors";
+import { selectAuthorizedUserId, selectIsAuth } from "../../auth/model/auth-selectors";
 import { useDispatch, useSelector } from "react-redux";
 
 type ProfileComponentType = {
@@ -15,13 +15,13 @@ type ProfileComponentType = {
 
 export const ProfileContainer = (props: ProfileComponentType ) => {
   const dispatch = useDispatch()
-  const authorizedUserId = useSelector(getAuthorizedUserId)
+  const authorizedUserId = useSelector(selectAuthorizedUserId)
   const params = useParams<{userId: undefined | string}>()
   let userId = params.userId
   let history = useHistory()
   let prevUserIdRef = useRef<string>()
   let prevUserId = prevUserIdRef.current
-  const isAuth = useSelector(getIsAuth)
+  const isAuth = useSelector(selectIsAuth)
 
   const refreshProfile = useCallback(() => {
     if (userId) {
