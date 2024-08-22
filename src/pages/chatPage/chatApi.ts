@@ -29,7 +29,7 @@ const onMessageHandler = (e: MessageEvent) => {
 export const chatApi = {
   // callback is a subscriber, so API could call it when new messages come and pass these messages
   subscribe(callback: SubscriberType) {
-    //when subscribe will be called, this subscriber should be added to array of subscribers
+    //when subscribe fn will be called, this subscriber (callback) should be added to array of subscribers
     subscribers.push(callback)
 
     //1st option of unsubsribe: subscribe return a functions that later could be called to unsubscribe
