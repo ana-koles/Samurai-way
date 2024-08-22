@@ -39,13 +39,19 @@ const newMessagesHandlerCreator = (dispatch: AppDispatch) => (messages: ChatMess
   return _newMessageHandler
 }
 
-const startMessageListeningTC = () => async (dispatch: AppDispatch) => {
+export const startMessageListeningTC = () => (dispatch: AppDispatch) => {
   //when this thunk is called, api should call callback fn inside subscribe
   // and pass messages that will be received throught ws,
   // when these messages will be received, they are dispatched in store
+  chatApi.start()
   chatApi.subscribe(newMessagesHandlerCreator(dispatch))
 }
 
-const stopMessageListingTC = () => async (dispatch: AppDispatch) => {
+export const stopMessageListingTC = () => (dispatch: AppDispatch) => {
   chatApi.unsubscribe(newMessagesHandlerCreator(dispatch))
+  chatApi.stop()
+}
+
+export const sendMessageTC = (message: string) => async () => {
+  chatApi.sendMessage(message)
 }
