@@ -30,10 +30,8 @@ const Chat = () => {
     }
 
     const createChannel = () => {
-      if (ws !== null) { //checking for reconnect: if channel was already opened, close it
-        ws.close()
-        ws.removeEventListener('close', onCloseChannelHandler)
-      }
+      ws?.removeEventListener('close', onCloseChannelHandler)  //checking for reconnect: if channel was already opened, close it
+      ws?.close()
 
       ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx') // create connection with this url
       ws.addEventListener('close', onCloseChannelHandler)
@@ -72,7 +70,7 @@ const Messages = ({wsChannel}: MessagesType) => {
       console.log(JSON.parse(e.data))
       const newMessages = JSON.parse(e.data)  //need to convert in JSON, because ws sends data in text and blob format
       setMessages(prevMessages => [...prevMessages, ...newMessages]) // receive messages through websocket -> set them in state
-                                                  // need to spread newMessages, because it is also an array
+      // need to spread newMessages, because it is also an array
     }
 
     //subscribe for message event of ws (synchronizing) when component mount
