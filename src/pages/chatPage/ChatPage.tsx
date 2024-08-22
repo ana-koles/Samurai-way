@@ -1,5 +1,8 @@
 import s from './ChatPage.module.css'
 import avatar from '../../assets/friend2.jpg'
+import { useEffect } from 'react'
+
+const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx') // create connection with this url
 
 const ChatPage = () => {
   return (
@@ -10,6 +13,14 @@ const ChatPage = () => {
 }
 
 const Chat = () => {
+  useEffect(() => {
+    //subscribe for message event of ws (synchronizing) when component mount
+    // this event runs each time when server sends message through websocket
+    ws.addEventListener('message', (e) => {
+      console.log(JSON.parse(e.data)) //need to convert in JSON, because ws sends data in text and blob format,
+    })
+  }, [])
+
   return (
     <>
       <Messages/>
