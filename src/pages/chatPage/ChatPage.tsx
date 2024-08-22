@@ -65,6 +65,14 @@ const Message = ({message}: MessagePropsType) => {
 
 const AddChatMessageForm = () => {
   const [message, setMessage] = useState('')
+  const [channelStatus, setChannelStatus] = useState<'pending' | 'open'>('pending')
+
+  useEffect(() => {
+    wsChannel.addEventListener('open', () => { //subscribe for open event for ws
+      setChannelStatus('open')
+    })
+    return () => {setChannelStatus('pending')}
+  }, [])
 
   const sendMessage = () => {
     if (!message) return
@@ -79,7 +87,7 @@ const AddChatMessageForm = () => {
   return (
     <>
       <textarea onChange={e => onChangeHanlder(e)} value={message}/>
-      <button onClick={sendMessage}>send</button>
+      <button disabled={channelStatus === 'pending'} onClick={sendMessage}>send</button>
     </>
   )
 }
