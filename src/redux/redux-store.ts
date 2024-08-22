@@ -6,6 +6,7 @@ import { authReducer } from '../features/auth/model/auth-reducer';
 import {reducer as formReducer} from 'redux-form';
 import { appReducer } from './app-reducer';
 import { profileReducer } from '../features/profile/modal/profile-reducer';
+import { chatReducer } from '@/pages/chatPage/chat-reducer';
 
 
 export let rootReducer = combineReducers({
@@ -14,7 +15,8 @@ export let rootReducer = combineReducers({
   usersPage: usersReducer,
   auth: authReducer,
   app: appReducer,
-  form: formReducer
+  form: formReducer,
+  chat: chatReducer
 })
 
 declare global {

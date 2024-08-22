@@ -1,7 +1,3 @@
-import { ChatMessageType } from "./ChatPage";
-
-type SubscriberType = (messages: ChatMessageType[]) => void
-
 const subscribers = [] as SubscriberType[]
 
 //there should not be any imports from react or redux, sinced
@@ -44,3 +40,12 @@ export const chatApi = {
     subscribers.filter(sub => sub !== callback)
   }
 }
+
+export type ChatMessageType = {
+  message: string
+  photo: string
+  userId: number
+  userName: string
+}
+
+type SubscriberType = (messages: ChatMessageType[]) => void

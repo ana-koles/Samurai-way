@@ -1,12 +1,6 @@
+import { ChatMessageType } from './chatApi'
 import s from './ChatPage.module.css'
 import { useEffect, useState } from 'react'
-
-export type ChatMessageType = {
-  message: string
-  photo: string
-  userId: number
-  userName: string
-}
 
 const ChatPage = () => {
   return (
