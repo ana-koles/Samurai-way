@@ -67,7 +67,7 @@ const Messages = () => {
   const messages = useSelector(selectMessages)
 /*   const [messages, setMessages] = useState<ChatMessageType[]>([]) */
 
-  useEffect(() => {
+/*   useEffect(() => { */
 /*     const onMessageHandler = (e: MessageEvent) => {
       const newMessages = JSON.parse(e.data)  */ //need to convert in JSON, because ws sends data in text and blob format
       /* setMessages(prevMessages => [...prevMessages, ...newMessages]) */ // receive messages through websocket -> set them in state
@@ -79,7 +79,7 @@ const Messages = () => {
 /*     wsChannel?.addEventListener('message', onMessageHandler)
 
     return () => wsChannel?.removeEventListener('message', onMessageHandler) */
-  }, [])
+/*   }, []) */
 
   return (
     <div style={{height: '400px', overflowY: 'auto'}}>

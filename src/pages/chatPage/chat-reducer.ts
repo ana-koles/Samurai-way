@@ -16,7 +16,11 @@ export const chatReducer = (state: InitialStateType = initialState, action: Acti
   switch(action.type) {
     case CHAT_MESSAGES_RECEIVED:
       return {...state, messages: [...state.messages, ...action.payload.messages]}
+
+    default:
+      return state
   }
+
 }
 
 //actions
@@ -31,10 +35,13 @@ const chatMessageReceivedAC = (messages:ChatMessageType[]) => {
 
 type NewMessageHanderType = ((messages: ChatMessageType[]) => void) | null
 
-let _newMessageHandler: NewMessageHanderType;
-const newMessagesHandlerCreator = (dispatch: AppDispatch) => (messages: ChatMessageType[]) => {
+let _newMessageHandler: NewMessageHanderType = null;
+
+const newMessagesHandlerCreator = (dispatch: AppDispatch) => {
   if (_newMessageHandler === null) {
-    _newMessageHandler = (messages) =>  dispatch(chatMessageReceivedAC(messages))
+    _newMessageHandler = (messages) =>  {
+      dispatch(chatMessageReceivedAC(messages))
+    }
   }
   return _newMessageHandler
 }
@@ -43,6 +50,7 @@ export const startMessageListeningTC = () => (dispatch: AppDispatch) => {
   //when this thunk is called, api should call callback fn inside subscribe
   // and pass messages that will be received throught ws,
   // when these messages will be received, they are dispatched in store
+
   chatApi.start()
   chatApi.subscribe(newMessagesHandlerCreator(dispatch))
 }

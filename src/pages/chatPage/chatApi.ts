@@ -13,7 +13,6 @@ const createChannel = () => {
 }
 
 const onCloseChannelHandler = () => {
-  console.log('Close ws')
   setTimeout(() => {
     createChannel() // reconnect in 3 seconds after the channel was closed (for example due to the internet issues)
   }, 3000)
@@ -33,7 +32,7 @@ export const chatApi = {
   },
   stop(){
     subscribers = []
-    ws?.addEventListener('message', onMessageHandler)
+    ws?.removeEventListener('message', onMessageHandler)
     ws?.removeEventListener('close', onCloseChannelHandler)
     ws?.close()
   },
