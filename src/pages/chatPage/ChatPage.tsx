@@ -20,23 +20,36 @@ const Chat = () => {
   const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
 
   useEffect(() => {
+    let ws: WebSocket
+
+    const onCloseChannelHandler = () => {
+      console.log('Close ws')
+      setTimeout(() => {
+        createChannel() // reconnect in 3 seconds after the channel was closed (for example due to the internet issues)
+      }, 3000)
+    }
+
     const createChannel = () => {
-      let ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx') // create connection with this url
-      ws.addEventListener('close', () => {
-        console.log('Close ws')
-        setTimeout(() => {
-          createChannel() // reconnect in 3 seconds after the channel was closed (for example due to the internet issues)
-        }, 3000)
-      })
+      if (ws !== null) { //checking for reconnect: if channel was already opened, close it
+        ws.close()
+        ws.removeEventListener('close', onCloseChannelHandler)
+      }
+
+      ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx') // create connection with this url
+      ws.addEventListener('close', onCloseChannelHandler)
       setWsChannel(ws)
     }
+
     createChannel()
   }, [])
 
   useEffect(() => {
-    wsChannel?.addEventListener('close', () => {
+    const onCloseHandler = () => {
       console.log('Close ws')
-    })
+    }
+    wsChannel?.addEventListener('close', onCloseHandler)
+
+    return () =>  wsChannel?.removeEventListener('close', onCloseHandler)
   }, [wsChannel])
 
   return (
@@ -55,14 +68,18 @@ const Messages = ({wsChannel}: MessagesType) => {
   const [messages, setMessages] = useState<ChatMessageType[]>([])
 
   useEffect(() => {
-    //subscribe for message event of ws (synchronizing) when component mount
-    // this event runs each time when server sends message through websocket
-    wsChannel?.addEventListener('message', (e: MessageEvent) => {
+    const onMessageHandler = (e: MessageEvent) => {
       console.log(JSON.parse(e.data))
       const newMessages = JSON.parse(e.data)  //need to convert in JSON, because ws sends data in text and blob format
       setMessages(prevMessages => [...prevMessages, ...newMessages]) // receive messages through websocket -> set them in state
                                                   // need to spread newMessages, because it is also an array
-    })
+    }
+
+    //subscribe for message event of ws (synchronizing) when component mount
+    // this event runs each time when server sends message through websocket
+    wsChannel?.addEventListener('message', onMessageHandler)
+
+    return () => wsChannel?.removeEventListener('message', onMessageHandler)
   }, [wsChannel])
 
   return (
@@ -92,10 +109,12 @@ const AddChatMessageForm = ({wsChannel}: MessagesType) => {
   const [channelStatus, setChannelStatus] = useState<'pending' | 'open'>('pending')
 
   useEffect(() => {
-    wsChannel?.addEventListener('open', () => { //subscribe for open event for ws
+    const onOpenHandler = () => { //subscribe for open event for ws
       setChannelStatus('open')
-    })
-    return () => {setChannelStatus('pending')}
+    }
+
+    wsChannel?.addEventListener('open', onOpenHandler)
+    return () => wsChannel?.removeEventListener('open', onOpenHandler)
   }, [wsChannel])
 
   const sendMessage = () => {
