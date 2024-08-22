@@ -1,4 +1,4 @@
-import React, { Component, Suspense, lazy } from "react";
+import React, { Component, lazy } from "react";
 import "./App.css";
 import { NavBar } from "./components/navBar/NavBar";
 import { News } from "./components/news/News";
@@ -22,6 +22,7 @@ import { LoginPage } from "./components/login/Login";
 import { Header } from "./components/header/Header";
 import { ConfigProvider } from "antd";
 import { withSuspense } from "./hoc/withSuspense";
+
 
 const UsersContainer = lazy(() => import("./features/users/ui/UsersPage"));
 const Dialogs = lazy(() => import("./features/dialog/ui/dialogs/Dialogs"));
