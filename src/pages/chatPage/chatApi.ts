@@ -3,8 +3,14 @@ let subscribers = [] as SubscriberType[]
 //there should not be any imports from react or redux, sinced
 // api doesn't know anything about them
 let ws: WebSocket | null = null;
+
+const cleanUp = () => {
+  ws?.removeEventListener('message', onMessageHandler)
+  ws?.removeEventListener('close', onCloseChannelHandler)
+}
+
 const createChannel = () => {
-  ws?.removeEventListener('close', onCloseChannelHandler)  //checking for reconnect: if channel was already opened, close it
+  cleanUp() //checking for reconnect: if channel was already opened, close it
   ws?.close()
 
   ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx') // create connection with this url
@@ -32,8 +38,7 @@ export const chatApi = {
   },
   stop(){
     subscribers = []
-    ws?.removeEventListener('message', onMessageHandler)
-    ws?.removeEventListener('close', onCloseChannelHandler)
+    cleanUp()
     ws?.close()
   },
   // callback is a subscriber, so API could call it when new messages come and pass these messages
