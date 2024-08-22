@@ -21,7 +21,14 @@ const Chat = () => {
 
   useEffect(() => {
     const createChannel = () => {
-      setWsChannel(new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')) // create connection with this url
+      let ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx') // create connection with this url
+      ws.addEventListener('close', () => {
+        console.log('Close ws')
+        setTimeout(() => {
+          createChannel() // reconnect in 3 seconds after the channel was closed (for example due to the internet issues)
+        }, 3000)
+      })
+      setWsChannel(ws)
     }
     createChannel()
   }, [])
