@@ -1,7 +1,6 @@
 import { Dispatch } from "redux"
 import { usersApi } from "../api/usersApi"
 
-
 export type UsersFilter = {
   term: string
   friend: boolean | null

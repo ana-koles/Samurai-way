@@ -3,7 +3,7 @@ import { ChatMessageType } from './chatApi'
 import s from './ChatPage.module.css'
 import { useEffect, useState } from 'react'
 import { sendMessageTC, startMessageListeningTC, stopMessageListingTC } from './chat-reducer'
-import { selectMessages } from './chat-selectors'
+import { selectChatStatus, selectMessages } from './chat-selectors'
 import { AppDispatch } from '@/redux/redux-store'
 
 const ChatPage = () => {
@@ -62,7 +62,6 @@ const Chat = () => {
   )
 }
 
-
 const Messages = () => {
   const messages = useSelector(selectMessages)
 /*   const [messages, setMessages] = useState<ChatMessageType[]>([]) */
@@ -105,7 +104,7 @@ const Message = ({message}: MessagePropsType) => {
 
 const AddChatMessageForm = () => {
   const [message, setMessage] = useState('')
-  const [channelStatus, setChannelStatus] = useState<'pending' | 'open'>('pending')
+  const chatStatus = useSelector(selectChatStatus)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -130,7 +129,7 @@ const AddChatMessageForm = () => {
   return (
     <>
       <textarea onChange={e => onChangeHanlder(e)} value={message}/>
-      <button disabled={false} onClick={onClickHandler}>send</button>
+      <button disabled={chatStatus === 'pending'} onClick={onClickHandler}>send</button>
     </>
   )
 }
