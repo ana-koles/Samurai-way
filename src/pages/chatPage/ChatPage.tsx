@@ -72,12 +72,26 @@ const Chat = () => {
 const Messages = () => {
   const messages = useSelector(selectMessages)
   const messageScrollRef = useRef<HTMLDivElement>(null)
+  const [isAutoScroll, setIsAutoScroll] = useState(false)
+
 
   //when new messages come, scroll have to put to div ref
   useEffect(() => {
-    messageScrollRef.current?.scrollIntoView({behavior: 'smooth'})
-
+    if (isAutoScroll) {
+      messageScrollRef.current?.scrollIntoView({behavior: 'smooth'})
+    }
   }, [messages])
+
+
+  const onScrollHanderl = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    const element = e.currentTarget
+    if (Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) < 500) {
+      setIsAutoScroll(true)
+    } else {
+      setIsAutoScroll(false)
+    }
+    console.log(element.scrollHeight - element.scrollTop - element.clientHeight)
+  }
 /*   const [messages, setMessages] = useState<ChatMessageType[]>([]) */
 
 /*   useEffect(() => { */
@@ -95,7 +109,7 @@ const Messages = () => {
 /*   }, []) */
 
   return (
-    <div style={{height: '400px', overflowY: 'auto'}}>
+    <div style={{height: '400px', overflowY: 'auto'}} onScroll={onScrollHanderl}>
       {messages?.map((m, index) => <Message key={index} message={m}/>)}
       <div ref={messageScrollRef}></div>
     </div>
