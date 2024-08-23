@@ -1,4 +1,18 @@
-let subscribers = [] as SubscriberType[]
+
+type MessageReceivedSubscriberType = (messages: ChatMessageType[]) => void
+type StatusChangedSubscriberType = (status: StatusType) => void
+export type StatusType = 'pending' | 'ready'
+
+export enum EventNames {
+  MESSAGE_RECEIVED = 'messages-received',
+  STATUS_CHANGED = 'status=changed'
+}
+
+let subscribers = {
+  [EventNames.MESSAGE_RECEIVED]: [] as MessageReceivedSubscriberType[],
+  [EventNames.STATUS_CHANGED]: [] as StatusChangedSubscriberType[]
+}
+
 
 //there should not be any imports from react or redux, sinced
 // api doesn't know anything about them
@@ -29,7 +43,7 @@ const onMessageHandler = (e: MessageEvent) => {
   const newMessages = JSON.parse(e.data)  //need to convert in JSON, because ws sends data in text and blob format
 
   //after receiving messages, need to pass them to all subscribers
-  subscribers.forEach(sub => sub(newMessages))
+  subscribers['messages-received'].forEach(sub => sub(newMessages))
 }
 
 export const chatApi = {
@@ -37,21 +51,24 @@ export const chatApi = {
     createChannel()
   },
   stop(){
-    subscribers = []
+    subscribers['messages-received'] = []
+    subscribers['status=changed'] = []
     cleanUp()
     ws?.close()
   },
   // callback is a subscriber, so API could call it when new messages come and pass these messages
-  subscribe(callback: SubscriberType) {
+  subscribe(eventName: EventNames, callback: MessageReceivedSubscriberType | StatusChangedSubscriberType) {
     //when subscribe fn will be called, this subscriber (callback) should be added to array of subscribers
-    subscribers.push(callback)
+
+    //@ts-ignore
+    subscribers[eventName].push(callback)
 
     //1st option of unsubsribe: subscribe return a functions that later could be called to unsubscribe
-    return () => subscribers.filter(sub => sub !== callback)
+    return () => subscribers[eventName].filter(sub => sub !== callback)
   },
   //2nd option of unsubscribe
-  unsubscribe(callback: SubscriberType) {
-    subscribers.filter(sub => sub !== callback)
+  unsubscribe(eventName: EventNames, callback: MessageReceivedSubscriberType | StatusChangedSubscriberType) {
+    subscribers[eventName].filter(sub => sub !== callback)
   },
   sendMessage(message: string) {
     ws?.send(message)
@@ -64,5 +81,3 @@ export type ChatMessageType = {
   userId: number
   userName: string
 }
-
-type SubscriberType = (messages: ChatMessageType[]) => void

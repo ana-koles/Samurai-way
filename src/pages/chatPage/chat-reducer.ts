@@ -1,8 +1,8 @@
 import { AppDispatch } from "@/redux/redux-store"
-import { chatApi, ChatMessageType } from "./chatApi"
+import { chatApi, ChatMessageType, EventNames, StatusType } from "./chatApi"
 
 type ChatStateType = typeof initialState
-type StatusType = 'pending' | 'ready'
+
 
 type ChatMessageReceivedAT = ReturnType<typeof chatMessageReceivedAC>
 type ChatStatusChangedAT = ReturnType<typeof chatStatusChangedAC>
@@ -60,11 +60,11 @@ export const startMessageListeningTC = () => (dispatch: AppDispatch) => {
   // when these messages will be received, they are dispatched in store
 
   chatApi.start()
-  chatApi.subscribe(newMessagesHandlerCreator(dispatch))
+  chatApi.subscribe(EventNames.MESSAGE_RECEIVED, newMessagesHandlerCreator(dispatch))
 }
 
 export const stopMessageListingTC = () => (dispatch: AppDispatch) => {
-  chatApi.unsubscribe(newMessagesHandlerCreator(dispatch))
+  chatApi.unsubscribe(EventNames.MESSAGE_RECEIVED, newMessagesHandlerCreator(dispatch))
   chatApi.stop()
 }
 
