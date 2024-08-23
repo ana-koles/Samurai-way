@@ -1,5 +1,5 @@
 
-export type MessageReceivedSubscriberType = (messages: ChatMessageType[]) => void
+export type MessageReceivedSubscriberType = (messages: ChatMessageAPIType[]) => void
 export type StatusChangedSubscriberType = (status: StatusType) => void
 
 export enum EventNames {
@@ -111,7 +111,15 @@ type StatusChangeFnType = {
   callback: StatusChangedSubscriberType
 }
 
-export type ChatMessageType = {
+export type ChatMessageAPIType = {
+  message: string
+  photo: string
+  userId: number
+  userName: string
+}
+
+export type ChatMessageDisplayType = {
+  id: string
   message: string
   photo: string
   userId: number

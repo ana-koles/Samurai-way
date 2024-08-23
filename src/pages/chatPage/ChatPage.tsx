@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { ChatMessageType } from './chatApi'
+import { ChatMessageDisplayType } from './chatApi'
 import s from './ChatPage.module.css'
 import { memo, useEffect, useRef, useState } from 'react'
 import { sendMessageTC, startMessageListeningTC, stopMessageListingTC } from './chat-reducer'
@@ -73,14 +73,12 @@ const Messages = () => {
   const messageScrollRef = useRef<HTMLDivElement>(null)
   const [isAutoScroll, setIsAutoScroll] = useState(false)
 
-
   //when new messages come, scroll have to put to div ref
   useEffect(() => {
     if (isAutoScroll) {
       messageScrollRef.current?.scrollIntoView({behavior: 'smooth'})
     }
   }, [messages])
-
 
   const onScrollHanderl = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const element = e.currentTarget
@@ -108,17 +106,18 @@ const Messages = () => {
 
   return (
     <div style={{height: '400px', overflowY: 'auto'}} onScroll={onScrollHanderl}>
-      {messages?.map((m, index) => <Message key={index} message={m}/>)}
+      {messages?.map((m) => <Message key={m.id} message={m}/>)}
       <div ref={messageScrollRef}></div>
     </div>
   )
 }
 
 type MessagePropsType = {
-  message: ChatMessageType
+  message: ChatMessageDisplayType
 }
 
 const Message = memo(({message}: MessagePropsType) => {
+  console.log('message')
   return (
     <div style={{marginBottom: '20px'}}>
       <img src={message.photo} alt={'avatar'} style={{height: '30px', width: '30px'}}/>

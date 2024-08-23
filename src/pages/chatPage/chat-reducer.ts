@@ -1,5 +1,6 @@
 import { AppDispatch } from "@/redux/redux-store"
-import { chatApi, ChatMessageType, EventNames, MessageReceivedSubscriberType, StatusChangedSubscriberType, StatusType } from "./chatApi"
+import { chatApi, ChatMessageAPIType, ChatMessageDisplayType, EventNames, MessageReceivedSubscriberType, StatusChangedSubscriberType, StatusType } from "./chatApi"
+import {v1} from 'uuid'
 
 type ChatStateType = typeof initialState
 type ChatMessageReceivedAT = ReturnType<typeof chatMessageReceivedAC>
@@ -10,14 +11,15 @@ const CHAT_MESSAGES_RECEIVED = 'CHAT-MESSAGES-RECEIVED'
 const CHAT_STATUS_CHANGED = 'CHAT-STATUS-CHANGED'
 
 const initialState = {
-  messages: [] as ChatMessageType[],
+  messages: [] as ChatMessageDisplayType[],
   status: 'pending' as StatusType
 }
 
 export const chatReducer = (state: ChatStateType = initialState, action: ActionType): ChatStateType => {
   switch(action.type) {
     case CHAT_MESSAGES_RECEIVED:
-      return {...state, messages: [...state.messages, ...action.payload.messages].slice(-20)}
+      const displayMessages: ChatMessageDisplayType[] = [...action.payload.messages.map(m => ({...m, id: v1()})).slice(-20)]
+      return {...state, messages: [...state.messages, ...displayMessages]}
     case CHAT_STATUS_CHANGED:
       return {...state, status: action.payload.status}
     default:
@@ -26,7 +28,7 @@ export const chatReducer = (state: ChatStateType = initialState, action: ActionT
 }
 
 //actions
-const chatMessageReceivedAC = (messages:ChatMessageType[]) => {
+const chatMessageReceivedAC = (messages:ChatMessageAPIType[]) => {
   return {type: CHAT_MESSAGES_RECEIVED, payload: {messages}} as const
 }
 
