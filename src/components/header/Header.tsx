@@ -5,8 +5,6 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutTC } from '../../features/auth/model/auth-reducer';
 import { Avatar, Button, Flex, Tooltip } from 'antd';
-import { getProfile } from '../../features/profile/modal/profile-selectors';
-import noPhoto from '../../assets/no_photo.jpg'
 /* import { selectIsAuth, selectLogin } from '@/features/auth/model/auth-selectors'; */
 import { selectIsAuth, selectLogin } from '../../features/auth/model/auth-selectors';
 
@@ -17,13 +15,10 @@ export const Header: React.FC<HeaderPropsType> = (props: HeaderPropsType) => {
 
   const login = useSelector(selectLogin)
   const isAuth = useSelector(selectIsAuth)
-  const profile = useSelector(getProfile)
   const dispatch = useDispatch()
   const logOut = () => {
     dispatch(logoutTC())
   }
-
-  console.log(profile)
   return (
     <header className={s.header}>
 

@@ -119,7 +119,6 @@ type MessagePropsType = {
 }
 
 const Message = memo(({message}: MessagePropsType) => {
-  console.log('message')
   return (
     <div style={{marginBottom: '20px'}}>
       <img src={message.photo} alt={'avatar'} style={{height: '30px', width: '30px'}}/>
@@ -135,8 +134,6 @@ const AddChatMessageForm = () => {
   const dispatch = useDispatch()
   const submitBtnRef = useRef<HTMLButtonElement>(null)
   const messageAreaRef = useRef<HTMLTextAreaElement>(null)
-
-
 
   useEffect(() => {
     const currentMessageAreaRef =  messageAreaRef.current

@@ -17,7 +17,7 @@ const initialState = {
 export const chatReducer = (state: ChatStateType = initialState, action: ActionType): ChatStateType => {
   switch(action.type) {
     case CHAT_MESSAGES_RECEIVED:
-      return {...state, messages: [...state.messages, ...action.payload.messages]}
+      return {...state, messages: [...state.messages, ...action.payload.messages].slice(-20)}
     case CHAT_STATUS_CHANGED:
       return {...state, status: action.payload.status}
     default:
