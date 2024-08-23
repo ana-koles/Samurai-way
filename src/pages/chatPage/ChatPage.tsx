@@ -85,12 +85,11 @@ const Messages = () => {
 
   const onScrollHanderl = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const element = e.currentTarget
-    if (Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) < 500) {
+    if (Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) < 100) {
       setIsAutoScroll(true)
     } else {
       setIsAutoScroll(false)
     }
-    console.log(element.scrollHeight - element.scrollTop - element.clientHeight)
   }
 /*   const [messages, setMessages] = useState<ChatMessageType[]>([]) */
 
@@ -134,14 +133,29 @@ const AddChatMessageForm = () => {
   const [message, setMessage] = useState('')
   const chatStatus = useSelector(selectChatStatus)
   const dispatch = useDispatch()
+  const submitBtnRef = useRef<HTMLButtonElement>(null)
+  const messageAreaRef = useRef<HTMLTextAreaElement>(null)
+
+
 
   useEffect(() => {
+    const currentMessageAreaRef =  messageAreaRef.current
+    const keyPressHandler = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        submitBtnRef?.current?.click();
+      }
+    }
+    messageAreaRef.current?.addEventListener('keypress', keyPressHandler)
+
+
    /*  const onOpenHandler = () => { */ //subscribe for open event for ws
     /*    setChannelStatus('open')
     }
 
     wsChannel?.addEventListener('open', onOpenHandler)
     return () => wsChannel?.removeEventListener('open', onOpenHandler) */
+
+    return () => currentMessageAreaRef?.removeEventListener('keypress', keyPressHandler)
   }, [])
 
   const onClickHandler = () => {
@@ -156,8 +170,8 @@ const AddChatMessageForm = () => {
 
   return (
     <>
-      <textarea onChange={e => onChangeHanlder(e)} value={message}/>
-      <button disabled={chatStatus === 'pending'} onClick={onClickHandler}>send</button>
+      <textarea onChange={e => onChangeHanlder(e)} value={message} ref={messageAreaRef}/>
+      <button disabled={chatStatus === 'pending'} onClick={onClickHandler} ref={submitBtnRef}>send</button>
     </>
   )
 }
