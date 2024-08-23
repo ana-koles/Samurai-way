@@ -2,8 +2,6 @@ import { AppDispatch } from "@/redux/redux-store"
 import { chatApi, ChatMessageType, EventNames, MessageReceivedSubscriberType, StatusChangedSubscriberType, StatusType } from "./chatApi"
 
 type ChatStateType = typeof initialState
-
-
 type ChatMessageReceivedAT = ReturnType<typeof chatMessageReceivedAC>
 type ChatStatusChangedAT = ReturnType<typeof chatStatusChangedAC>
 type ActionType = ChatMessageReceivedAT | ChatStatusChangedAT

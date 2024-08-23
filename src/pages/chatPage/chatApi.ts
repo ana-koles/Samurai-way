@@ -23,6 +23,8 @@ let ws: WebSocket | null = null;
 const cleanUp = () => {
   ws?.removeEventListener('message', onMessageHandler)
   ws?.removeEventListener('close', onCloseChannelHandler)
+  ws?.removeEventListener('open', onOpenHandler)
+  ws?.removeEventListener('error', onErrorHandler)
 }
 
 const createChannel = () => {

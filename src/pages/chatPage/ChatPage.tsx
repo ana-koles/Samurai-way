@@ -17,6 +17,7 @@ const ChatPage = () => {
 const Chat = () => {
 /*   const [wsChannel, setWsChannel] = useState<WebSocket | null>(null) */
   const dispatch: AppDispatch = useDispatch()
+  const chatStatus = useSelector(selectChatStatus)
 
   useEffect(() => {
     dispatch(startMessageListeningTC())
@@ -56,8 +57,13 @@ const Chat = () => {
  */
   return (
     <>
-      <Messages/>
-      <AddChatMessageForm/>
+      {chatStatus === 'error' ? <div>Some error occuried. Pleae refresh the page</div>
+        :
+        <>
+          <Messages/>
+          <AddChatMessageForm/>
+        </>
+      }
     </>
   )
 }
