@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { ChatMessageType } from './chatApi'
 import s from './ChatPage.module.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { sendMessageTC, startMessageListeningTC, stopMessageListingTC } from './chat-reducer'
 import { selectChatStatus, selectMessages } from './chat-selectors'
 import { AppDispatch } from '@/redux/redux-store'
 
 const ChatPage = () => {
+  console.log('Chat')
   return (
     <div className={s.content}>
       <Chat/>
@@ -57,7 +58,7 @@ const Chat = () => {
  */
   return (
     <>
-      {chatStatus === 'error' ? <div>Some error occuried. Pleae refresh the page</div>
+      {chatStatus === 'error' ? <div>Some error occuried. Please refresh the page</div>
         :
         <>
           <Messages/>
@@ -70,6 +71,13 @@ const Chat = () => {
 
 const Messages = () => {
   const messages = useSelector(selectMessages)
+  const messageScrollRef = useRef<HTMLDivElement>(null)
+
+  //when new messages come, scroll have to put to div ref
+  useEffect(() => {
+    messageScrollRef.current?.scrollIntoView({behavior: 'smooth'})
+
+  }, [messages])
 /*   const [messages, setMessages] = useState<ChatMessageType[]>([]) */
 
 /*   useEffect(() => { */
@@ -89,6 +97,7 @@ const Messages = () => {
   return (
     <div style={{height: '400px', overflowY: 'auto'}}>
       {messages?.map((m, index) => <Message key={index} message={m}/>)}
+      <div ref={messageScrollRef}></div>
     </div>
   )
 }
@@ -106,7 +115,6 @@ const Message = ({message}: MessagePropsType) => {
     </div>
   )
 }
-
 
 const AddChatMessageForm = () => {
   const [message, setMessage] = useState('')

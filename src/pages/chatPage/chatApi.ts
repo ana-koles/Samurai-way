@@ -50,7 +50,7 @@ const onOpenHandler = () => {
 
 const onErrorHandler = () => {
   statusChangeSubscribersNotify('error')
-  console.log('REFEREST THE PAGE')
+  console.log('REFRESH THE PAGE')
 }
 
 const onMessageHandler = (e: MessageEvent) => {
