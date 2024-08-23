@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { ChatMessageType } from './chatApi'
 import s from './ChatPage.module.css'
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { sendMessageTC, startMessageListeningTC, stopMessageListingTC } from './chat-reducer'
 import { selectChatStatus, selectMessages } from './chat-selectors'
 import { AppDispatch } from '@/redux/redux-store'
@@ -118,7 +118,8 @@ type MessagePropsType = {
   message: ChatMessageType
 }
 
-const Message = ({message}: MessagePropsType) => {
+const Message = memo(({message}: MessagePropsType) => {
+  console.log('message')
   return (
     <div style={{marginBottom: '20px'}}>
       <img src={message.photo} alt={'avatar'} style={{height: '30px', width: '30px'}}/>
@@ -126,7 +127,7 @@ const Message = ({message}: MessagePropsType) => {
       <p>{message.message}</p>
     </div>
   )
-}
+})
 
 const AddChatMessageForm = () => {
   const [message, setMessage] = useState('')
