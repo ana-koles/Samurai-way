@@ -1,5 +1,5 @@
 import { AppDispatch } from "@/redux/redux-store"
-import { chatApi, ChatMessageType, EventNames, StatusType } from "./chatApi"
+import { chatApi, ChatMessageType, EventNames, MessageReceivedSubscriberType, StatusChangedSubscriberType, StatusType } from "./chatApi"
 
 type ChatStateType = typeof initialState
 
@@ -41,7 +41,7 @@ const chatStatusChangedAC = (status: StatusType) => {
 
 // subscribe and unsubscribe should receive the same function. In both cases this function should receive the same dispatch
 
-type NewMessageHanderType = ((messages: ChatMessageType[]) => void) | null
+type NewMessageHanderType = MessageReceivedSubscriberType | null
 
 let _newMessageHandler: NewMessageHanderType = null;
 
@@ -54,17 +54,32 @@ const newMessagesHandlerCreator = (dispatch: AppDispatch) => {
   return _newMessageHandler
 }
 
+type StatusChangedHandlerType = StatusChangedSubscriberType | null
+
+let _statusChangedHandler: StatusChangedHandlerType = null;
+
+const statusChangedHandlerCreator = (dispatch: AppDispatch) => {
+  if (_statusChangedHandler === null) {
+    _statusChangedHandler = (status) =>  {
+      dispatch(chatStatusChangedAC(status))
+    }
+  }
+  return _statusChangedHandler
+}
+
 export const startMessageListeningTC = () => (dispatch: AppDispatch) => {
   //when this thunk is called, api should call callback fn inside subscribe
   // and pass messages that will be received throught ws,
   // when these messages will be received, they are dispatched in store
 
   chatApi.start()
-  chatApi.subscribe(EventNames.MESSAGE_RECEIVED, newMessagesHandlerCreator(dispatch))
+  chatApi.subscribeToMessageReceive({eventName: EventNames.MESSAGE_RECEIVED, callback: newMessagesHandlerCreator(dispatch)})
+  chatApi.subscribeToStatusChange({eventName: EventNames.STATUS_CHANGED, callback: statusChangedHandlerCreator(dispatch)})
 }
 
 export const stopMessageListingTC = () => (dispatch: AppDispatch) => {
-  chatApi.unsubscribe(EventNames.MESSAGE_RECEIVED, newMessagesHandlerCreator(dispatch))
+  chatApi.unsubscribeFromMessageReceive({eventName: EventNames.MESSAGE_RECEIVED, callback: newMessagesHandlerCreator(dispatch)})
+  chatApi.subscribeToStatusChange({eventName: EventNames.STATUS_CHANGED, callback: statusChangedHandlerCreator(dispatch)})
   chatApi.stop()
 }
 

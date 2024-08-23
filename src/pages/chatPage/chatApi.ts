@@ -1,6 +1,7 @@
 
-type MessageReceivedSubscriberType = (messages: ChatMessageType[]) => void
-type StatusChangedSubscriberType = (status: StatusType) => void
+export type MessageReceivedSubscriberType = (messages: ChatMessageType[]) => void
+export type StatusChangedSubscriberType = (status: StatusType) => void
+
 export type StatusType = 'pending' | 'ready'
 
 export enum EventNames {
@@ -12,7 +13,6 @@ let subscribers = {
   [EventNames.MESSAGE_RECEIVED]: [] as MessageReceivedSubscriberType[],
   [EventNames.STATUS_CHANGED]: [] as StatusChangedSubscriberType[]
 }
-
 
 //there should not be any imports from react or redux, sinced
 // api doesn't know anything about them
@@ -57,22 +57,43 @@ export const chatApi = {
     ws?.close()
   },
   // callback is a subscriber, so API could call it when new messages come and pass these messages
-  subscribe(eventName: EventNames, callback: MessageReceivedSubscriberType | StatusChangedSubscriberType) {
+
+  subscribeToMessageReceive(params: MessagesReceiveFnType) {
     //when subscribe fn will be called, this subscriber (callback) should be added to array of subscribers
 
-    //@ts-ignore
-    subscribers[eventName].push(callback)
+    subscribers[params.eventName].push(params.callback)
 
     //1st option of unsubsribe: subscribe return a functions that later could be called to unsubscribe
-    return () => subscribers[eventName].filter(sub => sub !== callback)
+    return () => subscribers[params.eventName].filter(sub => sub !== params.callback)
+  },
+
+  //2nd option of unsubscribe
+  unsubscribeFromMessageReceive(params: MessagesReceiveFnType) {
+    subscribers[params.eventName].filter(sub => sub !== params.callback)
+  },
+  
+  subscribeToStatusChange(params: StatusChangeFnType) {
+    subscribers[params.eventName].push(params.callback)
+    return () => subscribers[params.eventName].filter(sub => sub !== params.callback)
   },
   //2nd option of unsubscribe
-  unsubscribe(eventName: EventNames, callback: MessageReceivedSubscriberType | StatusChangedSubscriberType) {
-    subscribers[eventName].filter(sub => sub !== callback)
+  unsubscribeFromStatusChange(params: StatusChangeFnType) {
+    subscribers[params.eventName].filter(sub => sub !== params.callback)
   },
   sendMessage(message: string) {
     ws?.send(message)
   }
+}
+
+
+type MessagesReceiveFnType = {
+  eventName: EventNames.MESSAGE_RECEIVED,
+  callback: MessageReceivedSubscriberType
+}
+
+type StatusChangeFnType = {
+  eventName: EventNames.STATUS_CHANGED,
+  callback: StatusChangedSubscriberType
 }
 
 export type ChatMessageType = {
