@@ -7,7 +7,6 @@ import { selectChatStatus, selectMessages } from './chat-selectors'
 import { AppDispatch } from '@/redux/redux-store'
 
 const ChatPage = () => {
-  console.log('Chat')
   return (
     <div className={s.content}>
       <Chat/>
@@ -141,8 +140,11 @@ const AddChatMessageForm = () => {
   useEffect(() => {
     const currentMessageAreaRef =  messageAreaRef.current
     const keyPressHandler = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        submitBtnRef?.current?.click();
+      if (currentMessageAreaRef && currentMessageAreaRef.value.length > 0) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          submitBtnRef?.current?.click();
+        }
       }
     }
     messageAreaRef.current?.addEventListener('keypress', keyPressHandler)

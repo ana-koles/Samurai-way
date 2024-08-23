@@ -54,7 +54,6 @@ const onErrorHandler = () => {
 }
 
 const onMessageHandler = (e: MessageEvent) => {
-  console.log(JSON.parse(e.data))
   const newMessages = JSON.parse(e.data)  //need to convert in JSON, because ws sends data in text and blob format
 
   //after receiving messages, need to pass them to all subscribers
