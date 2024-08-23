@@ -2,8 +2,6 @@
 export type MessageReceivedSubscriberType = (messages: ChatMessageType[]) => void
 export type StatusChangedSubscriberType = (status: StatusType) => void
 
-export type StatusType = 'pending' | 'ready'
-
 export enum EventNames {
   MESSAGE_RECEIVED = 'messages-received',
   STATUS_CHANGED = 'status=changed'
@@ -12,6 +10,10 @@ export enum EventNames {
 let subscribers = {
   [EventNames.MESSAGE_RECEIVED]: [] as MessageReceivedSubscriberType[],
   [EventNames.STATUS_CHANGED]: [] as StatusChangedSubscriberType[]
+}
+
+const statusChangeSubscribersNotify = (status: StatusType) => {
+  subscribers[EventNames.STATUS_CHANGED].forEach(sub => sub(status))
 }
 
 //there should not be any imports from react or redux, sinced
@@ -26,16 +28,27 @@ const cleanUp = () => {
 const createChannel = () => {
   cleanUp() //checking for reconnect: if channel was already opened, close it
   ws?.close()
-
+  statusChangeSubscribersNotify('pending')
   ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx') // create connection with this url
   ws.addEventListener('close', onCloseChannelHandler)
   ws.addEventListener('message', onMessageHandler)
+  ws.addEventListener('open', onOpenHandler)
+  ws.addEventListener('error', onErrorHandler)
 }
 
 const onCloseChannelHandler = () => {
   setTimeout(() => {
     createChannel() // reconnect in 3 seconds after the channel was closed (for example due to the internet issues)
   }, 3000)
+}
+
+const onOpenHandler = () => {
+  statusChangeSubscribersNotify('ready')
+}
+
+const onErrorHandler = () => {
+  statusChangeSubscribersNotify('error')
+  console.log('REFEREST THE PAGE')
 }
 
 const onMessageHandler = (e: MessageEvent) => {
@@ -71,7 +84,7 @@ export const chatApi = {
   unsubscribeFromMessageReceive(params: MessagesReceiveFnType) {
     subscribers[params.eventName].filter(sub => sub !== params.callback)
   },
-  
+
   subscribeToStatusChange(params: StatusChangeFnType) {
     subscribers[params.eventName].push(params.callback)
     return () => subscribers[params.eventName].filter(sub => sub !== params.callback)
@@ -85,6 +98,7 @@ export const chatApi = {
   }
 }
 
+export type StatusType = 'pending' | 'ready' | 'error'
 
 type MessagesReceiveFnType = {
   eventName: EventNames.MESSAGE_RECEIVED,
